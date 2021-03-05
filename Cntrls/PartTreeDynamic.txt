@@ -1,0 +1,17 @@
+PartTreeDynamic отличаетс€ от PartTree следующим:
+1) ѕри добавлении в дерево ItemContainer (ItemPartID=15) выводитс€ форма 
+дл€ ввода имени этого Item Part.
+2) Item Parts, отличные от ItemContainer, последовательно нумеруютс€
+
+ѕример:
+MetalBodyItem
+  Post 1
+    Mount 1
+      Diamond 1
+  Post 2
+    Mount 2
+      Diamond 2
+  
+3) ƒл€ того, чтобы иметь возможность построить в результате рекурсивного 
+обхода дерева им€, отражающее структуру, элемент Tag каждого листа хранит строку вида 
+PartTypeID!PartID!ItemContainerName

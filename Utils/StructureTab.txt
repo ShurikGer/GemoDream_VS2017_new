@@ -1,0 +1,9 @@
+
+
+/*
+Structure tab intend for manipulating (adding, removing and editing) item structures.
+They define how and which parts put together the item. For example, 
+
+Item Part 'Item Container' must have a name. For the new item structure
+name formed by recursive 
+*/

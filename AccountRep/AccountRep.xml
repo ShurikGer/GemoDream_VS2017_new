@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AccountReport</name>
+    </assembly>
+    <members>
+        <member name="T:gemoDream.AccountRep">
+            <summary>
+            Account representative form
+            </summary>
+        </member>
+        <member name="M:gemoDream.AccountRep.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.AccountRep.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:gemoDream.AccountRep.cbcCustomer_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="F:gemoDream.BillingOptions.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.BillingOptions.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:gemoDream.BillingOptions.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:gemoDream.CommonDetails">
+            <summary>
+            Summary description for CommonDetails.
+            </summary>
+        </member>
+        <member name="F:gemoDream.CommonDetails.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.CommonDetails.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.CommonDetails.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:gemoDream.PrintingOptions">
+            <summary>
+            Summary description for PrintingOptions.
+            </summary>
+        </member>
+        <member name="F:gemoDream.PrintingOptions.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.PrintingOptions.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.PrintingOptions.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:gemoDream.ReprintForm">
+            <summary>
+            Summary description for ReprintForm.
+            </summary>
+        </member>
+        <member name="F:gemoDream.ReprintForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.ReprintForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.ReprintForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

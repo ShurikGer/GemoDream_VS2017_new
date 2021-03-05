@@ -1,0 +1,11 @@
+<ComPort>
+	<CommPortNumber>1</CommPortNumber>
+	<BitRate>1200</BitRate>
+	<Parity>odd</Parity>
+	<StopBits>1</StopBits>
+	<DataBits>7</DataBits>
+	<RTSEnable>true</RTSEnable>
+	<DTREnable>true</DTREnable>
+	<XonXoffHandshaking>true</XonXoffHandshaking>
+	<CTSHandshaking>false</CTSHandshaking>
+</ComPort>

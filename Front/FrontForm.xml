@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Front</name>
+    </assembly>
+    <members>
+        <member name="T:gemoDream.ExternalReceiptForm">
+            <summary>
+            Summary description for ExternalReceiptForm.
+            </summary>
+        </member>
+        <member name="F:gemoDream.ExternalReceiptForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.ExternalReceiptForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.ExternalReceiptForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:gemoDream.FrontForm">
+            <summary>
+            Summary description for FrontForm.
+            </summary>
+        </member>
+        <member name="F:gemoDream.FrontForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:gemoDream.FrontForm.Dispose(System.Boolean)">
+            <summary>
+            Get data for TakeIn tab. Fill dsFrontGet
+            </summary>
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:gemoDream.FrontForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:gemoDream.FrontForm.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="M:gemoDream.FrontForm.SaveMemoNumber(System.String)">
+            <summary>
+            function for save MemoNumber
+            by vetal_242 07.05.2006
+            </summary>
+            <param name="sOrderID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:gemoDream.FrontForm.SaveMemoNumberShReceiv(System.String)">
+            <summary>
+            function for save MemoNumber
+            by vetal_242 07.05.2006
+            </summary>
+            <param name="sOrderID"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

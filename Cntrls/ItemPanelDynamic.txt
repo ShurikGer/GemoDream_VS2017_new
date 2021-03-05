@@ -1,0 +1,3 @@
+ItemPanelDynamic отличается от ItemPanel следующим:
+1) NewItemTypeSelected - новое событие, 
+возникает после выбора группы (Item Type Group)

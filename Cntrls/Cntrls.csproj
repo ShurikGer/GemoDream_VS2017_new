@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6809104E-BB4E-4998-8AFC-201F350FE4EE}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon />
+    <AssemblyKeyContainerName />
+    <AssemblyName>Cntrls</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Cntrls</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DefineDocument\DefineDocument.csproj">
+      <Name>DefineDocument</Name>
+      <Project>{B7FAB17F-4405-4949-BE10-5BEE2A3E2BA1}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\gdrLibrary\gdrClientLibrary.csproj">
+      <Name>gdrClientLibrary</Name>
+      <Project>{A651DE82-DAB6-40FD-96E8-A076DC59CBC3}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\ShipManifestConstructor\ShipManifestConstructor.csproj">
+      <Name>ShipManifestConstructor</Name>
+      <Project>{B6FB027C-FCA6-438E-B73E-DA439E3B304C}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdditionalPrice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BarCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BarCodeField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BindingComboBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CBTBcontrol.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Communication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DocumentProps.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\CarrierControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\CustomerOrder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\CustomerSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\MessengerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\Tab_TakeIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IntField.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ItemContainerNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemNumberControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ItemPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ItemPanelDynamic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Location.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrderDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrdersTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrdersTree2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PartPropControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PartProps.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PartTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PartTreeDynamic.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PartTreeEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Permissions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Price.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceRange.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingManifest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WeightControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Content Include="ItemPanelDynamic.txt" />
+    <Content Include="PartTreeDynamic.txt" />
+    <EmbeddedResource Include="AdditionalPrice.resx">
+      <DependentUpon>AdditionalPrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BarCode.resx">
+      <DependentUpon>BarCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BarCodeField.resx">
+      <DependentUpon>BarCodeField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BindingComboBox.resx">
+      <DependentUpon>BindingComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CBTBcontrol.resx">
+      <DependentUpon>CBTBcontrol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Communication.resx">
+      <DependentUpon>Communication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataTree.resx">
+      <DependentUpon>DataTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DocumentProps.resx">
+      <DependentUpon>DocumentProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\CarrierControl.resx">
+      <DependentUpon>CarrierControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\CustomerOrder.resx">
+      <DependentUpon>CustomerOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\CustomerSelecter.resx">
+      <DependentUpon>CustomerSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\MessengerControl.resx">
+      <DependentUpon>MessengerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\Tab_TakeIn.resx">
+      <DependentUpon>Tab_TakeIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntField.resx">
+      <DependentUpon>IntField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemContainerNameForm.resx">
+      <DependentUpon>ItemContainerNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemNumberControl.resx">
+      <DependentUpon>ItemNumberControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemPanel.resx">
+      <DependentUpon>ItemPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemPanelDynamic.resx">
+      <DependentUpon>ItemPanelDynamic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Location.resx">
+      <DependentUpon>Location.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderDetails.resx">
+      <DependentUpon>OrderDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersTree.resx">
+      <DependentUpon>OrdersTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersTree2.resx">
+      <DependentUpon>OrdersTree2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartPropControl.resx">
+      <DependentUpon>PartPropControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartProps.resx">
+      <DependentUpon>PartProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartTree.resx">
+      <DependentUpon>PartTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartTreeDynamic.resx">
+      <DependentUpon>PartTreeDynamic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PartTreeEx.resx">
+      <DependentUpon>PartTreeEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Permissions.resx">
+      <DependentUpon>Permissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Price.resx">
+      <DependentUpon>Price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceRange.resx">
+      <DependentUpon>PriceRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShippingManifest.resx">
+      <DependentUpon>ShippingManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WeightControl.resx">
+      <DependentUpon>WeightControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

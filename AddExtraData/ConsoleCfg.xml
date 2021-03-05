@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<consoleCfg>
+	<login>admin</login>
+	<password>admin</password>
+	<department>1</department>
+	<departmentOffice>1</departmentOffice>
+	<serverUrl>C:\work\sasha\prices\Pear.dat</serverUrl>
+	<time>4/16/2005 1:40:11 PM</time>
+	<pricetime>3/16/2005 1:40:11 PM</pricetime>
+	<storedFileTypes>*.ou1, *.trn, *.dat</storedFileTypes>
+	<shape>round,princess,emerald,asscher,marquise,oval,radiant,pear,heart,cushion</shape>
+	<shapecode>1,2,3,4,5,6,7,8,9,10</shapecode>
+	<color>d,e,f,g,h,i,j,k,l,m,n</color>
+	<colorcode>51,52,53,54,55,56,57,58,59,60,61</colorcode>
+	<clarity>fl,if,vvs1,vvs2,vs1,vs2,si1,si2,si3,i1,i2,i3</clarity>
+	<claritycode>1,2,3,4,5,6,7,8,9,10,11,12</claritycode>
+	<logfile>C:\log.txt</logfile>
+</consoleCfg>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<Printers>
+	<Front_TakeIn_Label>
+		Microsoft Office Document Image Writer
+	</Front_TakeIn_Label>
+	<Front_TakeIn>
+		Microsoft Office Document Image Writer
+	</Front_TakeIn>
+	<Label_Batch>
+		Microsoft Office Document Image Writer
+	</Label_Batch>
+	<Label_Item>
+		Microsoft Office Document Image Writer
+	</Label_Item>
+	<Items_Selected>
+		Microsoft Office Document Image Writer
+	</Items_Selected>
+	<Internal_Receipt>
+		\\front02\HpLaserJ
+	</Internal_Receipt>
+	<Customer_Program>
+		\\front02\HpLaserJ
+	</Customer_Program>
+	<Batch>
+		Microsoft Office Document Image Writer
+	</Batch>
+	<Account_Rep_Label>
+		Microsoft Office Document Image Writer
+	</Account_Rep_Label>
+	<Printing_Form_Printer>
+		Microsoft Office Document Image Writer
+	</Printing_Form_Printer>	
+</Printers>
+

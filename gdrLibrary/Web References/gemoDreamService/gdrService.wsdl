@@ -1,0 +1,1296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPassword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iDepartment" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="iDepartmentOffice" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsAccess">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsoleLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsoleLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsoleLoginResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsAccess">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficeDepartments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="iOfficeCode" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficeDepartmentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetOfficeDepartmentsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetOfficeCode">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetOfficeCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetOfficeCodeResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Logoff">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoffResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SetDepartmentOfficeId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DepartmentOfficeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDepartmentOfficeIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetDepartmentOfficeIdResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetImageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetImageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCorelFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCorelFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCorelFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericGetById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericGetByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenericGetByIdResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericGetProcedure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsParameters">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericGetProcedureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenericGetProcedureResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericSetProcedure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsParameters">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="sHeader" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenericSetProcedureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenericSetProcedureResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QBAddInvoice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sBatchId_ItemCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QBAddInvoiceResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SendMail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sAttach" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSubject" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendMailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMailCancelledDocs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Body" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMailCancelledDocsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendMailCancelledDocsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBatchByFax">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsOrder">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="sExt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSubject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBatchByFaxResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SendBatchByFax1">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSubject" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBatchByFax1Response">
+        <s:complexType />
+      </s:element>
+      <s:element name="SendDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sTemplatePath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSendPath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileExt" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iOrderCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="iBatchCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="iItemCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsBatch">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="dsItem">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="dsItemType">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="sDocChar" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsShape">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendDocumentResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddGraderData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPartID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddGraderDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddGraderDataResult" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="rid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPrices">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sPath" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsCodes">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="dsData">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddPricesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddPricesResult" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="rid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGraderDir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGraderDirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGraderDirResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGraderKeymap">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGraderKeymapResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGraderKeymapResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServiceCfgParameter">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sParameter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetServiceCfgParameterResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetServiceCfgParameterResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveFileToSendDir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sFileName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveFileToSendDirResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMeasuresFormats">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMeasuresFormatsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMeasuresFormatsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsincPrint">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsChecked">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="sDocId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AsincPrintResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MakeTextFile3">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSessionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsChecked">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="sDocId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeTextFile3Response">
+        <s:complexType />
+      </s:element>
+      <s:element name="PrintExcelReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReportName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DataFileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TempFile" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrintExcelReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PrintExcelReportResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsoleLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsoleLogin" />
+  </wsdl:message>
+  <wsdl:message name="ConsoleLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsoleLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDepartmentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOfficeDepartments" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeDepartmentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOfficeDepartmentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetOfficeCode" />
+  </wsdl:message>
+  <wsdl:message name="GetOfficeCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetOfficeCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoffSoapIn">
+    <wsdl:part name="parameters" element="tns:Logoff" />
+  </wsdl:message>
+  <wsdl:message name="LogoffSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoffResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetDepartmentOfficeIdSoapIn">
+    <wsdl:part name="parameters" element="tns:SetDepartmentOfficeId" />
+  </wsdl:message>
+  <wsdl:message name="SetDepartmentOfficeIdSoapOut">
+    <wsdl:part name="parameters" element="tns:SetDepartmentOfficeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetImageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetImage" />
+  </wsdl:message>
+  <wsdl:message name="GetImageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCorelFileSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCorelFile" />
+  </wsdl:message>
+  <wsdl:message name="GetCorelFileSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCorelFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenericGetByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GenericGetById" />
+  </wsdl:message>
+  <wsdl:message name="GenericGetByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GenericGetByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenericGetProcedureSoapIn">
+    <wsdl:part name="parameters" element="tns:GenericGetProcedure" />
+  </wsdl:message>
+  <wsdl:message name="GenericGetProcedureSoapOut">
+    <wsdl:part name="parameters" element="tns:GenericGetProcedureResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenericSetProcedureSoapIn">
+    <wsdl:part name="parameters" element="tns:GenericSetProcedure" />
+  </wsdl:message>
+  <wsdl:message name="GenericSetProcedureSoapOut">
+    <wsdl:part name="parameters" element="tns:GenericSetProcedureResponse" />
+  </wsdl:message>
+  <wsdl:message name="QBAddInvoiceSoapIn">
+    <wsdl:part name="parameters" element="tns:QBAddInvoice" />
+  </wsdl:message>
+  <wsdl:message name="QBAddInvoiceSoapOut">
+    <wsdl:part name="parameters" element="tns:QBAddInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMailSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMail" />
+  </wsdl:message>
+  <wsdl:message name="SendMailSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMailCancelledDocsSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMailCancelledDocs" />
+  </wsdl:message>
+  <wsdl:message name="SendMailCancelledDocsSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMailCancelledDocsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBatchByFaxSoapIn">
+    <wsdl:part name="parameters" element="tns:SendBatchByFax" />
+  </wsdl:message>
+  <wsdl:message name="SendBatchByFaxSoapOut">
+    <wsdl:part name="parameters" element="tns:SendBatchByFaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBatchByFax1SoapIn">
+    <wsdl:part name="parameters" element="tns:SendBatchByFax1" />
+  </wsdl:message>
+  <wsdl:message name="SendBatchByFax1SoapOut">
+    <wsdl:part name="parameters" element="tns:SendBatchByFax1Response" />
+  </wsdl:message>
+  <wsdl:message name="SendDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:SendDocument" />
+  </wsdl:message>
+  <wsdl:message name="SendDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:SendDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddGraderDataSoapIn">
+    <wsdl:part name="parameters" element="tns:AddGraderData" />
+  </wsdl:message>
+  <wsdl:message name="AddGraderDataSoapOut">
+    <wsdl:part name="parameters" element="tns:AddGraderDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddPricesSoapIn">
+    <wsdl:part name="parameters" element="tns:AddPrices" />
+  </wsdl:message>
+  <wsdl:message name="AddPricesSoapOut">
+    <wsdl:part name="parameters" element="tns:AddPricesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGraderDirSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGraderDir" />
+  </wsdl:message>
+  <wsdl:message name="GetGraderDirSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGraderDirResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGraderKeymapSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGraderKeymap" />
+  </wsdl:message>
+  <wsdl:message name="GetGraderKeymapSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGraderKeymapResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetServiceCfgParameterSoapIn">
+    <wsdl:part name="parameters" element="tns:GetServiceCfgParameter" />
+  </wsdl:message>
+  <wsdl:message name="GetServiceCfgParameterSoapOut">
+    <wsdl:part name="parameters" element="tns:GetServiceCfgParameterResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveFileToSendDirSoapIn">
+    <wsdl:part name="parameters" element="tns:MoveFileToSendDir" />
+  </wsdl:message>
+  <wsdl:message name="MoveFileToSendDirSoapOut">
+    <wsdl:part name="parameters" element="tns:MoveFileToSendDirResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMeasuresFormatsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMeasuresFormats" />
+  </wsdl:message>
+  <wsdl:message name="GetMeasuresFormatsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMeasuresFormatsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AsincPrintSoapIn">
+    <wsdl:part name="parameters" element="tns:AsincPrint" />
+  </wsdl:message>
+  <wsdl:message name="AsincPrintSoapOut">
+    <wsdl:part name="parameters" element="tns:AsincPrintResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeTextFile3SoapIn">
+    <wsdl:part name="parameters" element="tns:MakeTextFile3" />
+  </wsdl:message>
+  <wsdl:message name="MakeTextFile3SoapOut">
+    <wsdl:part name="parameters" element="tns:MakeTextFile3Response" />
+  </wsdl:message>
+  <wsdl:message name="PrintExcelReportSoapIn">
+    <wsdl:part name="parameters" element="tns:PrintExcelReport" />
+  </wsdl:message>
+  <wsdl:message name="PrintExcelReportSoapOut">
+    <wsdl:part name="parameters" element="tns:PrintExcelReportResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GdrServiceSoap">
+    <wsdl:operation name="Login">
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsoleLogin">
+      <wsdl:input message="tns:ConsoleLoginSoapIn" />
+      <wsdl:output message="tns:ConsoleLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeDepartments">
+      <wsdl:input message="tns:GetOfficeDepartmentsSoapIn" />
+      <wsdl:output message="tns:GetOfficeDepartmentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeCode">
+      <wsdl:input message="tns:GetOfficeCodeSoapIn" />
+      <wsdl:output message="tns:GetOfficeCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logoff">
+      <wsdl:input message="tns:LogoffSoapIn" />
+      <wsdl:output message="tns:LogoffSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDepartmentOfficeId">
+      <wsdl:input message="tns:SetDepartmentOfficeIdSoapIn" />
+      <wsdl:output message="tns:SetDepartmentOfficeIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImage">
+      <wsdl:input message="tns:GetImageSoapIn" />
+      <wsdl:output message="tns:GetImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCorelFile">
+      <wsdl:input message="tns:GetCorelFileSoapIn" />
+      <wsdl:output message="tns:GetCorelFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetById">
+      <wsdl:input message="tns:GenericGetByIdSoapIn" />
+      <wsdl:output message="tns:GenericGetByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetProcedure">
+      <wsdl:input message="tns:GenericGetProcedureSoapIn" />
+      <wsdl:output message="tns:GenericGetProcedureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenericSetProcedure">
+      <wsdl:input message="tns:GenericSetProcedureSoapIn" />
+      <wsdl:output message="tns:GenericSetProcedureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QBAddInvoice">
+      <wsdl:input message="tns:QBAddInvoiceSoapIn" />
+      <wsdl:output message="tns:QBAddInvoiceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <wsdl:input message="tns:SendMailSoapIn" />
+      <wsdl:output message="tns:SendMailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMailCancelledDocs">
+      <wsdl:input message="tns:SendMailCancelledDocsSoapIn" />
+      <wsdl:output message="tns:SendMailCancelledDocsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax">
+      <wsdl:input message="tns:SendBatchByFaxSoapIn" />
+      <wsdl:output message="tns:SendBatchByFaxSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax1">
+      <wsdl:input message="tns:SendBatchByFax1SoapIn" />
+      <wsdl:output message="tns:SendBatchByFax1SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDocument">
+      <wsdl:input message="tns:SendDocumentSoapIn" />
+      <wsdl:output message="tns:SendDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddGraderData">
+      <wsdl:input message="tns:AddGraderDataSoapIn" />
+      <wsdl:output message="tns:AddGraderDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPrices">
+      <wsdl:input message="tns:AddPricesSoapIn" />
+      <wsdl:output message="tns:AddPricesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderDir">
+      <wsdl:input message="tns:GetGraderDirSoapIn" />
+      <wsdl:output message="tns:GetGraderDirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderKeymap">
+      <wsdl:input message="tns:GetGraderKeymapSoapIn" />
+      <wsdl:output message="tns:GetGraderKeymapSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceCfgParameter">
+      <wsdl:input message="tns:GetServiceCfgParameterSoapIn" />
+      <wsdl:output message="tns:GetServiceCfgParameterSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveFileToSendDir">
+      <wsdl:input message="tns:MoveFileToSendDirSoapIn" />
+      <wsdl:output message="tns:MoveFileToSendDirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMeasuresFormats">
+      <wsdl:input message="tns:GetMeasuresFormatsSoapIn" />
+      <wsdl:output message="tns:GetMeasuresFormatsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AsincPrint">
+      <wsdl:input message="tns:AsincPrintSoapIn" />
+      <wsdl:output message="tns:AsincPrintSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeTextFile3">
+      <wsdl:input message="tns:MakeTextFile3SoapIn" />
+      <wsdl:output message="tns:MakeTextFile3SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintExcelReport">
+      <wsdl:input message="tns:PrintExcelReportSoapIn" />
+      <wsdl:output message="tns:PrintExcelReportSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GdrServiceSoap" type="tns:GdrServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsoleLogin">
+      <soap:operation soapAction="http://tempuri.org/ConsoleLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeDepartments">
+      <soap:operation soapAction="http://tempuri.org/GetOfficeDepartments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeCode">
+      <soap:operation soapAction="http://tempuri.org/GetOfficeCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logoff">
+      <soap:operation soapAction="http://tempuri.org/Logoff" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDepartmentOfficeId">
+      <soap:operation soapAction="http://tempuri.org/SetDepartmentOfficeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImage">
+      <soap:operation soapAction="http://tempuri.org/GetImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCorelFile">
+      <soap:operation soapAction="http://tempuri.org/GetCorelFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetById">
+      <soap:operation soapAction="http://tempuri.org/GenericGetById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetProcedure">
+      <soap:operation soapAction="http://tempuri.org/GenericGetProcedure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericSetProcedure">
+      <soap:operation soapAction="http://tempuri.org/GenericSetProcedure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QBAddInvoice">
+      <soap:operation soapAction="http://tempuri.org/QBAddInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <soap:operation soapAction="http://tempuri.org/SendMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMailCancelledDocs">
+      <soap:operation soapAction="http://tempuri.org/SendMailCancelledDocs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax">
+      <soap:operation soapAction="http://tempuri.org/SendBatchByFax" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax1">
+      <soap:operation soapAction="http://tempuri.org/SendBatchByFax1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDocument">
+      <soap:operation soapAction="http://tempuri.org/SendDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddGraderData">
+      <soap:operation soapAction="http://tempuri.org/AddGraderData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPrices">
+      <soap:operation soapAction="http://tempuri.org/AddPrices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderDir">
+      <soap:operation soapAction="http://tempuri.org/GetGraderDir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderKeymap">
+      <soap:operation soapAction="http://tempuri.org/GetGraderKeymap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceCfgParameter">
+      <soap:operation soapAction="http://tempuri.org/GetServiceCfgParameter" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveFileToSendDir">
+      <soap:operation soapAction="http://tempuri.org/MoveFileToSendDir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMeasuresFormats">
+      <soap:operation soapAction="http://tempuri.org/GetMeasuresFormats" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsincPrint">
+      <soap:operation soapAction="http://tempuri.org/AsincPrint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTextFile3">
+      <soap:operation soapAction="http://tempuri.org/MakeTextFile3" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintExcelReport">
+      <soap:operation soapAction="http://tempuri.org/PrintExcelReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GdrServiceSoap12" type="tns:GdrServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsoleLogin">
+      <soap12:operation soapAction="http://tempuri.org/ConsoleLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeDepartments">
+      <soap12:operation soapAction="http://tempuri.org/GetOfficeDepartments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOfficeCode">
+      <soap12:operation soapAction="http://tempuri.org/GetOfficeCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logoff">
+      <soap12:operation soapAction="http://tempuri.org/Logoff" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDepartmentOfficeId">
+      <soap12:operation soapAction="http://tempuri.org/SetDepartmentOfficeId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImage">
+      <soap12:operation soapAction="http://tempuri.org/GetImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCorelFile">
+      <soap12:operation soapAction="http://tempuri.org/GetCorelFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetById">
+      <soap12:operation soapAction="http://tempuri.org/GenericGetById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericGetProcedure">
+      <soap12:operation soapAction="http://tempuri.org/GenericGetProcedure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenericSetProcedure">
+      <soap12:operation soapAction="http://tempuri.org/GenericSetProcedure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QBAddInvoice">
+      <soap12:operation soapAction="http://tempuri.org/QBAddInvoice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMail">
+      <soap12:operation soapAction="http://tempuri.org/SendMail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMailCancelledDocs">
+      <soap12:operation soapAction="http://tempuri.org/SendMailCancelledDocs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax">
+      <soap12:operation soapAction="http://tempuri.org/SendBatchByFax" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBatchByFax1">
+      <soap12:operation soapAction="http://tempuri.org/SendBatchByFax1" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendDocument">
+      <soap12:operation soapAction="http://tempuri.org/SendDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddGraderData">
+      <soap12:operation soapAction="http://tempuri.org/AddGraderData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPrices">
+      <soap12:operation soapAction="http://tempuri.org/AddPrices" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderDir">
+      <soap12:operation soapAction="http://tempuri.org/GetGraderDir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGraderKeymap">
+      <soap12:operation soapAction="http://tempuri.org/GetGraderKeymap" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServiceCfgParameter">
+      <soap12:operation soapAction="http://tempuri.org/GetServiceCfgParameter" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveFileToSendDir">
+      <soap12:operation soapAction="http://tempuri.org/MoveFileToSendDir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMeasuresFormats">
+      <soap12:operation soapAction="http://tempuri.org/GetMeasuresFormats" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AsincPrint">
+      <soap12:operation soapAction="http://tempuri.org/AsincPrint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeTextFile3">
+      <soap12:operation soapAction="http://tempuri.org/MakeTextFile3" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintExcelReport">
+      <soap12:operation soapAction="http://tempuri.org/PrintExcelReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GdrService">
+    <wsdl:port name="GdrServiceSoap" binding="tns:GdrServiceSoap">
+      <soap:address location="http://localhost/gemoDream/gdrService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GdrServiceSoap12" binding="tns:GdrServiceSoap12">
+      <soap12:address location="http://localhost/gemoDream/gdrService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
