@@ -1,10 +1,8 @@
 using System;
 using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data;
-using System.Xml;
 using System.IO;
 using System.Diagnostics;
 using gemoDream.gemoDreamService;
@@ -25,7 +23,7 @@ namespace gemoDream
 			public string sCPID;
 		}
 
-        public enum DocTypeCode
+		public enum DocTypeCode
 		{
 			MDX = 1,
 			FDX = 2,
@@ -46,7 +44,7 @@ namespace gemoDream
 		private ArrayList newOperationsListMember = null;
 		private DataSet dsParts = null;
 		private DataSet dsNotVCCM = null;
-        private bool IsLoadDocuments = false;
+		private bool IsLoadDocuments = false;
 		private bool IsLoadImPExpInfo = false;
 		private bool IsUpdateImPExpInfo = false;
 		private string sOperationTypeOfficeID_OperationTypeID;
@@ -125,14 +123,14 @@ namespace gemoDream
 
 
 
-		public DefineDocumentForm(	int iAccessLevel, 
-									DataSet dsNotVCCM, 
-									string sItemTypeID, 
-									string sPath2Picture, 
+		public DefineDocumentForm(int iAccessLevel,
+									DataSet dsNotVCCM,
+									string sItemTypeID,
+									string sPath2Picture,
 									string sOperationTypeName,
-									string sCPOfficeID, 
+									string sCPOfficeID,
 									string sCPID,
-									ArrayList newOperationsList, 
+									ArrayList newOperationsList,
 									string sDocTypeCode,
 									string sCPName)
 		{
@@ -155,15 +153,15 @@ namespace gemoDream
 			SetAccessLevel(iAccessLevel);
 		}
 		//This part is called from CP documents part (not default document)
-		public DefineDocumentForm(	int iAccessLevel, 
-									DataSet dsNotVCCM, 
+		public DefineDocumentForm(int iAccessLevel,
+									DataSet dsNotVCCM,
 									string sItemTypeID,
-									string sPath2Picture, 
+									string sPath2Picture,
 									string sOperationTypeName,
-									string sCPOfficeID, 
-									string sCPID, 
+									string sCPOfficeID,
+									string sCPID,
 									ArrayList newOperationsList,
-									string sDocTypeCode, 
+									string sDocTypeCode,
 									string sOperationTypeID,
 									string sCPName)
 		{
@@ -179,14 +177,14 @@ namespace gemoDream
 			this.sDocTypeCode = sDocTypeCode;
 			this.sOperationTypeID = sOperationTypeID;
 			string[] sDocs;
-			
-			if(sOperationTypeName.IndexOf(',')<0) 
+
+			if (sOperationTypeName.IndexOf(',') < 0)
 				this.Text += GetCaption("Document Type: " + sOperationTypeName, " SKU: " + sCPName);
 			else
 			{
 				sDocs = sOperationTypeName.Split(',');
 				sOperationTypeName = sDocs[1].Trim();
-                this.Text += GetCaption("Document Type: " + sDocs[1].Trim(), " SKU: " + sCPName);
+				this.Text += GetCaption("Document Type: " + sDocs[1].Trim(), " SKU: " + sCPName);
 			}
 			this.sItemTypeID = sItemTypeID;
 			this.sPath2Picture = sPath2Picture;
@@ -205,71 +203,71 @@ namespace gemoDream
 			switch (iAccessLevel)
 			{
 				case 1:
-				{
-					this.cbDocuments.Enabled = false;
-					this.lbCorelFiles.Enabled = false;
-					this.ptItemStructure.Enabled = false;
-					this.rbSlash.Enabled = false;
-					this.rbX.Enabled = false;
-					this.rbMult.Enabled = false;
-					this.rbSpace.Enabled = false;
-					this.rbSpace2.Enabled = false;
-					this.rbSpace3.Enabled = false;
-					this.rbSpace4.Enabled = false;
-					this.cbLanguage.Enabled = false;
-					this.cbUseDate.Enabled = false;
-					this.cbUseVVN.Enabled = false;
-					this.rbReportNumber.Enabled = false;
-					this.rbFixedText.Enabled = false;
-					this.tbFixedText.Enabled = false;
-					this.lbDefDocTitles.Enabled = false;
-					this.lbMeasures.Enabled = false;
-					this.dataGrid.Enabled = false;
-					this.btnAddLine.Enabled = false;
-					this.btnInsertLine.Enabled = false;
-					this.btnDeleteLine.Enabled = false;
-					this.btnMoveUp.Enabled = false;
-					this.btnMoveDown.Enabled = false;
-					this.btnView.Enabled = false;
-					this.btnClear.Enabled = false;
-					this.btnSaveWithName.Enabled = false;
-					this.btnUpdate.Enabled = false;
-					this.btnAttach.Enabled = false;
-					break;
-				}
+					{
+						this.cbDocuments.Enabled = false;
+						this.lbCorelFiles.Enabled = false;
+						this.ptItemStructure.Enabled = false;
+						this.rbSlash.Enabled = false;
+						this.rbX.Enabled = false;
+						this.rbMult.Enabled = false;
+						this.rbSpace.Enabled = false;
+						this.rbSpace2.Enabled = false;
+						this.rbSpace3.Enabled = false;
+						this.rbSpace4.Enabled = false;
+						this.cbLanguage.Enabled = false;
+						this.cbUseDate.Enabled = false;
+						this.cbUseVVN.Enabled = false;
+						this.rbReportNumber.Enabled = false;
+						this.rbFixedText.Enabled = false;
+						this.tbFixedText.Enabled = false;
+						this.lbDefDocTitles.Enabled = false;
+						this.lbMeasures.Enabled = false;
+						this.dataGrid.Enabled = false;
+						this.btnAddLine.Enabled = false;
+						this.btnInsertLine.Enabled = false;
+						this.btnDeleteLine.Enabled = false;
+						this.btnMoveUp.Enabled = false;
+						this.btnMoveDown.Enabled = false;
+						this.btnView.Enabled = false;
+						this.btnClear.Enabled = false;
+						this.btnSaveWithName.Enabled = false;
+						this.btnUpdate.Enabled = false;
+						this.btnAttach.Enabled = false;
+						break;
+					}
 				case 2:
-				{
-					//this.cbDocuments.Enabled = false;
-					this.lbCorelFiles.Enabled = false;
-					//this.ptItemStructure.Enabled = false;
-					this.rbSlash.Enabled = false;
-					this.rbX.Enabled = false;
-					this.rbMult.Enabled = false;
-					this.rbSpace.Enabled = false;
-					this.rbSpace2.Enabled = false;
-					this.rbSpace3.Enabled = false;
-					this.rbSpace4.Enabled = false;
-					this.cbLanguage.Enabled = false;
-					this.cbUseDate.Enabled = false;
-					this.cbUseVVN.Enabled = false;
-					this.rbReportNumber.Enabled = false;
-					this.rbFixedText.Enabled = false;
-					this.tbFixedText.Enabled = false;
-					this.lbDefDocTitles.Enabled = false;
-					this.lbMeasures.Enabled = false;
-					this.dataGrid.Enabled = false;
-					this.btnAddLine.Enabled = false;
-					this.btnInsertLine.Enabled = false;
-					this.btnDeleteLine.Enabled = false;
-					this.btnMoveUp.Enabled = false;
-					this.btnMoveDown.Enabled = false;
-					this.btnView.Enabled = false;
-					this.btnClear.Enabled = false;
-					this.btnSaveWithName.Enabled = false;
-					this.btnUpdate.Enabled = false;
-					this.btnAttach.Enabled = false;
-					break;
-				}
+					{
+						//this.cbDocuments.Enabled = false;
+						this.lbCorelFiles.Enabled = false;
+						//this.ptItemStructure.Enabled = false;
+						this.rbSlash.Enabled = false;
+						this.rbX.Enabled = false;
+						this.rbMult.Enabled = false;
+						this.rbSpace.Enabled = false;
+						this.rbSpace2.Enabled = false;
+						this.rbSpace3.Enabled = false;
+						this.rbSpace4.Enabled = false;
+						this.cbLanguage.Enabled = false;
+						this.cbUseDate.Enabled = false;
+						this.cbUseVVN.Enabled = false;
+						this.rbReportNumber.Enabled = false;
+						this.rbFixedText.Enabled = false;
+						this.tbFixedText.Enabled = false;
+						this.lbDefDocTitles.Enabled = false;
+						this.lbMeasures.Enabled = false;
+						this.dataGrid.Enabled = false;
+						this.btnAddLine.Enabled = false;
+						this.btnInsertLine.Enabled = false;
+						this.btnDeleteLine.Enabled = false;
+						this.btnMoveUp.Enabled = false;
+						this.btnMoveDown.Enabled = false;
+						this.btnView.Enabled = false;
+						this.btnClear.Enabled = false;
+						this.btnSaveWithName.Enabled = false;
+						this.btnUpdate.Enabled = false;
+						this.btnAttach.Enabled = false;
+						break;
+					}
 			}
 		}
 
@@ -296,10 +294,10 @@ namespace gemoDream
 			InitCorelFiles(sReportName);
 			InitMeasures();//Procedure dbo.spGetMeasuresWithAdditional
 			InitPartTree(this.sItemTypeID);//Procedures dbo.spGetMeasuresByItemType, dbo.spGetPartsByItemType
-			
+
 			InitItemPicture(sPath2Picture);
 			string sDocumentLanguageID = "0";
-			if(this.cbLanguage.SelectedValue != null)
+			if (this.cbLanguage.SelectedValue != null)
 				sDocumentLanguageID = this.cbLanguage.SelectedValue.ToString();
 			InitDefDocTitles(sDocumentLanguageID);//Procedure dbo.spGetDefaultDocumentTitle
 			InitTitlesValues();
@@ -315,7 +313,7 @@ namespace gemoDream
 				}
 			}
 		}
-	
+
 		private void InitImpExInfo()
 		{
 			DataSet dsImpEx = Service.GetImpExpInfo(sCPOfficeID);
@@ -329,7 +327,7 @@ namespace gemoDream
 				this.cbFTPExport.ValueMember = "ExportID_nOrder";
 				this.cbExportFormat.DataSource = dsImpEx.Tables[2];
 				this.cbExportFormat.DisplayMember = "Format";
-				this.cbExportFormat.ValueMember =  "FormatID";
+				this.cbExportFormat.ValueMember = "FormatID";
 			}
 		}
 		private DataSet InitDocuments()
@@ -346,18 +344,18 @@ namespace gemoDream
 				newRow["DocumentID_OperationTypeOfficeID_OperationTypeID"] = DBNull.Value;
 				//newRow["DocumentID"] = DBNull.Value;
 				dvDocOperations.Table.Rows.Add(newRow);
-				
+
 				this.IsLoadDocuments = true;
 				this.cbDocuments.DataSource = dvDocOperations;
 				this.cbDocuments.ValueMember = "DocumentID_OperationTypeOfficeID_OperationTypeID";
 				this.cbDocuments.DisplayMember = "DocumentName";
 
-				if(this.sOperationTypeID.IndexOf('_') >0)
+				if (this.sOperationTypeID.IndexOf('_') > 0)
 				{
 					sOperationTypeID = sOperationTypeID.Substring(sOperationTypeID.IndexOf('_') + 1).Trim();
 					DataView dvOperationTypeID = new DataView(dsDocOperations.Tables[0]);
 					dvOperationTypeID.RowFilter = "OperationTypeID = '" + sOperationTypeID + "'";
-					if(dvOperationTypeID.Count > 0) 		this.cbDocuments.SelectedValue = dvOperationTypeID[0]["DocumentID_OperationTypeOfficeID_OperationTypeID"];
+					if (dvOperationTypeID.Count > 0) this.cbDocuments.SelectedValue = dvOperationTypeID[0]["DocumentID_OperationTypeOfficeID_OperationTypeID"];
 				}
 				//this.cbExportFormat.SelectedValue = 
 
@@ -407,21 +405,21 @@ namespace gemoDream
 			for (int i = 0; i < lstFileNames.Count; i++)
 			{
 				FileName fileName = (FileName)lstFileNames[i];
-                if (fileName.Text.ToUpper().Equals(sReportName.ToUpper()))
-                {
-                    sReportNameOriginal = fileName.Text;
-                    //break;
-                }
+				if (fileName.Text.ToUpper().Equals(sReportName.ToUpper()))
+				{
+					sReportNameOriginal = fileName.Text;
+					//break;
+				}
 			}
 
 			//If file doesn't exist showing the filename with (Doesn't exist!) mark
 			//By _3ter on 2006.06.07
 			if (sReportNameOriginal == null && lbCorelFiles.FindString(sReportName + " (Doesn't exist!)", -1) < 0)
-			{				
+			{
 				lstFileNames.Add(new FileName(sReportName + " (Doesn't exist!)"));
 				sReportNameOriginal = sReportName + " (Doesn't exist!)";
 				lbCorelFiles.DataSource = null;
-				lbCorelFiles.DataSource = lstFileNames;				
+				lbCorelFiles.DataSource = lstFileNames;
 			}
 
 			return sReportNameOriginal;
@@ -437,19 +435,19 @@ namespace gemoDream
 				{
 					string sMsg = String.Format("Can't load corel files. Directory {0} is not exists or access denied. Please, check the directory.",
 						sCorelFilesPath);
-						
-					MessageBox.Show(this, sMsg, "Directory isn't exists", 
+
+					MessageBox.Show(this, sMsg, "Directory isn't exists",
 						MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return ;
+					return;
 				}
 				if (!Directory.Exists(sReportFilePath))
 				{
 					string sMsg = String.Format("Can't load corel files. Directory {0} is not exists or access denied. Please, check the directory.",
 						sReportFilePath);
-						
-					MessageBox.Show(this, sMsg, "Directory isn't exists", 
+
+					MessageBox.Show(this, sMsg, "Directory isn't exists",
 						MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return ;
+					return;
 				}
 
 				ArrayList lstFileNames = Service.GetFileList(sCorelFilesPath);
@@ -478,7 +476,7 @@ namespace gemoDream
 			ArrayList fileNames = new ArrayList();
 			foreach (FileInfo fiTemp in fi)
 			{
-				if(fiTemp.Extension.Equals(".rpt"))
+				if (fiTemp.Extension.Equals(".rpt"))
 				{
 					fileNames.Add(new FileName(fiTemp.Name));
 				}
@@ -491,17 +489,18 @@ namespace gemoDream
 		{
 			dsParts = new DataSet();
 			DataTable dtMeasureType = Service.GetMeasuresByItemType(sItemTypeID);//tblName : MeasuresByItemType / 1 - empty	/procedure spGetMeasuresByItemType
-			dtMeasureType.TableName = "Measures";	
+			dtMeasureType.TableName = "Measures";
 
-			dsParts.Tables.Add(dtMeasureType);		//tblName : Measures
+			dsParts.Tables.Add(dtMeasureType);      //tblName : Measures
 
 			dsParts.Tables.Add(Service.GetParts(sItemTypeID));  //tblName : Parts	/Procedure dbo.spGetPartsByItemType
-			dsParts.Tables.Add(Service.GetPartsStruct());	//tblName : SetParts
+			dsParts.Tables.Add(Service.GetPartsStruct());   //tblName : SetParts
 
 			//gemoDream.Service.debug_DiaspalyDataSet(dsParts);
-				
+
 			this.ptItemStructure.Initialize(dsParts.Tables["Parts"]);
 			this.ptItemStructure.ExpandTree();
+
 			//this.ptItemStructure.SelectedNode = this.ptItemStructure.tvPartTree.TopNode;
 		}
 
@@ -534,60 +533,60 @@ namespace gemoDream
 			DataSet dsMeasures = Service.GetMeasuresWithAdditional();
 
 #if DEBUG
-            // For debugging only			
-            string filename = Service.sTempDir + "/myXmlDocMeasureFromDataSet.xml";
-            if (File.Exists(filename)) File.Delete(filename);
-            // Create the FileStream to write with.
-            System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
-            // Create an XmlTextWriter with the fileStream.
-            System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
-            // Write to the file with the WriteXml method.
-            dsMeasures.WriteXml(myXmlWriter);
-            myXmlWriter.Close();
-            // End of debugging part
+			// For debugging only			
+			string filename = Service.sTempDir + "/myXmlDocMeasureFromDataSet.xml";
+			if (File.Exists(filename)) File.Delete(filename);
+			// Create the FileStream to write with.
+			System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+			// Create an XmlTextWriter with the fileStream.
+			System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+			// Write to the file with the WriteXml method.
+			dsMeasures.WriteXml(myXmlWriter);
+			myXmlWriter.Close();
+			// End of debugging part
 #endif
 
 
-            //gemoDream.Service.debug_DiaspalyDataSet(dsMeasures);
-            //			DataRow row = dsMeasures.Tables[0].NewRow();
-            //			row["PartTypeID"] = "-1";
-            //			row["MeasureID"] = "-1";
-            //			row["MeasureTitle"] = "ReportNumber";
-            //			dsMeasures.Tables[0].Rows.Add(row);
-            //
-            //			row = dsMeasures.Tables[0].NewRow();
-            //			row["PartTypeID"] = "-1";
-            //			row["MeasureID"] = "-2";
-            //			row["MeasureTitle"] = "FullShapeName";
-            //			dsMeasures.Tables[0].Rows.Add(row);
+			//gemoDream.Service.debug_DiaspalyDataSet(dsMeasures);
+			//			DataRow row = dsMeasures.Tables[0].NewRow();
+			//			row["PartTypeID"] = "-1";
+			//			row["MeasureID"] = "-1";
+			//			row["MeasureTitle"] = "ReportNumber";
+			//			dsMeasures.Tables[0].Rows.Add(row);
+			//
+			//			row = dsMeasures.Tables[0].NewRow();
+			//			row["PartTypeID"] = "-1";
+			//			row["MeasureID"] = "-2";
+			//			row["MeasureTitle"] = "FullShapeName";
+			//			dsMeasures.Tables[0].Rows.Add(row);
 
 
-            dvMeasures = new DataView(dsMeasures.Tables[0]);
+			dvMeasures = new DataView(dsMeasures.Tables[0]);
 			dvMeasures.RowFilter = "1=0";
 			dvMeasures.Sort = "MeasureTitle";
 #if DEBUG
-            // For debugging only			
-            filename = Service.sTempDir + "/myXmlDocMeasurefromView.xml";
-            if (File.Exists(filename)) File.Delete(filename);
-            // Create the FileStream to write with.
-            myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
-            // Create an XmlTextWriter with the fileStream.
-            myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
-            // Write to the file with the WriteXml method.
-            dvMeasures.Table.DataSet.WriteXml(myXmlWriter);
-            myXmlWriter.Close();
-            // End of debugging part
+			// For debugging only			
+			filename = Service.sTempDir + "/myXmlDocMeasurefromView.xml";
+			if (File.Exists(filename)) File.Delete(filename);
+			// Create the FileStream to write with.
+			myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+			// Create an XmlTextWriter with the fileStream.
+			myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+			// Write to the file with the WriteXml method.
+			dvMeasures.Table.DataSet.WriteXml(myXmlWriter);
+			myXmlWriter.Close();
+			// End of debugging part
 #endif
 
-            //			DataRowView row1 = dvMeasures.AddNew();
-            //			row1["MeasureID"] = "-1";
-            //			row1["MeasureTitle"] = "ReportNumber";
+			//			DataRowView row1 = dvMeasures.AddNew();
+			//			row1["MeasureID"] = "-1";
+			//			row1["MeasureTitle"] = "ReportNumber";
 
-            //			DataRowView row2 = dvMeasures.AddNew();
-            //			row2["MeasureID"] = "-2";
-            //			row2["MeasureTitle"] = "FullShapeName";
+			//			DataRowView row2 = dvMeasures.AddNew();
+			//			row2["MeasureID"] = "-2";
+			//			row2["MeasureTitle"] = "FullShapeName";
 
-            this.lbMeasures.DataSource = dvMeasures;
+			this.lbMeasures.DataSource = dvMeasures;
 			this.lbMeasures.ValueMember = "MeasureID";
 			this.lbMeasures.DisplayMember = "MeasureTitle";
 		}
@@ -597,16 +596,16 @@ namespace gemoDream
 			string pathToShape = Client.GetOfficeDirPath("iconDir") + sPath2Picture;
 			if (File.Exists(pathToShape))
 			{
-				Image im =  System.Drawing.Image.FromFile(pathToShape);
-				if(im != null)
-				this.pbItemPicture.Image = im;
+				Image im = System.Drawing.Image.FromFile(pathToShape);
+				if (im != null)
+					this.pbItemPicture.Image = im;
 				Service.DrawAdjustShapeImage(this.pbItemPicture, im);
 			}
-			
-		
-				//MessageBox.Show("There is no picture in specified location",
-				//	"Picture not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-		
+
+
+			//MessageBox.Show("There is no picture in specified location",
+			//	"Picture not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
 		}
 
 		private void InitDefDocTitles(string sDocumentLanguageID)
@@ -614,7 +613,7 @@ namespace gemoDream
 			DataSet dsDefDocTitles = Service.GetDefDocTitles(sDocumentLanguageID);
 			DataView dvDefDocTitles = new DataView(dsDefDocTitles.Tables[0]);
 			//this.dvDefDocTitles.RowFilter = "DocumentLanguageID = " + sDocumentLanguageID;
-			
+
 			this.lbDefDocTitles.DataSource = dvDefDocTitles;
 			this.lbDefDocTitles.ValueMember = "TitleCode";
 			this.lbDefDocTitles.DisplayMember = "TitleName";
@@ -622,7 +621,7 @@ namespace gemoDream
 
 		private void InitTitlesValuesDataGrid(DataSet dsValues)
 		{
-			string[] columnNames = new string[] 
+			string[] columnNames = new string[]
 				{
 					"Title", "Value", "Unit"
 				};
@@ -647,7 +646,7 @@ namespace gemoDream
 				tbColumn.HeaderText = headerText[i];
 				tbColumn.Width = columnWidth[i];
 
-				tableStyle.GridColumnStyles.Add(tbColumn);		
+				tableStyle.GridColumnStyles.Add(tbColumn);
 				tableStyle.AllowSorting = false;
 			}
 
@@ -673,16 +672,16 @@ namespace gemoDream
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
+		protected override void Dispose(bool disposing)
 		{
-			if( disposing )
+			if (disposing)
 			{
-				if (components != null) 
+				if (components != null)
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -901,7 +900,7 @@ namespace gemoDream
 			this.cbDocuments.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbDocuments.Location = new System.Drawing.Point(75, 4);
 			this.cbDocuments.Name = "cbDocuments";
-			this.cbDocuments.Size = new System.Drawing.Size(230, 21);
+			this.cbDocuments.Size = new System.Drawing.Size(269, 21);
 			this.cbDocuments.TabIndex = 1;
 			this.cbDocuments.SelectedValueChanged += new System.EventHandler(this.cbDocuments_SelectedValueChanged);
 			// 
@@ -1026,7 +1025,7 @@ namespace gemoDream
 			// pbItemPicture
 			// 
 			this.pbItemPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbItemPicture.BackgroundImage")));
-			this.pbItemPicture.Location = new System.Drawing.Point(194, 57);
+			this.pbItemPicture.Location = new System.Drawing.Point(254, 58);
 			this.pbItemPicture.Name = "pbItemPicture";
 			this.pbItemPicture.Size = new System.Drawing.Size(111, 107);
 			this.pbItemPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1054,7 +1053,7 @@ namespace gemoDream
 			// 
 			// lbCorelFiles
 			// 
-			this.lbCorelFiles.Location = new System.Drawing.Point(311, 10);
+			this.lbCorelFiles.Location = new System.Drawing.Point(394, 10);
 			this.lbCorelFiles.Name = "lbCorelFiles";
 			this.lbCorelFiles.Size = new System.Drawing.Size(269, 225);
 			this.lbCorelFiles.TabIndex = 48;
@@ -1126,7 +1125,7 @@ namespace gemoDream
 			// 
 			this.ptItemStructure.Location = new System.Drawing.Point(5, 31);
 			this.ptItemStructure.Name = "ptItemStructure";
-			this.ptItemStructure.Size = new System.Drawing.Size(190, 203);
+			this.ptItemStructure.Size = new System.Drawing.Size(243, 203);
 			this.ptItemStructure.TabIndex = 7;
 			this.ptItemStructure.Changed += new System.EventHandler(this.ptItemStructure_Changed);
 			// 
@@ -1179,7 +1178,7 @@ namespace gemoDream
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 
-        }
+		}
 		#endregion
 
 		/// <summary>
@@ -1301,7 +1300,7 @@ namespace gemoDream
 			;
 		}
 
-		
+
 		private int GetCurrentRowIndex()
 		{
 			int i = 0;
@@ -1340,7 +1339,7 @@ namespace gemoDream
 				string sOld = this.ds.Tables[0].Rows[iCurrent]["Value"].ToString();
 				DataRowView row = (DataRowView)this.lbMeasures.SelectedItem;
 				string sMeasure = (string)row["MeasureTitle"];
-				
+
 				string sPartType = this.ptItemStructure.tvPartTree.SelectedNode.Text;
 				string sNewPart = null;
 				if (sOld.Length == 0)
@@ -1412,7 +1411,7 @@ namespace gemoDream
 
 				if (File.Exists(sLink))
 					File.Delete(sLink);
-			
+
 				string sItemContainerName = Service.GetItemContainerName(this.sItemTypeID);
 
 				string sPicture = this.sPath2Picture;
@@ -1445,7 +1444,7 @@ namespace gemoDream
 			}
 			//pr.WaitForExit();
 			//File.Delete(sLink);
-			
+
 		}
 
 		private void Clear()
@@ -1471,7 +1470,7 @@ namespace gemoDream
 			Clear();
 		}
 
-		private DocumentExistance IsDocumentExist(string sDocumentName, out string sID, 
+		private DocumentExistance IsDocumentExist(string sDocumentName, out string sID,
 			string sDocTypeCode)
 		{
 			DataView dvDocuments = (DataView)this.cbDocuments.DataSource;
@@ -1507,14 +1506,14 @@ namespace gemoDream
 				string sFTPimport = this.cbFTPimport.SelectedValue.ToString();
 				string[] sExport = sFTPExport.Split('_');
 				string[] sImport = sFTPimport.Split('_');
-				Service.UpdateDocument(sDocumentID, 
-										sDocumentName, 
-										sBarCodeFixedText, 
-										bUseDate, 
-										bUseVVN, 
-										sCorelFile, 
-										sExport[0], 
-										sImport[0], 
+				Service.UpdateDocument(sDocumentID,
+										sDocumentName,
+										sBarCodeFixedText,
+										bUseDate,
+										bUseVVN,
+										sCorelFile,
+										sExport[0],
+										sImport[0],
 										this.cbExportFormat.SelectedValue.ToString());
 
 				//check filds Title and Value
@@ -1537,11 +1536,11 @@ namespace gemoDream
 				string sTitle;
 				string sValue;
 				string sUnit;
-				foreach(DataRow row in ds.Tables[0].Rows)
+				foreach (DataRow row in ds.Tables[0].Rows)
 				{
 					sTitle = row["Title"].ToString();
 					sValue = row["Value"].ToString();
-					sUnit  = row["Unit"].ToString();
+					sUnit = row["Unit"].ToString();
 					Service.SaveDocumentValue(sDocumentID, sTitle, sValue, sUnit);
 				}
 				return 0;
@@ -1574,7 +1573,7 @@ namespace gemoDream
 					{
 						string[] sIDs = sID.Split('_');
 						string sDocumentID = sIDs[0];
-						DialogResult dr = MessageBox.Show(this, 
+						DialogResult dr = MessageBox.Show(this,
 							"Document with this name already exists. Are you sure you want to override it?",
 							"Confirm update", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 						if (dr == DialogResult.Yes)
@@ -1582,7 +1581,7 @@ namespace gemoDream
 							//if title or value fields was empty 
 							if (UpdateDoc(sDocumentID, sDocumentName) == -1)
 							{
-								MessageBox.Show(this, "Document wasn't updated.", 
+								MessageBox.Show(this, "Document wasn't updated.",
 									"abort update", MessageBoxButtons.OK, MessageBoxIcon.Error);
 								return;
 							}
@@ -1605,16 +1604,16 @@ namespace gemoDream
 								"Confirm creation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 							if (dr == DialogResult.No)
 							{
-								return ;
+								return;
 							}
 						}
 						string s = SaveDoc(sDocumentName, sNewDocTypeCode);
-						if(s.Equals("-1"))
+						if (s.Equals("-1"))
 						{
 							return;
 						}
 						if (this.sDocTypeCode.Equals(sNewDocTypeCode))
-							//if (this.docTypeCode == newDocTypeCode)
+						//if (this.docTypeCode == newDocTypeCode)
 						{
 							string[] sIDs = s.Split('_');
 							this.sDocumentID = null;
@@ -1709,7 +1708,7 @@ namespace gemoDream
 			//ds
 			//			dsIn.Tables.Add("DocumentTypeOf");
 			//			DataSet dsOut = gemoDream.Service.ProxyGenericGet(dsIn);
-			
+
 			//			foreach (DataColumn column in dsOut.Tables[0].Columns)
 			//			{
 			//				MessageBox.Show(column.ColumnName + " : " + column.DataType.ToString());
@@ -1732,25 +1731,25 @@ namespace gemoDream
 
 			DataTable table = dsOut.Tables[0];
 			table.TableName = "Document";
-			table.Rows.Add(new object[] {});
-			table.Rows[0]["DocumentName"]			= sDocumentName;
+			table.Rows.Add(new object[] { });
+			table.Rows[0]["DocumentName"] = sDocumentName;
 			//table.Rows[0]["OperationTypeName"]		= sDocumentName;
-			table.Rows[0]["BarCodeFixedText"]		= sBarCodeFixedText;
-			table.Rows[0]["UseDate"]				= bUseDate;
-			table.Rows[0]["UseVirtualVaultNumber"]	= bUseVVN;
-			table.Rows[0]["ItemTypeID"]				= sItemTypeID;
-			table.Rows[0]["OperationTypeName"]		= sOperationTypeName;
-			table.Rows[0]["OperationChar"]			= "H";
+			table.Rows[0]["BarCodeFixedText"] = sBarCodeFixedText;
+			table.Rows[0]["UseDate"] = bUseDate;
+			table.Rows[0]["UseVirtualVaultNumber"] = bUseVVN;
+			table.Rows[0]["ItemTypeID"] = sItemTypeID;
+			table.Rows[0]["OperationTypeName"] = sOperationTypeName;
+			table.Rows[0]["OperationChar"] = "H";
 			//string sDocTypeCode = GetDocTypeCodeString(docTypeCode);
-			table.Rows[0]["DocumentTypeCode"]		=  sDocTypeCode;
-			table.Rows[0]["CorelFile"]				=  sCorelFile;
+			table.Rows[0]["DocumentTypeCode"] = sDocTypeCode;
+			table.Rows[0]["CorelFile"] = sCorelFile;
 			string sFTPExport = this.cbFTPExport.SelectedValue.ToString();
 			string sFTPimport = this.cbFTPimport.SelectedValue.ToString();
 			string[] sExport = sFTPExport.Split('_');
 			string[] sImport = sFTPimport.Split('_');
-			table.Rows[0]["ExportTypeID"]			= sExport[0];
-			table.Rows[0]["ImportTypeID"]			= sImport[0];
-			table.Rows[0]["FormatTypeID"]			= this.cbExportFormat.SelectedValue;
+			table.Rows[0]["ExportTypeID"] = sExport[0];
+			table.Rows[0]["ImportTypeID"] = sImport[0];
+			table.Rows[0]["FormatTypeID"] = this.cbExportFormat.SelectedValue;
 
 			dsOut = gemoDream.Service.ProxyGenericSet(dsOut, "Set");
 			//gemoDream.Service.debug_DiaspalyDataSet(dsOut);
@@ -1883,11 +1882,11 @@ namespace gemoDream
 				string sTitle;
 				string sValue;
 				string sUnit;
-				foreach(DataRow row in ds.Tables[0].Rows)
+				foreach (DataRow row in ds.Tables[0].Rows)
 				{
 					sTitle = row["Title"].ToString();
 					sValue = row["Value"].ToString();
-					sUnit  = row["Unit"].ToString();
+					sUnit = row["Unit"].ToString();
 					Service.SaveDocumentValue(sDocumentID, sTitle, sValue, sUnit);
 				}
 				//return sDocumentID;
@@ -1941,28 +1940,28 @@ namespace gemoDream
 
 		private string GetNotVisibleMeasures(string sPartID)
 		{
-            return null;  // sasha
-            //if (dsNotVCCM != null)
-   //         {
-			//	string sFilter = "NotVisibleInCCM = 1 AND PartID = " + sPartID;
-			//	//gemoDream.Service.debug_DiaspalyDataSet(this.dsNotVCCM);
-			//	DataRow[] rows = this.dsNotVCCM.Tables[0].Select(sFilter);
-			//	string sNotVisibleMeasures = null;
-			//	foreach (DataRow row in rows)
-			//	{
-			//		if (sNotVisibleMeasures != null)
-			//			sNotVisibleMeasures += ",";
-			//		sNotVisibleMeasures += row["MeasureID"].ToString();
-			//	}
-			//	if (sNotVisibleMeasures != null)
-			//		sNotVisibleMeasures += ",";
-			//	sNotVisibleMeasures += "8";
-			//	return sNotVisibleMeasures;
-			//}
-			//else
-			//{
-			//	return null;
-			//}
+			return null;  // sasha
+						  //if (dsNotVCCM != null)
+						  //         {
+						  //	string sFilter = "NotVisibleInCCM = 1 AND PartID = " + sPartID;
+						  //	//gemoDream.Service.debug_DiaspalyDataSet(this.dsNotVCCM);
+						  //	DataRow[] rows = this.dsNotVCCM.Tables[0].Select(sFilter);
+						  //	string sNotVisibleMeasures = null;
+						  //	foreach (DataRow row in rows)
+						  //	{
+						  //		if (sNotVisibleMeasures != null)
+						  //			sNotVisibleMeasures += ",";
+						  //		sNotVisibleMeasures += row["MeasureID"].ToString();
+						  //	}
+						  //	if (sNotVisibleMeasures != null)
+						  //		sNotVisibleMeasures += ",";
+						  //	sNotVisibleMeasures += "8";
+						  //	return sNotVisibleMeasures;
+						  //}
+						  //else
+						  //{
+						  //	return null;
+						  //}
 		}
 
 		private void ptItemStructure_Changed(object sender, System.EventArgs e)
@@ -2021,14 +2020,14 @@ namespace gemoDream
 			return this.sDocTypeCode;
 		}
 
-		public static string AddOperation(	int iAccessLevel, 
-											DataSet dsNotVCCM, 
+		public static string AddOperation(int iAccessLevel,
+											DataSet dsNotVCCM,
 											ArrayList newOperationsList,
-											string CPOfficeID_CPID, 
-											IWin32Window parent, 
-											ComboBox comboBox, 
-											string sItemTypeID, 
-											string sPath2Picture, 
+											string CPOfficeID_CPID,
+											IWin32Window parent,
+											ComboBox comboBox,
+											string sItemTypeID,
+											string sPath2Picture,
 											string sOperationTypeName,
 											string sDocTypeCode,
 											string sOperationTypeID,
@@ -2043,30 +2042,30 @@ namespace gemoDream
 				string[] sCPOfficeID_CPID = CPOfficeID_CPID.Split(separator);
 				sCPOfficeID = sCPOfficeID_CPID[0];
 				sCPID = sCPOfficeID_CPID[1];
-				defDocForm = new DefineDocumentForm(iAccessLevel, 
+				defDocForm = new DefineDocumentForm(iAccessLevel,
 													dsNotVCCM,
-													sItemTypeID, 
-													sPath2Picture, 
-													sOperationTypeName, 
-													sCPOfficeID, 
-													sCPID, 
-													newOperationsList, 
-													sDocTypeCode, 
-													sOperationTypeID, 
+													sItemTypeID,
+													sPath2Picture,
+													sOperationTypeName,
+													sCPOfficeID,
+													sCPID,
+													newOperationsList,
+													sDocTypeCode,
+													sOperationTypeID,
 													sCPName);
 			}
 			else
 			{
-				defDocForm = new DefineDocumentForm(iAccessLevel, 
+				defDocForm = new DefineDocumentForm(iAccessLevel,
 													dsNotVCCM,
-													sItemTypeID, 
-													sPath2Picture, 
-													sOperationTypeName, 
-													sCPOfficeID, 
-													sCPID, 
-													newOperationsList, 
-													sDocTypeCode, 
-													sOperationTypeID, 
+													sItemTypeID,
+													sPath2Picture,
+													sOperationTypeName,
+													sCPOfficeID,
+													sCPID,
+													newOperationsList,
+													sDocTypeCode,
+													sOperationTypeID,
 													sCPName);
 			}
 
@@ -2110,7 +2109,7 @@ namespace gemoDream
 				//				string[] sOperationTypeOfficeID_OperationTypeIDs = sOperationTypeOfficeID_OperationTypeID.Split(separator);
 				//				string sOperationTypeOfficeID = sOperationTypeOfficeID_OperationTypeIDs[1];
 				//				string sOperationTypeID = sOperationTypeOfficeID_OperationTypeIDs[0];
-			
+
 				//              DefineDocumentForm.NewOperationData nod = new DefineDocumentForm.NewOperationData();
 				//				nod.sDocumentID = sDocumentID;
 				//				nod.sCPID = sCPID;
@@ -2222,8 +2221,8 @@ namespace gemoDream
 
 		private void pbItemPicture_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
 		{
-			if(pbItemPicture.Image==null) return;
-			if(pbItemPicture.Image.Size.Height > pbItemPicture.Size.Height || pbItemPicture.Image.Size.Width > pbItemPicture.Size.Width)
+			if (pbItemPicture.Image == null) return;
+			if (pbItemPicture.Image.Size.Height > pbItemPicture.Size.Height || pbItemPicture.Image.Size.Width > pbItemPicture.Size.Width)
 			{
 				pbItemPicture.SizeMode = PictureBoxSizeMode.StretchImage;
 			}
@@ -2277,7 +2276,7 @@ namespace gemoDream
 				{
 					MessageBox.Show(this, "Document to attach isn't selected. Please, select any document first.",
 						"Document isn't selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return ;
+					return;
 				}
 
 				string[] sIDs = s.Split('_');
@@ -2288,19 +2287,19 @@ namespace gemoDream
 				{
 					if (Service.IsDocumentAttached1(sDocumentID, sCPID, sCPOfficeID))//Procedure dbo.spGetDocument_CP1
 
-//					if (Service.IsDocumentAttached(sDocumentID, sCPID, sCPOfficeID))
+					//					if (Service.IsDocumentAttached(sDocumentID, sCPID, sCPOfficeID))
 					{
 						MessageBox.Show(this, "This document is already attached. Please, choose another document.",
 							"Document already attached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						this.sDocumentID = null;
 						this.sDocumentName = sDocumentName;
 						this.sOperationTypeOfficeID_OperationTypeID = null;
-						return ;
+						return;
 					}
 					if (IsUpdateImPExpInfo)
-						{
-							UpdateDoc(sIDs[0], sDocumentName);
-						}
+					{
+						UpdateDoc(sIDs[0], sDocumentName);
+					}
 					this.sDocumentID = AttachDoc(sDocumentID, sCPID, sCPOfficeID);//Procedure dbo.spSetDocument_CP
 				}
 				else
@@ -2313,11 +2312,11 @@ namespace gemoDream
 						this.sDocumentID = null;
 						this.sDocumentName = sDocumentName;
 						this.sOperationTypeOfficeID_OperationTypeID = null;
-						return ;
+						return;
 					}
 					else
 					{
-						
+
 						DefineDocumentForm.NewOperationData nod = new DefineDocumentForm.NewOperationData();
 						nod.sDocumentID = sDocumentID;
 						nod.sCPID = null;
@@ -2366,7 +2365,7 @@ namespace gemoDream
 				{
 					MessageBox.Show(this, "Can't update document. Please, select any document first.",
 						"Document isn't selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return ;
+					return;
 				}
 				string[] sIDs = sID.Split('_');
 				string sDocumentID = sIDs[0];
@@ -2375,7 +2374,7 @@ namespace gemoDream
 				//if title or value fields was empty 
 				if (UpdateDoc(sDocumentID, sDocumentName) == -1)
 				{
-					MessageBox.Show(this, "Document wasn't updated.", 
+					MessageBox.Show(this, "Document wasn't updated.",
 						"abort update", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
@@ -2386,7 +2385,7 @@ namespace gemoDream
 				//				this.sDocumentID = sDocumentID;
 				//				this.sDocumentName = sDocumentName;
 				//				this.sOperationTypeOfficeID_OperationTypeID = sIDs[1] + "_" + sIDs[2];
-				MessageBox.Show(this, "Document was successfully updated.", 
+				MessageBox.Show(this, "Document was successfully updated.",
 					"Successful update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 				//this.InitDocuments();
@@ -2412,7 +2411,7 @@ namespace gemoDream
 
 		//private void label2_Click(object sender, System.EventArgs e)
 		//{
-		
+
 		//}
 
 		private void cbFTPimport_SelectedValueChanged(object sender, System.EventArgs e)

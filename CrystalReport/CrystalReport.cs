@@ -1771,7 +1771,6 @@ namespace CrystalReport
 				{
 					ErrorArray.Add("# " + sShortNumber[0] + ": " + asParts[0].ToString() + "." + asParts[1].ToString());
 				}
-             
             }
 
 			while (sBrackets.IndexOf("[") >= 0)
@@ -6338,182 +6337,219 @@ alex */
             string sDotNewBatch = "";
 
             ArrayList SheetToPrint = new ArrayList();
+			try
+			{
+				//DataSet for print
+				DataSet dsResults = new DataSet();
+				dsResults.Tables.Add("ItemDataFromOrderBatchItem");
+				dsResults.Tables[0].Columns.Add("GroupCode");
+				dsResults.Tables[0].Columns.Add("BatchCode");
+				dsResults.Tables[0].Columns.Add("ItemCode");
+				dsResults.Tables[0].Rows.Add(dsResults.Tables[0].NewRow());
 
-            //DataSet for print
-            DataSet dsResults = new DataSet();
-            dsResults.Tables.Add("ItemDataFromOrderBatchItem");
-            dsResults.Tables[0].Columns.Add("GroupCode");
-            dsResults.Tables[0].Columns.Add("BatchCode");
-            dsResults.Tables[0].Columns.Add("ItemCode");
-            dsResults.Tables[0].Rows.Add(dsResults.Tables[0].NewRow());
+				dsResults.Tables[0].Rows[0]["GroupCode"] = sGroupCode;
+				dsResults.Tables[0].Rows[0]["BatchCode"] = sBatchCode;
+				dsResults.Tables[0].Rows[0]["ItemCode"] = sItemCode;
 
-            dsResults.Tables[0].Rows[0]["GroupCode"] = sGroupCode;
-            dsResults.Tables[0].Rows[0]["BatchCode"] = sBatchCode;
-            dsResults.Tables[0].Rows[0]["ItemCode"] = sItemCode;
+				dsResults = Service.ProxyGenericGet(dsResults);
+				if (dsResults.Tables[0].Rows.Count == 0)
+				{
+					throw new Exception("Missing Data for # " + sGroupCode + "." + sBatchCode + "." + sItemCode);
+				}
 
-            dsResults = Service.ProxyGenericGet(dsResults);
-            if (dsResults.Tables[0].Rows.Count == 0)
-            {
-                throw new Exception("Missing Data for # " + sGroupCode + "." + sBatchCode + "." + sItemCode);
-            }
+				DataSet dsBlocked = new DataSet();
+				dsBlocked.Tables.Add("BatchBlockedParts1");
+				dsBlocked.Tables[0].Columns.Add("GroupCode");
+				dsBlocked.Tables[0].Columns.Add("BatchCode");
+				dsBlocked.Tables[0].Rows.Add(dsBlocked.Tables[0].NewRow());
+				dsBlocked.Tables[0].Rows[0]["GroupCode"] = sGroupCode;
+				dsBlocked.Tables[0].Rows[0]["BatchCode"] = sBatchCode;
+				dsBlocked = Service.ProxyGenericGet(dsBlocked);
+				ArrayList parts = new ArrayList();
+				
+				//if (drBlockedParts.Length > 0)
+				if (dsBlocked.Tables[2].Rows.Count > 0)
+				{
+					{
+						var myparts = dsBlocked.Tables[0].Rows[0]["FullPartName"].ToString().TrimStart(';').Split(';');
+						if (myparts.Length > 0)
+						{
+							parts.AddRange(myparts);
+							skipErrors = false;
+						}
+					}
+				}
+																						 
+					//get Measures for print from tblDocumentValues
+				DataRow[] drResults = dsResults.Tables[0].Select("PartName = 'Item Container'");
+				//            DataView dvItemData = new DataView(dsResults.Tables[0]);
+				//            dvItemData.RowFilter = "PartName = 'Item Container'";
 
-            //get Measures for print from tblDocumentValues
-            DataRow[] drResults = dsResults.Tables[0].Select("PartName = 'Item Container'");
-            //            DataView dvItemData = new DataView(dsResults.Tables[0]);
-            //            dvItemData.RowFilter = "PartName = 'Item Container'";
+				foreach (DataRow dr in drResults)
+				{
+					switch (dr["MeasureName"].ToString().Trim())
+					{
+						case "NewItemNumber":
+							{
+								sNewNumber = dr["ResultValue"].ToString().Trim();
+								break;
+							}
+						case "OldItemNumber":
+							{
+								sOldNumber = dr["ResultValue"].ToString().Trim();
+								break;
+							}
+						case "DotOldItemNumber":
+							{
+								sFullOldNumber = dr["ResultValue"].ToString().Trim();
+								break;
+							}
+						case "DotNewItemNumber":
+							{
+								sFullNewNumber = dr["ResultValue"].ToString().Trim();
+								break;
+							}
+						case "DotNewBatchNumber":
+							{
+								sDotNewBatch = dr["ResultValue"].ToString().Trim();
+								break;
+							}
+					}
+				}
 
-            foreach (DataRow dr in drResults)
-            {
-                switch (dr["MeasureName"].ToString().Trim())
-                {
-                    case "NewItemNumber":
-                        {
-                            sNewNumber = dr["ResultValue"].ToString().Trim();
-                            break;
-                        }
-                    case "OldItemNumber":
-                        {
-                            sOldNumber = dr["ResultValue"].ToString().Trim();
-                            break;
-                        }
-                    case "DotOldItemNumber":
-                        {
-                            sFullOldNumber = dr["ResultValue"].ToString().Trim();
-                            break;
-                        }
-                    case "DotNewItemNumber":
-                        {
-                            sFullNewNumber = dr["ResultValue"].ToString().Trim();
-                            break;
-                        }
-                    case "DotNewBatchNumber":
-                        {
-                            sDotNewBatch = dr["ResultValue"].ToString().Trim();
-                            break;
-                        }
-                }
-            }
+				//try
+				//{
+				DataSet dsDocsValue = gemoDream.Service.GetDocumentValues(drDoc["DocumentID"].ToString());//Procedure dbo.spGetDocumentValue
 
-            try
-            {
-                DataSet dsDocsValue = gemoDream.Service.GetDocumentValues(drDoc["DocumentID"].ToString());//Procedure dbo.spGetDocumentValue
+				ArrayList ErrorArray = new ArrayList();
+				foreach (DataRow row in dsDocsValue.Tables[0].Rows)
+				{
+					foreach (DataColumn dc in dsDocsValue.Tables[0].Columns)
+					{
+						if (dc.ColumnName == "Value" | dc.ColumnName == "Title")
+						{
+							String temp = "";
+							temp = GetMyValues(row[dc.ColumnName].ToString(), dsResults.Tables[0], sFullNewNumber + "/" + sFullOldNumber, ref ErrorArray).Trim();
+							if (temp.Trim() == "") temp = "";
+							temp = temp.Replace("VERY GOOD", "VG").Replace("IDEAL", "ID").Replace("GOOD", "G").Replace("EXCELLENT", "EX").Replace("FAIR", "F").Replace("N/A", "NA");
+							temp = temp.Replace("Very Good", "VG").Replace("Ideal", "ID").Replace("Good", "G").Replace("Excellent", "EX").Replace("Fair", "F");
+							temp = temp + " " + row["Unit"].ToString();
+							temp = temp.Replace(" %", "%").Replace(" " + Convert.ToChar(176).ToString(), Convert.ToChar(176).ToString());
+							temp = temp.Replace("SQUARE", "SQ.").Replace("MODIFIED", "MOD.");
+							temp = temp.Replace("Square", "Sq.").Replace("Modified", "Mod.");
+							temp = temp.Replace("Extremely", "Extr.");
 
-                ArrayList ErrorArray = new ArrayList();
-                foreach (DataRow row in dsDocsValue.Tables[0].Rows)
-                {
-                    foreach (DataColumn dc in dsDocsValue.Tables[0].Columns)
-                    {
-                        if (dc.ColumnName == "Value" | dc.ColumnName == "Title")
-                        {
-                            String temp = GetMyValues(row[dc.ColumnName].ToString(), dsResults.Tables[0], sFullNewNumber + "/" + sFullOldNumber, ref ErrorArray).Trim();
+							if (row[dc.ColumnName].ToString().ToUpper().Contains("CUTGRADE]") && dc.ColumnName == "Value") sComments = sComments + @"Cut/";
+							if (row[dc.ColumnName].ToString().ToUpper().Contains("POLISH]") && dc.ColumnName == "Value") sComments = sComments + @"Polish/";
+							if (row[dc.ColumnName].ToString().ToUpper().Contains("SYMMETRY]") && dc.ColumnName == "Value") sComments = sComments + @"Symmetry/";
+							if (row[dc.ColumnName].ToString().ToUpper().Contains("STYLE") && dc.ColumnName == "Title")
+							{
+								sStyle = row["Value"].ToString().ToUpper().Trim();
+							}
 
-                            temp = temp.Replace("VERY GOOD", "VG").Replace("IDEAL", "ID").Replace("GOOD", "G").Replace("EXCELLENT", "EX").Replace("FAIR", "F").Replace("N/A", "NA");
-                            temp = temp.Replace("Very Good", "VG").Replace("Ideal", "ID").Replace("Good", "G").Replace("Excellent", "EX").Replace("Fair", "F");
-                            temp = temp + " " + row["Unit"].ToString();
-                            temp = temp.Replace(" %", "%").Replace(" " + Convert.ToChar(176).ToString(), Convert.ToChar(176).ToString());
-                            temp = temp.Replace("SQUARE", "SQ.").Replace("MODIFIED", "MOD.");
-                            temp = temp.Replace("Square", "Sq.").Replace("Modified", "Mod.");
-                            temp = temp.Replace("Extremely", "Extr.");
+							row[dc.ColumnName] = (temp.Trim() != "" ? temp : "");
+						}
+					}
+				}
+				//[Diamond.CutGrade]/[Diamond.Polish]/[Diamond.Symmetry]
 
-                            if (row[dc.ColumnName].ToString().ToUpper().Contains("CUTGRADE]")	&& dc.ColumnName == "Value") sComments = sComments + @"Cut/";
-                            if (row[dc.ColumnName].ToString().ToUpper().Contains("POLISH]")		&& dc.ColumnName == "Value") sComments = sComments + @"Polish/";
-                            if (row[dc.ColumnName].ToString().ToUpper().Contains("SYMMETRY]")	&& dc.ColumnName == "Value") sComments = sComments + @"Symmetry/";
-                            if (row[dc.ColumnName].ToString().ToUpper().Contains("STYLE")		&& dc.ColumnName == "Title")
-                            {
-                                sStyle = row["Value"].ToString().ToUpper().Trim();
-                            }
+				string sErrMessage = "";
+				if (ErrorArray.Count > 0)
+				{
+					foreach (string part in parts)
+					{
+						for (int i = 0; i < ErrorArray.Count; i++)
+						{
+							if (ErrorArray[i].ToString().ToUpper().Contains(part.ToUpper() + "."))
+							{
+								ErrorArray.RemoveAt(i);
+								i--;
+							}
+						}
+					}
+					foreach (string sLine in ErrorArray)
+					{
+						sErrMessage = sErrMessage + sLine + "\n";
+					}
+					ErrorArray.Clear();
+					throw new Exception("\n" + sErrMessage);
+				}
 
-                                row[dc.ColumnName] = (temp.Trim() != "" ? temp : "  ");
-                        }
-                    }
-                }
-                //[Diamond.CutGrade]/[Diamond.Polish]/[Diamond.Symmetry]
-                string sErrMessage = "";
-                if (ErrorArray.Count > 0)
-                {
-                    foreach (string sLine in ErrorArray)
-                    {
-                        sErrMessage = sErrMessage + sLine + "\n";
-                    }
-                    ErrorArray.Clear();
-                    throw new Exception("\n" + sErrMessage);
-                }
-    
-            ArrayList alCutGradeDetail = new ArrayList();
+				ArrayList alCutGradeDetail = new ArrayList();
 #if DEBUG
-            // For debugging only			
-            string filename = "C:/DELL/myXmlDocForCrystalReport.xml";
-            if (File.Exists(filename)) File.Delete(filename);
-            // Create the FileStream to write with.
-            System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
-            // Create an XmlTextWriter with the fileStream.
-            System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
-            // Write to the file with the WriteXml method.
-            dsDocsValue.WriteXml(myXmlWriter);
-            myXmlWriter.Close();
-            // End of debugging part
+				// For debugging only			
+				string filename = "C:/DELL/myXmlDocForCrystalReport.xml";
+				if (File.Exists(filename)) File.Delete(filename);
+				// Create the FileStream to write with.
+				System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+				// Create an XmlTextWriter with the fileStream.
+				System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+				// Write to the file with the WriteXml method.
+				dsDocsValue.WriteXml(myXmlWriter);
+				myXmlWriter.Close();
+				// End of debugging part
 #endif
 
-            #endregion
+				#endregion
 
-            #region Open Excel
-            Open_Excel(sReportPath);
-            //Excel.Application objExcel = null ;
-            ////            Excel.Workbook BookData = null;
-            ////            Excel.Workbook BookTemp = null;
-            try
-            {
-                ////                if(objExcel == null)
-                ////                    objExcel = new Excel.Application();
-                ////                try
-                ////                {
-                ////                    BookData = objExcel.Workbooks.Open(sReportPath,Type.Missing,true,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing);
-                ////                }
-                ////                catch(Exception ex)
-                ////                {
-                ////                    throw new Exception("file not found");
-                ////                }
-                ////                try
-                ////                {
-                ////                    if(File.Exists(fnTemp))
-                ////                        File.Delete(fnTemp);//delete temp file
-                ////                }
-                ////                catch{}
-                ////
-                ////                BookData.SaveCopyAs(fnTemp);
-                ////                BookData.Close(false,sReportPath,null);
-                ////                //make local copy
-                ////
-                ////                BookTemp = objExcel.Workbooks.Open(fnTemp,Type.Missing,false,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing);
-                Excel.Worksheet SheetData = (Excel.Worksheet)BookTemp.Sheets[1];
-                Excel.Worksheet SheetData1 = (Excel.Worksheet)BookTemp.Sheets[2];
+				#region Open Excel
+				Open_Excel(sReportPath);
+				//Excel.Application objExcel = null ;
+				////            Excel.Workbook BookData = null;
+				////            Excel.Workbook BookTemp = null;
+				try
+				{
+					////                if(objExcel == null)
+					////                    objExcel = new Excel.Application();
+					////                try
+					////                {
+					////                    BookData = objExcel.Workbooks.Open(sReportPath,Type.Missing,true,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing);
+					////                }
+					////                catch(Exception ex)
+					////                {
+					////                    throw new Exception("file not found");
+					////                }
+					////                try
+					////                {
+					////                    if(File.Exists(fnTemp))
+					////                        File.Delete(fnTemp);//delete temp file
+					////                }
+					////                catch{}
+					////
+					////                BookData.SaveCopyAs(fnTemp);
+					////                BookData.Close(false,sReportPath,null);
+					////                //make local copy
+					////
+					////                BookTemp = objExcel.Workbooks.Open(fnTemp,Type.Missing,false,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing,Type.Missing);
+					Excel.Worksheet SheetData = (Excel.Worksheet)BookTemp.Sheets[1];
+					Excel.Worksheet SheetData1 = (Excel.Worksheet)BookTemp.Sheets[2];
 
-                Excel.Range crCell = null;
+					Excel.Range crCell = null;
 
 					//SheetData.Shapes.Item("Comments2").TextFrame.Characters(Type.Missing, Type.Missing).Text = "";
 
 					SheetData.Shapes.Item("BarCode39").TextFrame.Characters(Type.Missing, Type.Missing).Text = "";
 
-				int i1 = 0;
-                int iBaseCellRow = 2;
-                int iMaxRows = 7;
-				int iFilledRowInFirstColumn = 0;
-                string sTitleColumn = "b";
-                string sDataColumn = "c";
-                int iRows = dsDocsValue.Tables[0].Rows.Count;
+					int i1 = 0;
+					int iBaseCellRow = 2;
+					int iMaxRows = 7;
+					int iFilledRowInFirstColumn = 0;
+					string sTitleColumn = "b";
+					string sDataColumn = "c";
+					int iRows = dsDocsValue.Tables[0].Rows.Count;
 
-                sLabelFileName = sLabelFileName.ToUpper().Trim();
+					sLabelFileName = sLabelFileName.ToUpper().Trim();
 					/*
 					if (iMaxRows * 2 > iRows)
 					{
 						iMaxRows = iRows / 2 + iRows % 2;
 					} */
-				crCell = SheetData.get_Range("A1:F10", Type.Missing);
-                crCell.Cells.Value2 = null;
-                crCell.Cells.NumberFormat = "@";
+					crCell = SheetData.get_Range("A1:F10", Type.Missing);
+					crCell.Cells.Value2 = null;
+					crCell.Cells.NumberFormat = "@";
 
-                crCell = SheetData.get_Range("d9", Type.Missing);
-                crCell.Cells.Value2 = "";
+					crCell = SheetData.get_Range("d9", Type.Missing);
+					crCell.Cells.Value2 = "";
 					//crCell.Style = "General";
 					if (sStyle.Trim() == "")
 					{
@@ -6533,11 +6569,11 @@ alex */
 					}
 					else
 						crCell.Cells.Value2 = "";
-				DateTime ddDate = System.DateTime.Now;
-				
+					DateTime ddDate = System.DateTime.Now;
 
-				foreach (DataRow dr in dsDocsValue.Tables[0].Rows)
-                {
+
+					foreach (DataRow dr in dsDocsValue.Tables[0].Rows)
+					{
 						if (dr["Title"].ToString().Trim().ToUpper() != "$CUTGRADEFAILCODE")
 						{
 							//if (dr["Title"].ToString().Trim().ToUpper().Contains("$BARCODE"))
@@ -6550,16 +6586,16 @@ alex */
 							//{
 							//	SheetData.Shapes.Item("ItemNumber").TextFrame.Characters(Type.Missing, Type.Missing).Text = "GSI " + dr["Value"].ToString().Trim();
 							//}
- 
+
 							//else
 							{
 								if (!dr["Title"].ToString().Contains("$"))
 								{
 									crCell = SheetData.get_Range(sTitleColumn + Convert.ToString(iBaseCellRow + i1), Type.Missing);
-									crCell.Cells.Value2 = dr["Title"].ToString();
+									crCell.Cells.Value2 = /*dr["Title"].ToString().Trim(); */(dr["Title"].ToString().Trim() != "" ? dr["Title"].ToString().Trim() : null);
 
 									crCell = SheetData.get_Range(sDataColumn + Convert.ToString(iBaseCellRow + i1), Type.Missing);
-									crCell.Cells.Value2 = dr["Value"].ToString();
+									crCell.Cells.Value2 = /*dr["Value"].ToString().Trim();*/ (dr["Value"].ToString().Trim() != "" ? dr["Value"].ToString().Trim() : null);
 
 									if (sDataColumn == "c" && dr["Value"].ToString().Trim() != "") iFilledRowInFirstColumn++;
 
@@ -6587,11 +6623,11 @@ alex */
 							//	string msg = ex.Message.ToString();
 							//}
 						}
-                    else
-                    {
-                        alCutGradeDetail = GetCutGradeFailGroupCodes(dr["Value"].ToString());
-                    }
-                }
+						else
+						{
+							alCutGradeDetail = GetCutGradeFailGroupCodes(dr["Value"].ToString());
+						}
+					}
 					try
 					{
 						crCell = SheetData.get_Range("b1", Type.Missing);
@@ -6614,7 +6650,7 @@ alex */
 							{
 								var temp = drAdd[0]["Value"].ToString().Trim();
 								Int64 code = Int64.Parse(temp);
-							
+
 								crCell = SheetData.get_Range("b1", Type.Missing);
 								crCell.Cells.Value2 = @ConvertTo128(drAdd[0]["Value"].ToString().Trim());
 							}
@@ -6643,40 +6679,40 @@ alex */
 					}
 					catch { }//dsDocsValue.Tables[0]
 
-						//System.DateTime ddDate = System.DateTime.Now;
-						//try
-						//{
-						//    crCell = SheetData.get_Range("b1", Type.Missing);
-						//    crCell.Cells.Value2 = @ConvertTo128(sOldNumber);
-						//    SheetData.Shapes.Item("Style").TextFrame.Characters(Type.Missing, Type.Missing).Text = sStyle;
-						//    SheetData.Shapes.Item("ItemNumber").TextFrame.Characters(Type.Missing, Type.Missing).Text = "GSI " + sFullOldNumber;
-						//    SheetData.Shapes.Item("Date").TextFrame.Characters(Type.Missing, Type.Missing).Text = ddDate.Date.ToShortDateString();
-						//}
-						//catch (Exception ex)
-						//{
-						//    string msg = ex.Message.ToString();
-						//}
+					//System.DateTime ddDate = System.DateTime.Now;
+					//try
+					//{
+					//    crCell = SheetData.get_Range("b1", Type.Missing);
+					//    crCell.Cells.Value2 = @ConvertTo128(sOldNumber);
+					//    SheetData.Shapes.Item("Style").TextFrame.Characters(Type.Missing, Type.Missing).Text = sStyle;
+					//    SheetData.Shapes.Item("ItemNumber").TextFrame.Characters(Type.Missing, Type.Missing).Text = "GSI " + sFullOldNumber;
+					//    SheetData.Shapes.Item("Date").TextFrame.Characters(Type.Missing, Type.Missing).Text = ddDate.Date.ToShortDateString();
+					//}
+					//catch (Exception ex)
+					//{
+					//    string msg = ex.Message.ToString();
+					//}
 
-						int iLastIndex;
+					int iLastIndex;
 
 
-                if (sComments.Trim().Length > 0)
-                {
-                    sComments = sComments.Trim();
-                    crCell = SheetData.get_Range("b9", Type.Missing);
-                    crCell.Cells.Value2 = "";
-                        
-                    //SheetData.Shapes.Item("Comments").TextFrame.Characters(Type.Missing, Type.Missing).Text = "";
-                    iLastIndex = sComments.LastIndexOf('/');
-                    if (iLastIndex == (sComments.Length - 1)) sComments = sComments.Substring(0, iLastIndex);
-                    try
-                    {
-                        crCell = SheetData.get_Range("b9", Type.Missing);
-                        crCell.Cells.Value2 = "*" + sComments;
-                        //SheetData.Shapes.Item("Comments").TextFrame.Characters(Type.Missing, Type.Missing).Text = "*" + sComments;
-                    }
-                    catch { }
-                }
+					if (sComments.Trim().Length > 0)
+					{
+						sComments = sComments.Trim();
+						crCell = SheetData.get_Range("b9", Type.Missing);
+						crCell.Cells.Value2 = "";
+
+						//SheetData.Shapes.Item("Comments").TextFrame.Characters(Type.Missing, Type.Missing).Text = "";
+						iLastIndex = sComments.LastIndexOf('/');
+						if (iLastIndex == (sComments.Length - 1)) sComments = sComments.Substring(0, iLastIndex);
+						try
+						{
+							crCell = SheetData.get_Range("b9", Type.Missing);
+							crCell.Cells.Value2 = "*" + sComments;
+							//SheetData.Shapes.Item("Comments").TextFrame.Characters(Type.Missing, Type.Missing).Text = "*" + sComments;
+						}
+						catch { }
+					}
 					//Excel.Range ccCell = SheetData.get_Range("C2:C8", Type.Missing);
 					sDataColumn = "c";
 
@@ -6704,45 +6740,45 @@ alex */
 					}
 					catch { }
 					bool bTwoPages = false;
-                SheetToPrint.Add(SheetData);
+					SheetToPrint.Add(SheetData);
 
-                if (alCutGradeDetail.Count > 0)
-                {
-                    bTwoPages = true;
-                    crCell = SheetData.get_Range("d9", Type.Missing);
-                    crCell.Cells.Value2 = "See Comments on 2nd Label";
+					if (alCutGradeDetail.Count > 0)
+					{
+						bTwoPages = true;
+						crCell = SheetData.get_Range("d9", Type.Missing);
+						crCell.Cells.Value2 = "See Comments on 2nd Label";
 
-                    try
-                    {
-                        //                        if(sOldNumber.Length > 10)
-                        //                        {
-                        //                            SheetData1.Shapes.Item("BarCode39").TextFrame.Characters(Type.Missing, Type.Missing).Text = "*" + sOldNumber + "*";
-                        //                        }
-                        //                        else 
-                        crCell = SheetData1.get_Range("b1", Type.Missing);
-                        crCell.Cells.Value2 = @ConvertTo128(sOldNumber);
-                        //SheetData1.Shapes.Item("BarCode").TextFrame.Characters(Type.Missing, Type.Missing).Text = @ConvertTo128(sOldNumber);
-                        SheetData1.Shapes.Item("ItemNumber").TextFrame.Characters(Type.Missing, Type.Missing).Text = "GSI " + sFullOldNumber;
-                        SheetData1.Shapes.Item("Date").TextFrame.Characters(Type.Missing, Type.Missing).Text = ddDate.Date.ToShortDateString();
+						try
+						{
+							//                        if(sOldNumber.Length > 10)
+							//                        {
+							//                            SheetData1.Shapes.Item("BarCode39").TextFrame.Characters(Type.Missing, Type.Missing).Text = "*" + sOldNumber + "*";
+							//                        }
+							//                        else 
+							crCell = SheetData1.get_Range("b1", Type.Missing);
+							crCell.Cells.Value2 = @ConvertTo128(sOldNumber);
+							//SheetData1.Shapes.Item("BarCode").TextFrame.Characters(Type.Missing, Type.Missing).Text = @ConvertTo128(sOldNumber);
+							SheetData1.Shapes.Item("ItemNumber").TextFrame.Characters(Type.Missing, Type.Missing).Text = "GSI " + sFullOldNumber;
+							SheetData1.Shapes.Item("Date").TextFrame.Characters(Type.Missing, Type.Missing).Text = ddDate.Date.ToShortDateString();
 
-                        //SheetData.Shapes.Item("Comments2").TextFrame.Characters(Type.Missing, Type.Missing).Text = "See Comments on 2nd Label";
-                    }
-                    catch { }
+							//SheetData.Shapes.Item("Comments2").TextFrame.Characters(Type.Missing, Type.Missing).Text = "See Comments on 2nd Label";
+						}
+						catch { }
 
-                    i1 = 0;
-                    sDataColumn = "c";
-                    iBaseCellRow = 3;
-                    foreach (object oLine in alCutGradeDetail)
-                    {
-                        crCell = SheetData1.get_Range(sDataColumn + Convert.ToString(iBaseCellRow + i1), Type.Missing);
-                        crCell.Cells.Value2 = oLine.ToString();
-                        i1++;
-                    }
-                    SheetToPrint.Add(SheetData1);
-                }
-                int m = 1;
-                string myFile = "";
- 					foreach (Excel.Worksheet mySheet in SheetToPrint)
+						i1 = 0;
+						sDataColumn = "c";
+						iBaseCellRow = 3;
+						foreach (object oLine in alCutGradeDetail)
+						{
+							crCell = SheetData1.get_Range(sDataColumn + Convert.ToString(iBaseCellRow + i1), Type.Missing);
+							crCell.Cells.Value2 = oLine.ToString();
+							i1++;
+						}
+						SheetToPrint.Add(SheetData1);
+					}
+					int m = 1;
+					string myFile = "";
+					foreach (Excel.Worksheet mySheet in SheetToPrint)
 					{
 						if (Client.ViewReport)
 						{
@@ -6765,82 +6801,82 @@ alex */
 #endif
 						}
 					}
-					
-                //Excel.Worksheet SheetLabel = (Excel.Worksheet)BookTemp.Sheets[1];
-                //                SheetData.PrintOut(1, 1, 1,false, sPrinterName,Type.Missing,true,Type.Missing);
-                //                
-                //                //Excel.Worksheet SheetLabel1 = (Excel.Worksheet)BookTemp.Sheets[2];
-                //                
-                //                if(bTwoPages)
-                //                {
-                //                    SheetData1.PrintOut(1, 1, 1,false,sPrinterName,Type.Missing,true,Type.Missing);
-                //                }
 
-                ////                NAR(crCell);
-                ////                NAR(SheetData);
-                ////                NAR(SheetData1);
-                ////                NAR(SheetLabel);
-                ////                NAR(SheetLabel1);
+					//Excel.Worksheet SheetLabel = (Excel.Worksheet)BookTemp.Sheets[1];
+					//                SheetData.PrintOut(1, 1, 1,false, sPrinterName,Type.Missing,true,Type.Missing);
+					//                
+					//                //Excel.Worksheet SheetLabel1 = (Excel.Worksheet)BookTemp.Sheets[2];
+					//                
+					//                if(bTwoPages)
+					//                {
+					//                    SheetData1.PrintOut(1, 1, 1,false,sPrinterName,Type.Missing,true,Type.Missing);
+					//                }
 
-                ////                crCell = null;
-                ////                SheetLabel = null;
-                ////                SheetLabel1 = null;
-                ////                SheetData = null;
-                ////                SheetData1 = null;
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                if (msg == "file not found")
-                {
-                    throw new Exception("The system cannot find the file: " + sReportPath);
-                }
-            }
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
-                MessageBox.Show("Item # " + sNewNumber + ", Missing data:" + "\n" + msg);
-                return;
-            }
-            finally
-            {
+					////                NAR(crCell);
+					////                NAR(SheetData);
+					////                NAR(SheetData1);
+					////                NAR(SheetLabel);
+					////                NAR(SheetLabel1);
 
-                ////                try
-                ////                {
-                ////                    BookData.Close(false,sReportPath,null);
-                                   ////BookTemp.Close(false,sReportPath,null);
-                ////                }
-                ////                catch(Exception ex)
-                ////                {}
-                ////                try
-                ////                {
-                ////                    //objExcel.Quit();
-                ////					
-                ////                    NAR(BookTemp);
-                ////                    NAR(BookData);
-                ////                    //NAR(objExcel);
-                ////
-                ////                    BookTemp=null;
-                ////                    BookData=null;
-                ////                    //objExcel=null;
-                ////
-                ////                    /*
-                ////                                        GC.Collect();
-                ////                                        GC.WaitForPendingFinalizers(); 
-                ////                                        GC.Collect();*/
-                ////                }
-                ////                catch(Exception ex)
-                ////                {}
-                ////                try
-                ////                {
-                ////                    if(File.Exists(fnTemp))
-                ////                        File.Delete(fnTemp);//delete temp file
-                ////                }
-                ////                catch(Exception ex)
-                ////                {}
-                SheetToPrint.Clear();
-            }
+					////                crCell = null;
+					////                SheetLabel = null;
+					////                SheetLabel1 = null;
+					////                SheetData = null;
+					////                SheetData1 = null;
+				}
+				catch (Exception ex)
+				{
+					string msg = ex.Message;
+					if (msg == "file not found")
+					{
+						throw new Exception("The system cannot find the file: " + sReportPath);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				string msg = ex.Message;
+				MessageBox.Show("Item # " + sNewNumber + ", Missing data:" + "\n" + msg);
+				return;
+			}
+			finally
+			{
+
+				////                try
+				////                {
+				////                    BookData.Close(false,sReportPath,null);
+				////BookTemp.Close(false,sReportPath,null);
+				////                }
+				////                catch(Exception ex)
+				////                {}
+				////                try
+				////                {
+				////                    //objExcel.Quit();
+				////					
+				////                    NAR(BookTemp);
+				////                    NAR(BookData);
+				////                    //NAR(objExcel);
+				////
+				////                    BookTemp=null;
+				////                    BookData=null;
+				////                    //objExcel=null;
+				////
+				////                    /*
+				////                                        GC.Collect();
+				////                                        GC.WaitForPendingFinalizers(); 
+				////                                        GC.Collect();*/
+				////                }
+				////                catch(Exception ex)
+				////                {}
+				////                try
+				////                {
+				////                    if(File.Exists(fnTemp))
+				////                        File.Delete(fnTemp);//delete temp file
+				////                }
+				////                catch(Exception ex)
+				////                {}
+				SheetToPrint.Clear();
+			}
             #endregion
             //crDocument.SetDataSource(dsCrystalSet);
 

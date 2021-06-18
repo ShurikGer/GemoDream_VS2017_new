@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Cntrls
 {
@@ -56,20 +57,20 @@ namespace Cntrls
 			// 
 			// tvPartTree
 			// 
+			this.tvPartTree.CheckBoxes = true;
 			this.tvPartTree.HideSelection = false;
-			this.tvPartTree.ImageIndex = -1;
 			this.tvPartTree.Location = new System.Drawing.Point(0, 0);
 			this.tvPartTree.Name = "tvPartTree";
-			this.tvPartTree.SelectedImageIndex = -1;
+			this.tvPartTree.ShowNodeToolTips = true;
 			this.tvPartTree.Size = new System.Drawing.Size(290, 225);
 			this.tvPartTree.TabIndex = 0;
-			this.tvPartTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvPartTree_KeyDown);
 			this.tvPartTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPartTree_AfterSelect);
+			this.tvPartTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvPartTree_KeyDown);
 			// 
-			// PartTreeEx
+			// PartTreeEx1
 			// 
 			this.Controls.Add(this.tvPartTree);
-			this.Name = "PartTreeEx";
+			this.Name = "PartTreeEx1";
 			this.Size = new System.Drawing.Size(290, 225);
 			this.Resize += new System.EventHandler(this.PartTree_Resize);
 			this.ResumeLayout(false);
@@ -110,7 +111,17 @@ namespace Cntrls
 
 			foreach(DataRow row in drSet)
 			{
-				tnSet[i] = new TreeNode(row["Name"].ToString(), recursTreeFill(row.GetChildRows("PartChild")));
+				var partName = row["Name"].ToString().ToLower();
+				TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+				partName = myTI.ToTitleCase(partName);
+				//partName = partName.Replace("White Diamond Stone Set", "WDS");
+				//partName = partName.Replace("Color Diamond Stone Set", "CDS");
+				//partName = partName.Replace("Color Stone Set", "CSS");
+				//partName = partName.Replace("Colored diamond", "CD");
+				tnSet[i] = new TreeNode(partName, recursTreeFill(row.GetChildRows("PartChild")));
+
+				//tnSet[i] = new TreeNode(row["Name"].ToString(), recursTreeFill(row.GetChildRows("PartChild")));
+				//tnSet[i].Checked = true;
 				/*
 				string sPartTypeID = "";
 				string sPartID = "";

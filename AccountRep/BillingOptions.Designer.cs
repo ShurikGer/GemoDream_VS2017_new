@@ -37,9 +37,9 @@
 			// cmd_Bill_Default
 			// 
 			this.cmd_Bill_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmd_Bill_Default.Location = new System.Drawing.Point(61, 14);
+			this.cmd_Bill_Default.Location = new System.Drawing.Point(12, 12);
 			this.cmd_Bill_Default.Name = "cmd_Bill_Default";
-			this.cmd_Bill_Default.Size = new System.Drawing.Size(351, 32);
+			this.cmd_Bill_Default.Size = new System.Drawing.Size(399, 32);
 			this.cmd_Bill_Default.TabIndex = 0;
 			this.cmd_Bill_Default.Text = "Send Invoice to ";
 			this.cmd_Bill_Default.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@
 			// cmd_BillToQB_primary
 			// 
 			this.cmd_BillToQB_primary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmd_BillToQB_primary.Location = new System.Drawing.Point(62, 69);
+			this.cmd_BillToQB_primary.Location = new System.Drawing.Point(12, 60);
 			this.cmd_BillToQB_primary.Name = "cmd_BillToQB_primary";
 			this.cmd_BillToQB_primary.Size = new System.Drawing.Size(90, 25);
 			this.cmd_BillToQB_primary.TabIndex = 1;
@@ -59,7 +59,7 @@
 			// cmd_BillToQB_corpt
 			// 
 			this.cmd_BillToQB_corpt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmd_BillToQB_corpt.Location = new System.Drawing.Point(192, 69);
+			this.cmd_BillToQB_corpt.Location = new System.Drawing.Point(159, 60);
 			this.cmd_BillToQB_corpt.Name = "cmd_BillToQB_corpt";
 			this.cmd_BillToQB_corpt.Size = new System.Drawing.Size(90, 25);
 			this.cmd_BillToQB_corpt.TabIndex = 2;
@@ -70,7 +70,7 @@
 			// cmd_BillToTally
 			// 
 			this.cmd_BillToTally.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmd_BillToTally.Location = new System.Drawing.Point(322, 69);
+			this.cmd_BillToTally.Location = new System.Drawing.Point(321, 60);
 			this.cmd_BillToTally.Name = "cmd_BillToTally";
 			this.cmd_BillToTally.Size = new System.Drawing.Size(90, 25);
 			this.cmd_BillToTally.TabIndex = 3;

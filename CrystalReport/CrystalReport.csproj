@@ -103,11 +103,14 @@
       <HintPath>..\..\..\..\QR_Code_with_Logo\QR_Code_with_Logo\bin\Debug\MessagingToolkit.QRCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Spire.License">
-      <HintPath>..\..\..\..\..\..\..\..\..\dell\PDF\Bin\NET4.0 ClientProfile\Spire.License.dll</HintPath>
+    <Reference Include="Spire.License, Version=1.3.8.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.10.10.0\lib\net40\Spire.License.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Pdf">
-      <HintPath>..\..\..\..\..\..\..\..\..\dell\PDF\Bin\NET4.0 ClientProfile\Spire.Pdf.dll</HintPath>
+    <Reference Include="Spire.Pdf, Version=6.10.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.10.10.0\lib\net40\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=10.10.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.10.10.0\lib\net40\Spire.XLS.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -133,6 +136,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="Printers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

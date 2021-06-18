@@ -41,6 +41,8 @@ namespace gemoDream
 		private DataView dvMeasures = null;
 		private DataSet dsParts = null;
 		private DataSet dsCustPrograms = null;
+		private DocumentProps dpPropsB = null;
+
 		private readonly ArrayList newOperationsList = new ArrayList();
 		private int iDocumentsCount;
 		//private readonly bool IsFixedPrice = true;
@@ -580,8 +582,6 @@ namespace gemoDream
 			// 
 			// checkBoxPD1
 			// 
-			this.checkBoxPD1.Checked = true;
-			this.checkBoxPD1.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBoxPD1.Location = new System.Drawing.Point(230, 25);
 			this.checkBoxPD1.Name = "checkBoxPD1";
 			this.checkBoxPD1.Size = new System.Drawing.Size(109, 15);
@@ -605,7 +605,7 @@ namespace gemoDream
 			// 
 			this.tabPage6.Location = new System.Drawing.Point(4, 18);
 			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Size = new System.Drawing.Size(940, 351);
+			this.tabPage6.Size = new System.Drawing.Size(982, 351);
 			this.tabPage6.TabIndex = 2;
 			this.tabPage6.Text = "Documents";
 			// 
@@ -648,7 +648,6 @@ namespace gemoDream
 			this.lbParts.Size = new System.Drawing.Size(100, 15);
 			this.lbParts.TabIndex = 16;
 			this.lbParts.Text = "Parts";
-			//this.lbParts.Click += new System.EventHandler(this.label5_Click);
 			// 
 			// listBox1
 			// 
@@ -978,7 +977,6 @@ namespace gemoDream
 			this.ctcVendor.TabIndex = 2;
 			this.ctcVendor.ValueMember = "CustomerOfficeID_CustomerID";
 			this.ctcVendor.SelectionChanged += new System.EventHandler(this.ctcVendor_SelectionChanged);
-			//this.ctcVendor.Load += new System.EventHandler(this.ctcVendor_Load);
 			this.ctcVendor.Enter += new System.EventHandler(this.ctcVendor_Enter);
 			// 
 			// ctcCustomer
@@ -1001,11 +999,13 @@ namespace gemoDream
 			this.ipItems.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
 			this.ipItems.FullItemName = "Full Item Name";
 			this.ipItems.initialized = false;
+			this.ipItems.instanceLoaded = false;
 			this.ipItems.ItemPicture = null;
 			this.ipItems.ItemTypesInUse = null;
 			this.ipItems.Location = new System.Drawing.Point(5, 50);
 			this.ipItems.Name = "ipItems";
 			this.ipItems.Size = new System.Drawing.Size(951, 205);
+			this.ipItems.StructName = "";
 			this.ipItems.TabIndex = 19;
 			this.ipItems.Changed += new System.EventHandler(this.ipItems_Changed);
 			this.ipItems.NewItemTypeSelected += new System.EventHandler(this.ipItems_NewItemTypeSelected);
@@ -2140,7 +2140,7 @@ namespace gemoDream
 						}
 						if (!IsLoadCPInstance)
 							ipItems.LoadItemitemTypeView(false, "0");
-						
+
 					}
 				}
 			}
@@ -2852,30 +2852,44 @@ namespace gemoDream
 				IsOK = SaveCPPart2(strCPOfficeID_CPID[0], strCPOfficeID_CPID[1]);
 				if (IsOK)
 				{
-					if (IsLoadFromItemizn)
+					try
 					{
-						MessageBox.Show("Customer program was saved successfully.", "Successful Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}
-					else
-					{
-						if (MessageBox.Show("Customer program was saved successfully.\nWould you like to clear all the fields?", "Successfull save", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
-							DialogResult.Yes)
+						if (dpPropsB != null)
 						{
-							ctcCustomer.ComboField.cbField.SelectedIndex = 0;
-							//Init();
-							//return;
-							ipItems.FullItemName = "";
-							ipItems.StructName = "";
-							ipItems.CustomerID = 0;
-							ipItems._ptItemStructure.Clear();
-							ipItems.LoadItemitemTypeView(true, "0");
-							ctcCustomer.Focus();
-							tbCustProgName.Text = "";
-							ctcVendor.ComboField.cbField.SelectedIndex = 0;
-
-							dsPricing = null;
-							return;
+							ArrayList myParts = new ArrayList();
+							ArrayList myPartsName = new ArrayList();
+							Service.GetCheckedPartFromPartTree(dpPropsB.ptPartTree.tvPartTree.Nodes, ref myParts, ref myPartsName);
+							SaveBlockedParts(this.tbBatchCode.Text.ToString(), strCPOfficeID_CPID[1], myParts);
 						}
+						if (IsLoadFromItemizn)
+						{
+							MessageBox.Show("Customer program was saved successfully.", "Successful Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						}
+						else
+						{
+							if (MessageBox.Show("Customer program was saved successfully.\nWould you like to clear all the fields?", "Successfull save", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+								DialogResult.Yes)
+							{
+								ctcCustomer.ComboField.cbField.SelectedIndex = 0;
+								//Init();
+								//return;
+								ipItems.FullItemName = "";
+								ipItems.StructName = "";
+								ipItems.CustomerID = 0;
+								ipItems._ptItemStructure.Clear();
+								ipItems.LoadItemitemTypeView(true, "0");
+								ctcCustomer.Focus();
+								tbCustProgName.Text = "";
+								ctcVendor.ComboField.cbField.SelectedIndex = 0;
+
+								dsPricing = null;
+								return;
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						var a = ex.Message;
 					}
 				}
 			}
@@ -2884,6 +2898,112 @@ namespace gemoDream
 			if (str.Equals("#####.###")) bSaveCustProgAs.Enabled = true;
 		}
 		#endregion NotDefaultDocument
+
+		private void GetCheckedPartFromPartTree(TreeNodeCollection nodes, ref ArrayList myParts)
+		{
+			try
+			{
+				foreach (TreeNode tn in nodes)
+				{
+					if (tn.Checked)
+						myParts.Add(tn.ImageKey);
+					GetRecursive(tn, ref myParts);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		private void GetRecursive(TreeNode treeNode, ref ArrayList myParts)
+		{
+			foreach (TreeNode tn in treeNode.Nodes)
+			{
+				if (tn.Checked) myParts.Add(tn.ImageKey);
+				GetRecursive(tn, ref myParts);
+			}
+		}
+
+		private void SaveBlockedParts(string strBatch, string CPID, ArrayList parts0)
+		{
+			try
+			{
+				string sGroupCode = "";
+				string sBatchCode = "";
+				if (strBatch.Length == 8)
+				{
+					sGroupCode = strBatch.Substring(0, 5);
+					sBatchCode = strBatch.Substring(5, 3);
+				}
+				if (strBatch.Length == 9)
+				{
+					sGroupCode = strBatch.Substring(0, 6);
+					sBatchCode = strBatch.Substring(6, 3);
+				}
+				string sBatchID = Service.GetBatchByCode(sGroupCode, sBatchCode);
+				DataSet dsTemp = new DataSet("Batches");
+				DataTable dt = new DataTable("PartsPerBatch");
+				int[] ColumnIndex = { 2, 3, 7 };
+
+				foreach (var i in ColumnIndex)
+				{
+					dt.Columns.Add("Col" + i.ToString());
+				}
+				if (parts0.Count == 0)
+				{
+					DataRow dr = dt.NewRow();
+					foreach (int i in ColumnIndex)
+					{
+						if (i == 2) dr["Col" + i.ToString()] = sBatchID;
+						if (i == 3) dr["Col" + i.ToString()] = CPID;
+						if (i == 7) dr["Col" + i.ToString()] = "";
+					}
+					dt.Rows.Add(dr);
+				}
+				else
+				{
+					foreach (var aa in parts0)
+					{
+						DataRow dr = dt.NewRow();
+						foreach (int i in ColumnIndex)
+						{
+							if (i == 2) dr["Col" + i.ToString()] = sBatchID;
+							if (i == 3) dr["Col" + i.ToString()] = CPID;
+							if (i == 7) dr["Col" + i.ToString()] = aa;
+						}
+						dt.Rows.Add(dr);
+					}
+
+				}
+				dsTemp.Tables.Add(dt);
+#if DEBUG
+				// For debugging only			
+				string filename = "C:/DELL/myXmlBlockedPartsListCP.xml";
+				if (File.Exists(filename)) File.Delete(filename);
+				// Create the FileStream to write with.
+				System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+				// Create an XmlTextWriter with the fileStream.
+				System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+				// Write to the file with the WriteXml method.
+				dsTemp.WriteXml(myXmlWriter);
+				myXmlWriter.Close();
+				// End of debugging part
+#endif
+				DataSet dsIn = new DataSet();
+				DataTable dtIn = dsIn.Tables.Add("SaveBlockedPartsByBatch");
+				dtIn.Columns.Add("XmlBlockedParts", System.Type.GetType("System.String"));
+				DataRow row = dtIn.NewRow();
+				dtIn.Rows.Add(row);
+				row["XmlBlockedParts"] = dsTemp.GetXml();
+				DataSet dsOut = Service.ProxyGenericSet(dsIn, "Set");
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
 
 		#region StatusBar
 		private void ctcCustomer_Enter(object sender, EventArgs e)
@@ -3987,10 +4107,11 @@ namespace gemoDream
 				//}
 
 				tbCustProgName.Focus();
+				string sItemTypeID = dsCP.Tables[0].Rows[0]["ItemTypeID"].ToString();
 				ipItems.SelectItemTypeById(dsCP.Tables[0].Rows[0]["ItemTypeID"].ToString(),
 					dsCP.Tables[0].Rows[0]["ItemTypeGroupID"].ToString());
 
-				string sItemTypeID = ipItems.ItemId;
+				//string sItemTypeID = ipItems.ItemId;
 				DataSet dsData1 = new DataSet();
 				DataTable dtParts = new DataTable();
 				dtParts = Service.GetParts(sItemTypeID);
@@ -4110,7 +4231,7 @@ namespace gemoDream
 						TabPage tpDoc = new TabPage("Document " + tcDocs.TabPages.Count.ToString());
 
 
-						sItemTypeID = this.ipItems.itemId;
+						//sItemTypeID = this.ipItems.itemId;
 						string sPath2Picture = this.tbPicPath.Text.ToString();
 
 						string sCPName = this.tbCustProgName.Text.Trim();
@@ -4271,6 +4392,7 @@ namespace gemoDream
 				}
 
 				skuItemTypeID = Convert.ToInt32(dsCP.Tables[0].Rows[0]["ItemTypeID"].ToString());
+				string sItemTypeID = skuItemTypeID.ToString();   //ipItems.ItemId;
 				CPOfficeID_CPID = "";
 
 				for (; tcDocs.TabPages.Count > 1;)
@@ -4433,7 +4555,7 @@ namespace gemoDream
 					}
 				}
 				
-				string sItemTypeID = skuItemTypeID.ToString();   //ipItems.ItemId;
+				//string sItemTypeID = skuItemTypeID.ToString();   //ipItems.ItemId;
 				//ipItems.LoadItemitemTypeView(false, sItemTypeID);
 
 				DataSet dsData1 = new DataSet();
@@ -4505,6 +4627,7 @@ namespace gemoDream
 							if (!Service.IsMagicOperation(s))
 							{
 								acbDocOps[k].SelectedValue = dsCPDocOperations.Tables[0].Rows[k]["OperationTypeOfficeID_OperationTypeID"];
+								//acbDocOps[k].
 								achbDocOpCheck[k].Checked = true;
 							}
 							//							acbDocOps[k].SelectedValue = dsCPDocOperations.Tables[0].Rows[k]["OperationTypeOfficeID_OperationTypeID"];
@@ -4533,24 +4656,24 @@ namespace gemoDream
 						//string sCPOfficeID = "";
 						//string sCPID = "";
 
-						sItemTypeID = ipItems.itemId;
+						//sItemTypeID = ipItems.itemId;
 						string sPath2Picture = this.tbPicPath.Text.ToString();
 
 						string sCPName = this.tbCustProgName.Text.Trim();
 
-						DocumentProps dpProps = new DocumentProps(this.AccessLevel, dsDocOperations, dsMeasureValues, dsParts, dsCPDocRules,
+						dpPropsB = new DocumentProps(this.AccessLevel, dsDocOperations, dsMeasureValues, dsParts, dsCPDocRules,
 							sCPOfficeID, sCPID, sItemTypeID, sPath2Picture,
 							this.newOperationsList, sCPName);
 
-						dpProps.InitTree(dtParts);
-						dpProps.Location = new Point(5, 5);
-						tpDoc.Controls.Add(dpProps);
+						dpPropsB.InitTree(dtParts);
+						dpPropsB.Location = new Point(5, 5);
+						tpDoc.Controls.Add(dpPropsB);
 						tcDocs.TabPages.Add(tpDoc);
 
-						dpProps.checkBox1.Checked =
+						dpPropsB.checkBox1.Checked =
 							dsDocs.Tables[0].Rows[i]["IsReturn"].ToString() == "1" ? true : false;
-						dpProps.tbDescription.Text = dsDocs.Tables[0].Rows[i]["Description"].ToString();
-						dpProps.chbDocEnabled.Checked = true;
+						dpPropsB.tbDescription.Text = dsDocs.Tables[0].Rows[i]["Description"].ToString();
+						dpPropsB.chbDocEnabled.Checked = true;
 
 						dsDoc.Tables[0].TableName = "CPDoc_MeasureGroup";
 						DataSet dsDocMeasures = Service.GetCPMeasures(dsDoc.Copy());//Procedure dbo.spGetCPDoc_MeasureGroup
@@ -4575,11 +4698,11 @@ namespace gemoDream
 							dtMsrs.Rows.Add(new object[] { sNm, bDo, iRchcks });
 						}
 
-						InitMeasuresRechecks(dpProps.dgRechecks, dtMsrs, NewTableStyle());
+						InitMeasuresRechecks(dpPropsB.dgRechecks, dtMsrs, NewTableStyle());
 
-						ComboBox[] acbDocOps = new ComboBox[] { dpProps.cbDoc1, dpProps.cbDoc2, dpProps.cbDoc3, dpProps.cbDoc4, dpProps.cbDoc5, dpProps.cbDoc6 };
-						CheckBox[] achbDocOpCheck = new CheckBox[] { dpProps.chbPrintDoc1, dpProps.chbPrintDoc2, dpProps.chbPrintDoc3, dpProps.chbPrintDoc4, dpProps.chbPrintDoc5, dpProps.chbPrintDoc6 };
-						CheckBox[] achbShowDoc = new CheckBox[] { dpProps.chbShowDoc1, dpProps.chbShowDoc2, dpProps.chbShowDoc3, dpProps.chbShowDoc4, dpProps.chbShowDoc5, dpProps.chbShowDoc6 };
+						ComboBox[] acbDocOps = new ComboBox[] { dpPropsB.cbDoc1, dpPropsB.cbDoc2, dpPropsB.cbDoc3, dpPropsB.cbDoc4, dpPropsB.cbDoc5, dpPropsB.cbDoc6 };
+						CheckBox[] achbDocOpCheck = new CheckBox[] { dpPropsB.chbPrintDoc1, dpPropsB.chbPrintDoc2, dpPropsB.chbPrintDoc3, dpPropsB.chbPrintDoc4, dpPropsB.chbPrintDoc5, dpPropsB.chbPrintDoc6 };
+						CheckBox[] achbShowDoc = new CheckBox[] { dpPropsB.chbShowDoc1, dpPropsB.chbShowDoc2, dpPropsB.chbShowDoc3, dpPropsB.chbShowDoc4, dpPropsB.chbShowDoc5, dpPropsB.chbShowDoc6 };
 						for (int k = 0; k < dsCPDocOperations.Tables[0].Rows.Count; k++)
 						{
 							string s = dsCPDocOperations.Tables[0].Rows[k]["OperationTypeOfficeID_OperationTypeID"].ToString();
@@ -4659,8 +4782,7 @@ namespace gemoDream
 				this.CheckNode(ptrOpsRight.tvPartTree, dsIDs.Tables[0].Rows[i][1].ToString());
 			}
 			skuMode = SKULoadMode.Main;
-		}
-		//mvs
+		}//LoadCPInstance
 
 
 		private void ctcVendor_SelectionChanged(object sender, EventArgs e)

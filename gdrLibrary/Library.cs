@@ -8478,7 +8478,7 @@ namespace gemoDream
             dsIn.Tables[0].Rows[0]["BatchCode"] = sBatchCode;
             DataSet dsOut = gemoDream.Service.ProxyGenericGet(dsIn);
             string sBatchID = null;
-            if (dsOut.Tables.Count > 0 && dsOut.Tables[0].Rows.Count > 0)
+            if (dsOut.Tables.Count > 0 && dsOut.Tables[0].Rows.Count > 0 && sBatchCode.Trim() != "")
                 sBatchID = dsOut.Tables[0].Rows[0]["BatchID"].ToString();
             return sBatchID;
         }
@@ -9250,13 +9250,20 @@ namespace gemoDream
             DirectoryInfo di = new DirectoryInfo(sPath);
             FileInfo[] fi = di.GetFiles();
             ArrayList fileNames = new ArrayList();
-            foreach (FileInfo fiTemp in fi)
-                if(fiTemp.Extension.ToUpper() != ".JPG" && fiTemp.Extension.ToUpper() != ".DB") 
-                    //                if(fiTemp.Extension.ToUpper() == ".CDR" || fiTemp.Extension.ToUpper() == ".TXT" || fiTemp.Name.ToUpper().IndexOf("DOESN") > 0)
-                    fileNames.Add(new FileName(fiTemp.Name.ToUpper()));
-
-            return fileNames;
-        }
+			foreach (FileInfo fiTemp in fi)
+			{
+				if (fiTemp.Extension.ToUpper() != ".JPG" && fiTemp.Extension.ToUpper() != ".DB")
+				{
+					if (fiTemp.Extension.ToUpper() != ".TMP")
+					{
+						if (!fiTemp.Name.ToUpper().Contains("BACKUP"))
+						fileNames.Add(new FileName(fiTemp.Name.ToUpper()));
+					}
+				}
+					//                if(fiTemp.Extension.ToUpper() == ".CDR" || fiTemp.Extension.ToUpper() == ".TXT" || fiTemp.Name.ToUpper().IndexOf("DOESN") > 0)
+			}
+			return fileNames;
+		}
 
 		public static ArrayList GetFileList(string sPath, bool forJPG)
 		{
@@ -9489,7 +9496,79 @@ namespace gemoDream
             return fn;
         }
 
-        public static string GetMyIP_Group()
+		public static void GetCheckedPartFromPartTree(TreeNodeCollection nodes, ref ArrayList myParts, ref ArrayList myPartsNames)
+		{
+			try
+			{
+				foreach (TreeNode tn in nodes)
+				{
+					if (tn.Checked)
+					{
+						myParts.Add(tn.ImageKey);
+						myPartsNames.Add(tn.Text);
+					}
+					GetRecursive(tn, ref myParts, ref myPartsNames);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		public static void GetRecursive(TreeNode treeNode, ref ArrayList myParts, ref ArrayList myPartsNames)
+		{
+			foreach (TreeNode tn in treeNode.Nodes)
+			{
+				if (tn.Checked)
+				{
+					myParts.Add(tn.ImageKey);
+					myPartsNames.Add(tn.Text);
+				}
+				GetRecursive(tn, ref myParts, ref myPartsNames);
+			}
+		}
+
+		public static void UpdatePartTree(TreeNodeCollection nodes, List<string> partID, bool toCheck)
+		{
+			try
+			{
+				if (partID.Count > 0)
+				{
+					foreach (string node in partID)
+					{
+						foreach (TreeNode tn in nodes)
+						{
+							if (node.Trim().ToUpper() == "ITEM CONTAINER" && tn.Text.Trim().ToUpper() == node.Trim().ToUpper())
+							{
+								tn.Checked = toCheck;
+								continue;
+							}
+							FindRecursive(tn, node.Trim(), toCheck);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+
+		}
+
+		public static void FindRecursive(TreeNode treeNode, string findNode, bool toCheck)
+		{
+			foreach (TreeNode tn in treeNode.Nodes)
+			{
+				if (tn.Text == findNode)
+					tn.Checked = toCheck;
+				FindRecursive(tn, findNode, toCheck);
+			}
+		}
+
+
+		public static string GetMyIP_Group()
         {
             string[] myIP1 = null;
             string sIPaddress = "";

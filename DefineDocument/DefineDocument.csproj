@@ -67,15 +67,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\gdrLibrary\gdrClientLibrary.csproj">
-      <Name>gdrClientLibrary</Name>
-      <Project>{A651DE82-DAB6-40FD-96E8-A076DC59CBC3}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\ImageListViewDemo\ImageListViewDemo.csproj">
-      <Project>{a4fca838-02e1-4c57-b0c0-8a6734657c47}</Project>
-      <Name>ImageListViewDemo</Name>
-    </ProjectReference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -125,6 +116,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gdrLibrary\gdrClientLibrary.csproj">
+      <Project>{a651de82-dab6-40fd-96e8-a076dc59cbc3}</Project>
+      <Name>gdrClientLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageListViewDemo\ImageListViewDemo.csproj">
+      <Project>{a4fca838-02e1-4c57-b0c0-8a6734657c47}</Project>
+      <Name>ImageListViewDemo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

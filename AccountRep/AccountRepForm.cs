@@ -8,6 +8,9 @@ using Cntrls;
 using System.Text;
 using System.Xml;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
 
 //using System.Drawing.Imaging;
 
@@ -16,8 +19,18 @@ namespace gemoDream
 	/// <summary>
 	/// Account representative form
 	/// </summary>
-	public class AccountRep : System.Windows.Forms.Form
+	public class AccountRep : Form
 	{
+		public static string addressToBill = "";
+		private string myActiveOrder = "";
+		private bool isLoaded = true;
+		private bool bulkMode = false;
+		private DataSet dsStructure = null;
+		private int indexOld = -1;
+		private Hashtable htBlockedPart = null;
+		private bool reset = false;
+		private ArrayList myParts = null;
+
 		#region DesignerDeclarations
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label5;
@@ -246,7 +259,30 @@ namespace gemoDream
 
 		public static int billingTo;
 		public static bool closeExit = false;
-
+		private TabPage tpBlockParts;
+		private Button button6;
+		private Button button5;
+		private Button cmd_ClearBlockPart;
+		private Label lblStructure;
+		private ListView lvBatchesToBlock;
+		private ColumnHeader columnHeader13;
+		private ColumnHeader myBatchID;
+		private ColumnHeader FullBatchCode;
+		private ColumnHeader CPID;
+		private ColumnHeader SKU_Name;
+		private ColumnHeader itemTypeID;
+		private PartTreeEx partView;
+		private ComboBox cbCustomerProgram;
+		private ColumnHeader itemStructure;
+		private ColumnHeader blockedPartName;
+		private Label label26;
+		private Label label22;
+		private Button cmd_Reset;
+		private ColumnHeader FullBlockedPartName;
+		private ColumnHeader copyOfBlockedParts;
+		private ColumnHeader myPartID;
+		
+		
 		public AccountRep()
 		{
 			InitializeComponent();
@@ -275,7 +311,7 @@ namespace gemoDream
 			tmr = new Timer();
 			tmr.Interval = 1000;
 			tmr.Tick +=new EventHandler(tmr_Tick);
-
+			
 			dtItem.Columns.Add("ID");
 			dtItem.Columns.Add("ParentID");
 			dtItem.Columns.Add("Name");
@@ -518,6 +554,27 @@ namespace gemoDream
 			this.label17 = new System.Windows.Forms.Label();
 			this.bPrintDeliveryReport = new System.Windows.Forms.Button();
 			this.otDelivery = new Cntrls.OrdersTree();
+			this.tpBlockParts = new System.Windows.Forms.TabPage();
+			this.cmd_Reset = new System.Windows.Forms.Button();
+			this.label22 = new System.Windows.Forms.Label();
+			this.cbCustomerProgram = new System.Windows.Forms.ComboBox();
+			this.partView = new Cntrls.PartTreeEx();
+			this.lvBatchesToBlock = new System.Windows.Forms.ListView();
+			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.FullBatchCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.myBatchID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.CPID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.SKU_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.itemTypeID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.itemStructure = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.myPartID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.blockedPartName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.FullBlockedPartName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.copyOfBlockedParts = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.button6 = new System.Windows.Forms.Button();
+			this.button5 = new System.Windows.Forms.Button();
+			this.cmd_ClearBlockPart = new System.Windows.Forms.Button();
+			this.lblStructure = new System.Windows.Forms.Label();
 			this.itemN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.firstName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lastName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -534,6 +591,7 @@ namespace gemoDream
 			this.lvServices = new System.Windows.Forms.ListView();
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.radioButton3 = new System.Windows.Forms.RadioButton();
+			this.label26 = new System.Windows.Forms.Label();
 			this.cbcCustomer = new Cntrls.ComboTextComponent();
 			this.tcMain.SuspendLayout();
 			this.tpCustomer.SuspendLayout();
@@ -566,6 +624,7 @@ namespace gemoDream
 			((System.ComponentModel.ISupportInitialize)(this.pbReportView)).BeginInit();
 			this.tpDelivery.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgOrdersToDelivery)).BeginInit();
+			this.tpBlockParts.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tcMain
@@ -576,6 +635,7 @@ namespace gemoDream
 			this.tcMain.Controls.Add(this.tpUpdate);
 			this.tcMain.Controls.Add(this.tpReports);
 			this.tcMain.Controls.Add(this.tpDelivery);
+			this.tcMain.Controls.Add(this.tpBlockParts);
 			this.tcMain.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
 			this.tcMain.ItemSize = new System.Drawing.Size(205, 15);
 			this.tcMain.Location = new System.Drawing.Point(5, 28);
@@ -595,7 +655,7 @@ namespace gemoDream
 			this.tpCustomer.Name = "tpCustomer";
 			this.tpCustomer.Size = new System.Drawing.Size(1243, 669);
 			this.tpCustomer.TabIndex = 0;
-			this.tpCustomer.Text = "          Customer          ";
+			this.tpCustomer.Text = "Customer";
 			this.tpCustomer.Enter += new System.EventHandler(this.tpCustomer_Enter);
 			// 
 			// gbOrdersHistory
@@ -949,7 +1009,7 @@ namespace gemoDream
 			this.tpOrders.Name = "tpOrders";
 			this.tpOrders.Size = new System.Drawing.Size(1243, 669);
 			this.tpOrders.TabIndex = 1;
-			this.tpOrders.Text = "     Open Orders, Stones     ";
+			this.tpOrders.Text = "Open Orders, Stones     ";
 			this.tpOrders.Visible = false;
 			this.tpOrders.Enter += new System.EventHandler(this.tpOrders_Enter);
 			// 
@@ -1660,7 +1720,7 @@ namespace gemoDream
 			this.tpUpdate.Name = "tpUpdate";
 			this.tpUpdate.Size = new System.Drawing.Size(1243, 669);
 			this.tpUpdate.TabIndex = 2;
-			this.tpUpdate.Text = "        Update Order        ";
+			this.tpUpdate.Text = "Update Order        ";
 			this.tpUpdate.Visible = false;
 			this.tpUpdate.Enter += new System.EventHandler(this.tpUpdate_Enter);
 			// 
@@ -2191,7 +2251,7 @@ namespace gemoDream
 			this.tpReports.Name = "tpReports";
 			this.tpReports.Size = new System.Drawing.Size(1243, 669);
 			this.tpReports.TabIndex = 3;
-			this.tpReports.Text = "          Reports          ";
+			this.tpReports.Text = "Reports          ";
 			// 
 			// groupBox9
 			// 
@@ -2399,7 +2459,7 @@ namespace gemoDream
 			this.tpDelivery.Name = "tpDelivery";
 			this.tpDelivery.Size = new System.Drawing.Size(1243, 669);
 			this.tpDelivery.TabIndex = 4;
-			this.tpDelivery.Text = "Orders for Delivery";
+			this.tpDelivery.Text = "Orders for Delivery     ";
 			// 
 			// label20
 			// 
@@ -2515,6 +2575,180 @@ namespace gemoDream
 			this.otDelivery.ShowColorAndClarity = true;
 			this.otDelivery.Size = new System.Drawing.Size(440, 544);
 			this.otDelivery.TabIndex = 0;
+			// 
+			// tpBlockParts
+			// 
+			this.tpBlockParts.BackColor = System.Drawing.SystemColors.Control;
+			this.tpBlockParts.Controls.Add(this.cmd_Reset);
+			this.tpBlockParts.Controls.Add(this.label22);
+			this.tpBlockParts.Controls.Add(this.cbCustomerProgram);
+			this.tpBlockParts.Controls.Add(this.partView);
+			this.tpBlockParts.Controls.Add(this.lvBatchesToBlock);
+			this.tpBlockParts.Controls.Add(this.button6);
+			this.tpBlockParts.Controls.Add(this.button5);
+			this.tpBlockParts.Controls.Add(this.cmd_ClearBlockPart);
+			this.tpBlockParts.Controls.Add(this.lblStructure);
+			this.tpBlockParts.Location = new System.Drawing.Point(19, 4);
+			this.tpBlockParts.Name = "tpBlockParts";
+			this.tpBlockParts.Size = new System.Drawing.Size(1243, 669);
+			this.tpBlockParts.TabIndex = 5;
+			this.tpBlockParts.Text = "Blocked Parts";
+			// 
+			// cmd_Reset
+			// 
+			this.cmd_Reset.Location = new System.Drawing.Point(1037, 472);
+			this.cmd_Reset.Name = "cmd_Reset";
+			this.cmd_Reset.Size = new System.Drawing.Size(120, 25);
+			this.cmd_Reset.TabIndex = 11;
+			this.cmd_Reset.Text = "Reset";
+			this.cmd_Reset.UseVisualStyleBackColor = true;
+			this.cmd_Reset.Click += new System.EventHandler(this.cmd_Reset_Click);
+			// 
+			// label22
+			// 
+			this.label22.Location = new System.Drawing.Point(896, 47);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(289, 22);
+			this.label22.TabIndex = 10;
+			// 
+			// cbCustomerProgram
+			// 
+			this.cbCustomerProgram.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cbCustomerProgram.FormattingEnabled = true;
+			this.cbCustomerProgram.Location = new System.Drawing.Point(898, 360);
+			this.cbCustomerProgram.Name = "cbCustomerProgram";
+			this.cbCustomerProgram.Size = new System.Drawing.Size(287, 21);
+			this.cbCustomerProgram.TabIndex = 9;
+			this.cbCustomerProgram.Click += new System.EventHandler(this.cbCustomerProgram_Click);
+			// 
+			// partView
+			// 
+			this.partView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.partView.Location = new System.Drawing.Point(898, 113);
+			this.partView.Name = "partView";
+			this.partView.Size = new System.Drawing.Size(290, 225);
+			this.partView.TabIndex = 8;
+			// 
+			// lvBatchesToBlock
+			// 
+			this.lvBatchesToBlock.AllowColumnReorder = true;
+			this.lvBatchesToBlock.CheckBoxes = true;
+			this.lvBatchesToBlock.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader13,
+            this.FullBatchCode,
+            this.myBatchID,
+            this.CPID,
+            this.SKU_Name,
+            this.itemTypeID,
+            this.itemStructure,
+            this.myPartID,
+            this.blockedPartName,
+            this.FullBlockedPartName,
+            this.copyOfBlockedParts});
+			this.lvBatchesToBlock.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lvBatchesToBlock.FullRowSelect = true;
+			this.lvBatchesToBlock.GridLines = true;
+			this.lvBatchesToBlock.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvBatchesToBlock.Location = new System.Drawing.Point(28, 47);
+			this.lvBatchesToBlock.Name = "lvBatchesToBlock";
+			this.lvBatchesToBlock.Size = new System.Drawing.Size(779, 599);
+			this.lvBatchesToBlock.TabIndex = 7;
+			this.lvBatchesToBlock.UseCompatibleStateImageBehavior = false;
+			this.lvBatchesToBlock.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader13
+			// 
+			this.columnHeader13.Text = "";
+			this.columnHeader13.Width = 20;
+			// 
+			// FullBatchCode
+			// 
+			this.FullBatchCode.DisplayIndex = 2;
+			this.FullBatchCode.Text = "Batch";
+			this.FullBatchCode.Width = 96;
+			// 
+			// myBatchID
+			// 
+			this.myBatchID.DisplayIndex = 1;
+			this.myBatchID.Text = "";
+			this.myBatchID.Width = 0;
+			// 
+			// CPID
+			// 
+			this.CPID.Text = "";
+			this.CPID.Width = 0;
+			// 
+			// SKU_Name
+			// 
+			this.SKU_Name.Text = "SKU";
+			this.SKU_Name.Width = 176;
+			// 
+			// itemTypeID
+			// 
+			this.itemTypeID.Text = "";
+			this.itemTypeID.Width = 0;
+			// 
+			// itemStructure
+			// 
+			this.itemStructure.Text = "Structure";
+			this.itemStructure.Width = 100;
+			// 
+			// myPartID
+			// 
+			this.myPartID.DisplayIndex = 8;
+			this.myPartID.Width = 0;
+			// 
+			// blockedPartName
+			// 
+			this.blockedPartName.DisplayIndex = 7;
+			this.blockedPartName.Text = "ColumnHeader";
+			this.blockedPartName.Width = 0;
+			// 
+			// FullBlockedPartName
+			// 
+			this.FullBlockedPartName.Text = "Blocked Parts";
+			this.FullBlockedPartName.Width = 367;
+			// 
+			// copyOfBlockedParts
+			// 
+			this.copyOfBlockedParts.Width = 0;
+			// 
+			// button6
+			// 
+			this.button6.Location = new System.Drawing.Point(1037, 433);
+			this.button6.Name = "button6";
+			this.button6.Size = new System.Drawing.Size(120, 25);
+			this.button6.TabIndex = 6;
+			this.button6.Text = "Save";
+			this.button6.UseVisualStyleBackColor = true;
+			this.button6.Click += new System.EventHandler(this.button6_Click);
+			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(898, 433);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(120, 25);
+			this.button5.TabIndex = 5;
+			this.button5.Text = "Save Bulk";
+			this.button5.UseVisualStyleBackColor = true;
+			this.button5.Click += new System.EventHandler(this.button5_Click);
+			// 
+			// cmd_ClearBlockPart
+			// 
+			this.cmd_ClearBlockPart.Location = new System.Drawing.Point(898, 472);
+			this.cmd_ClearBlockPart.Name = "cmd_ClearBlockPart";
+			this.cmd_ClearBlockPart.Size = new System.Drawing.Size(120, 25);
+			this.cmd_ClearBlockPart.TabIndex = 4;
+			this.cmd_ClearBlockPart.Text = "Clear";
+			this.cmd_ClearBlockPart.UseVisualStyleBackColor = true;
+			this.cmd_ClearBlockPart.Click += new System.EventHandler(this.cmd_ClearBlockPart_Click);
+			// 
+			// lblStructure
+			// 
+			this.lblStructure.Location = new System.Drawing.Point(899, 88);
+			this.lblStructure.Name = "lblStructure";
+			this.lblStructure.Size = new System.Drawing.Size(289, 22);
+			this.lblStructure.TabIndex = 3;
 			// 
 			// itemN
 			// 
@@ -2645,6 +2879,14 @@ namespace gemoDream
 			this.radioButton3.Text = "Tally";
 			this.radioButton3.UseVisualStyleBackColor = true;
 			// 
+			// label26
+			// 
+			this.label26.Location = new System.Drawing.Point(641, 75);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(289, 35);
+			this.label26.TabIndex = 3;
+			this.label26.Text = "label26";
+			// 
 			// cbcCustomer
 			// 
 			this.cbcCustomer.DefaultText = "Customer Lookup";
@@ -2715,6 +2957,7 @@ namespace gemoDream
 			this.tpDelivery.ResumeLayout(false);
 			this.tpDelivery.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgOrdersToDelivery)).EndInit();
+			this.tpBlockParts.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2906,7 +3149,9 @@ namespace gemoDream
 
 		private void InitGlobal()
 		{
-			
+			myActiveOrder = "";
+			isLoaded = true;
+			lvBatchesToBlock.Items.Clear();
 			tbMemoNumber.Clear();
 			this.Text = Service.sProgramTitle + "Account Representative";
 			dtDocDetails = new DataTable();
@@ -2921,7 +3166,9 @@ namespace gemoDream
 			dtCustInd = dsCustomerTypeEx.Tables["IndustryMemberships"].Copy();
 			dtStates = dsCustomerTypeEx.Tables["USStates"].Copy();
 			dtPositions = dsCustomerTypeEx.Tables["Positions"].Copy();
-			
+
+			cmd_Reset.Enabled = false;
+
 			for(int i = 1; i < dsCustomerTypeEx.Tables.Count; i++)
 				dsCustomerTypeEx.Tables.RemoveAt(i);
 		}
@@ -3594,15 +3841,28 @@ namespace gemoDream
 							return;
 						}
 					}
-
 				}
 			}
 			try
 			{
-				
-                DataSet dsOrders = Service.GetOrderTreeDataByGroupCode(sItemNum[0]);	//Procedures spGetGroupByCode, 
-    																										//spGetBatchByCode, spGetItemByCode, 
-        																									//spGetItemDocByCode, spGetStates
+				myActiveOrder = sItemNum[0];
+				if (bLoading && tcMain.SelectedIndex == 5)
+				{
+					cbCustomerProgram.Items.Clear();
+					cbCustomerProgram.Text = "Customer program lookup";
+					cbCustomerProgram.SelectedIndex = -1;
+					myActiveOrder = sItemNum[0];
+					FillBlockedDataObjects(sItemNum[0], "");
+					htBlockedPart = new Hashtable();
+					bulkMode = true;
+					indexOld = -1;
+					this.Cursor = Cursors.Default;
+					isSelectItem = false;
+					if (lvBatchesToBlock.Items.Count > 0) sbStatus.Text = "Ready";
+					else sbStatus.Text = "No batches to load";
+					return;
+				}
+				DataSet dsOrders = Service.GetOrderTreeDataByGroupCode(sItemNum[0]);	//Procedures spGetGroupByCode, spGetBatchByCode, spGetItemByCode, spGetItemDocByCode, spGetStates
 //				if(tbSearchUnit.Text.Length == 11 || tbSearchUnit.Text.Length == 18)
 #if DEBUG
                 // For debugging only			
@@ -3743,7 +4003,107 @@ namespace gemoDream
 			this.Cursor = Cursors.Default;
 			isSelectItem = false;
 		}
-        private void WrongOrderCodeMessage()
+
+		//private string[]  GetItemNumber(string sOrderGroup)
+		//{
+
+		//	return null;
+		//}
+
+//		private void InitPartTree(string sItemTypeID)
+//		{
+//			try
+//			{
+//				partView.Clear();
+//				dsStructure = new DataSet();
+//				dsStructure.Tables.Add(Service.GetParts(sItemTypeID));  //tblName : Parts	/Procedure dbo.spGetPartsByItemType
+//				dsStructure.Tables.Add(Service.GetPartsStruct());   //tblName : SetParts
+	
+//				this.partView.Initialize(dsStructure.Tables["Parts"]);
+//				this.partView.ExpandTree();
+//				partView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.partView_AfterCheck);
+//#if DEBUG
+//				// For debugging only			
+//				string filename = "C:/DELL/myXmlPartsList.xml";
+//				if (File.Exists(filename)) File.Delete(filename);
+//				// Create the FileStream to write with.
+//				System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+//				// Create an XmlTextWriter with the fileStream.
+//				System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+//				// Write to the file with the WriteXml method.
+//				dsStructure.WriteXml(myXmlWriter);
+//				myXmlWriter.Close();
+//				// End of debugging part
+//#endif
+//			}
+//			catch (Exception ex)
+		//	{
+		//		var a = ex.Message;
+		//	}
+
+		//}
+
+		//private void FillBlockedDataObjects(string sOrder, string sSelectBy)
+		//{
+		//	try
+		//	{
+		//		button5.Enabled = false;
+		//		DataSet dsBatches = GetBlockedPartsSKUBatches(sOrder);
+		//		if (dsBatches != null)
+		//		{
+		//			ListViewItem lv;
+		//			DataRow[] dRows;
+		//			isLoaded = true;
+		//			lvBatchesToBlock.Items.Clear();            //"DocumentTypeCode = '8'"
+		//			if (sSelectBy == "") dRows = dsBatches.Tables[0].Select();
+		//			else dRows = dsBatches.Tables[0].Select("CustomerProgramName = '" + sSelectBy + "'");
+
+		//			if (dRows.Length > 0)
+		//			{
+		//				foreach (DataRow dRow in dRows)
+		//				{
+		//					lv = new ListViewItem("");
+		//					if (dRow[6] != DBNull.Value) lv.Checked = true;
+		//					else lv.Checked = false;
+		//					lv.SubItems.Add(dRow[0].ToString());
+		//					lv.SubItems.Add(dRow[1].ToString());
+		//					lv.SubItems.Add(dRow[2].ToString());
+		//					lv.SubItems.Add(dRow[3].ToString());
+		//					lv.SubItems.Add(dRow[4].ToString());
+		//					lv.SubItems.Add(dRow[5].ToString());
+		//					lv.SubItems.Add(dRow[6] == DBNull.Value ? "" : dRow[6].ToString());
+		//					lv.SubItems.Add(dRow[7] == DBNull.Value ? "" : dRow[7].ToString());
+		//					lvBatchesToBlock.Items.Add(lv);
+		//				}
+		//				lvBatchesToBlock.ListViewItemSorter = new ListViewItemComparer(1);
+		//				lvBatchesToBlock.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvBatchesToBlock_ItemSelectionChanged);
+		//				lvBatchesToBlock.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lvBatchesToBlock_ItemCheck);
+		//				lvBatchesToBlock.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvBatchesToBlock_ItemChecked);
+		//			}
+		//			if (sSelectBy.Trim() == "")
+		//			{
+		//				dRows = dsBatches.Tables[1].Select();
+		//				if (dRows.Length > 0)
+		//				{
+		//					cbCustomerProgram.DataSource = dsBatches.Tables[1];
+		//					cbCustomerProgram.DisplayMember = "CustomerProgramName";
+		//					cbCustomerProgram.ValueMember = "ItemTypeID";
+		//					cbCustomerProgram.SelectedIndex = -1;
+		//					cbCustomerProgram.Text = "Customer program lookup";
+		//					cbCustomerProgram.SelectedIndexChanged += new System.EventHandler(this.cbCustomerProgram_SelectedIndexChanged);
+		//				}
+		//			}
+		//			isLoaded = false;
+		//		}
+
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		var a = ex.Message;
+		//	}
+		//}
+
+		private void WrongOrderCodeMessage()
         {
             MessageBox.Show("Order/Item could not be found. Make sure that you enter right Group Code or Item Code", 
                 "Could not find Order/Item", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);				
@@ -3752,11 +4112,11 @@ namespace gemoDream
             tcMain.Enabled = false;
         }
 				
-		#endregion Search
+#endregion Search
 
-		#endregion Tab1
+#endregion Tab1
 
-		#region Tab2		
+#region Tab2		
 				
 		//Tab2/ "Open Orders" & "Order Details"
 		private void otOpenOrders_SelectedItemChanged(object sender, EventArgs e)
@@ -3893,7 +4253,7 @@ namespace gemoDream
 				
 		}
 
-		#region PrintAndEndSession
+#region PrintAndEndSession
 		//External receipt
 		private void bPrint_Click(object sender, System.EventArgs e)
 		{
@@ -4009,7 +4369,7 @@ namespace gemoDream
 		private void FillAddServicesList(string sOrderCode, string sBatch)
 		{
 			ListViewItem lv;
-			//lvAddServices.Items.Clear();
+	
 			{
 				try
 				{
@@ -4256,7 +4616,7 @@ namespace gemoDream
 		}
 
 		//Commented on 2006.03.18 by 3ter. Now Print()'s functionality is contained by AnalyzeAndPrint(). We can remove this func at all
-		#region
+#region
 		/*
 		public static void Print(DataTable dtTable, bool isRpt, DataRow []docs)
 		{			
@@ -4313,7 +4673,7 @@ namespace gemoDream
 		}
 		
 */		
-		#endregion
+#endregion
 		//End session
 		private void bEndSession_Click(object sender, System.EventArgs e)
 		{
@@ -4482,7 +4842,7 @@ namespace gemoDream
 						}
 					}
 
-					#region BatchTracking
+#region BatchTracking
 					if(dtItemsWithOpenRecheckSession.Rows.Count > 0)
 					{
 							foreach(DataRow dr in dtBatch.Rows)
@@ -4499,7 +4859,7 @@ namespace gemoDream
 								}
 							}
 					}
-					#endregion
+#endregion
 					
 					sDoc = count.ToString();
 					//sd 10.25.2006				
@@ -4547,10 +4907,10 @@ namespace gemoDream
 			this.Cursor = Cursors.Default;
 		}
 
-		#endregion PrintAndEndSession
+#endregion PrintAndEndSession
 		
 
-		#region GoldEngraving
+#region GoldEngraving
 		private void button3_Click(object sender, System.EventArgs e)
 		{
 			//Gold Engraving
@@ -4619,7 +4979,7 @@ namespace gemoDream
 			}
 		}
 		
-		#endregion GoldEngraving
+#endregion GoldEngraving
 
 		private void pictureBox2_Paint(object sender, PaintEventArgs e)
 		{
@@ -4639,9 +4999,9 @@ namespace gemoDream
             catch{}
 		}
 
-		#endregion Tab2
+#endregion Tab2
 
-		#region Tab3
+#region Tab3
 
 		private DataSet GetCPByBatchID(string sBatchID)
 		{
@@ -5184,7 +5544,7 @@ namespace gemoDream
 						dtItems.ImportRow(drItem);
 					}
 					
-					#region BatchTracking
+#region BatchTracking
 
 					foreach(DataRow dr in dtBatch.Rows)
 						{
@@ -5199,7 +5559,7 @@ namespace gemoDream
 								Service.SetBatchEvent(EventID, BatchID, FormID, ItemsAffected, ItemsInBatch);
 							}
 						}
-					#endregion
+#endregion
 
 				}
 				catch (Exception ex)
@@ -5307,7 +5667,7 @@ namespace gemoDream
 				}
 		}
 
-		#region ReadingBarCode
+#region ReadingBarCode
 		private void tbOrderName_TextChanged(object sender, System.EventArgs e)
 		{
 			if(tbOrderName.Text.Length == 5)
@@ -5416,16 +5776,16 @@ namespace gemoDream
 		}		
 		
 
-		#endregion ReadingBarCode
-		#endregion Tab3		
+#endregion ReadingBarCode
+#endregion Tab3		
 
-		#region StatusBar
+#region StatusBar
 		private void bFax_Click(object sender, System.EventArgs e)
 		{
 
 			button13_Click(sender,e);
 
-			#region Old
+#region Old
 			StringBuilder sb = new StringBuilder();
 			sbStatus.Text = "Sending fax";
 			this.Cursor = Cursors.WaitCursor;			
@@ -5822,7 +6182,7 @@ namespace gemoDream
 				}
 			}
 			this.Cursor = Cursors.Default;
-			#endregion 
+#endregion
 
 		}
 
@@ -6123,7 +6483,7 @@ namespace gemoDream
 						dtItems.Rows[count]["LotNumber"]=dsItem1.Tables[0].Rows[0]["LotNumber"].ToString();		
 						dtItems.Rows[count]["Weight"] = dsItem1.Tables[0].Rows[0]["Weight"] == DBNull.Value ? 0 : dsItem1.Tables[0].Rows[0]["Weight"];
 
-						#region Get ItemContanier&DiamondWeigth
+#region Get ItemContanier&DiamondWeigth
 						DataTable dtParts = gemoDream.Service.GetParts(dtItems.Rows[count]["ItemTypeId"].ToString());
 			
 						DataSet dsIn1 = new DataSet();
@@ -6137,7 +6497,7 @@ namespace gemoDream
 							DataRow [] drItemContainersPartsIds = dtParts.Select("PartTypeID="+drPartTypeItemContainerId[0]["PartTypeID"].ToString());
 							DataRow [] drDiamondsPartsIds = dtParts.Select("PartTypeID="+drPartTypeDiamondId[0]["PartTypeID"].ToString());
 
-							#region GetPartValue
+#region GetPartValue
 							DataSet dsIn=new DataSet();
 							dsIn.Tables.Add("PartValueTypeEx");
 							DataSet dsOut=gemoDream.Service.GenericGetCrystalSet(dsIn);
@@ -6155,7 +6515,7 @@ namespace gemoDream
 							dsOut.Tables[0].TableName="PartValue";
 							DataSet dsPartValue=gemoDream.Service.GenericGetCrystalSet(dsOut);
 							gemoDream.Service.Debug_DiaspalyDataSet(dsPartValue);
-							#endregion
+#endregion
 
 							for(int i=0;i<drItemContainersPartsIds.Length;i++)
 							{
@@ -6205,7 +6565,7 @@ namespace gemoDream
 						//		throw new Exception("NoWeight");
 						//	}
 
-						#endregion
+#endregion
 
 
 						string sCommentsByMeasureTitle = null;
@@ -6304,7 +6664,7 @@ namespace gemoDream
 								rFile["Shape"]="";
 							}
 							
-							#region dimensions
+#region dimensions
 											
 							sMax = Service.GetMeasureValue("Max", dtPartValues, rPart["ID"].ToString());
 							sMin = Service.GetMeasureValue("Min", dtPartValues, rPart["ID"].ToString());
@@ -6386,7 +6746,7 @@ namespace gemoDream
 							{
 								rFile["Hx"]="";
 							}
-							#endregion
+#endregion
 							try
 							{
 								if(isTotalWeight) //use ItemContanier Weight
@@ -7168,7 +7528,7 @@ namespace gemoDream
 			sbStatus.Text = "Operations list. Select an item to view all available operations";
 		}
 
-		#endregion StatusBar
+#endregion StatusBar
 
 		private void tbSearchUnit_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
@@ -7213,7 +7573,7 @@ namespace gemoDream
 				DataSet dsChecked = otOpenOrders.Get();
 				
 				if (dsChecked.Tables["tblBatch"].Rows.Count == 0)
-					throw new Exception  ("Error: No batches were selected to invoice");
+					throw new Exception  ("Error: No batches were selected for invoicing");
 					
 
 				if (dsChecked.Tables["tblOrder"].Rows.Count != 0)
@@ -7234,6 +7594,8 @@ namespace gemoDream
 					if (dsTemp.Tables[0].Rows.Count == 1)
 					{
 						var AccountType = dsTemp.Tables[0].Rows[0][0].ToString();
+						closeExit = false;
+						addressToBill = "";
 						BillingOptions billToAccount; //= new BillingOptions();
 
 						billToAccount = new BillingOptions(Convert.ToInt16(AccountType));
@@ -7355,7 +7717,7 @@ namespace gemoDream
 							}
 						}
 
-						#region BatchTracking
+#region BatchTracking
 						int iItemsAffected = 0;
 						iItemsAffected = dtItems4Invoice.Select("BatchID = '" + drBatch["BatchID"] + "' AND NOT Description LIKE '*Item is already billed*'").Length;
 						if (sInvoiceID != "" && iItemsAffected > 0)
@@ -7367,7 +7729,7 @@ namespace gemoDream
 							object FormID = GraderLib.Codes.AccRep;
 							Service.SetBatchEvent(EventID, BatchID, FormID, ItemsAffected, ItemsInBatch);
 						}
-						#endregion
+#endregion
 					}
 					//				string msg = "";
 					//
@@ -7394,7 +7756,7 @@ namespace gemoDream
 					{
 						sMsgText = sMsgText + dr["FullBatch"].ToString() + ": " + dr["Result"].ToString() + "\n";
 					}
-					MessageBox.Show(sMsgText, "Order:" + dsChecked.Tables["tblOrder"].Rows[0]["OrderCode"].ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(sMsgText, "Order: " + dsChecked.Tables["tblOrder"].Rows[0]["OrderCode"].ToString() + ", billed to " + addressToBill, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 					sOperationMsg = "Operation succeed";
 					sbStatus.Text = sOperationMsg;
@@ -8253,11 +8615,20 @@ namespace gemoDream
 
 		private void tcMain_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if(bLoading && tcMain.SelectedIndex == 4)
+			if (bLoading && tcMain.SelectedIndex == 4)
 			{
 				tbSearchUnit.Text = "";
 				tbOrderToDelivery.Text = "";
 				tbOrderToDelivery.Focus();
+			}
+			if (bLoading && tcMain.SelectedIndex == 5)
+			{
+				tcMain.SelectedTab = tcMain.TabPages[5];
+				if (myActiveOrder.Trim() != "")
+				{
+					FillBlockedDataObjects(myActiveOrder, "");
+					//cbCustomerProgram.SelectedIndexChanged += new System.EventHandler(this.cbCustomerProgram_SelectedIndexChanged);
+				}
 			}
 		}
 
@@ -8502,6 +8873,7 @@ namespace gemoDream
 			}
 		}
 
+
 		private void otOpenOrders_AfterCheck(object sender, TreeViewEventArgs e)
 		{
 			var a = e.Node.Level;
@@ -8721,7 +9093,7 @@ namespace gemoDream
 		//		}
 		//	}
 		//	catch { }
-			
+
 		//}
 		//private void otOpenOrders_AfterExpand(object sender, TreeViewEventArgs e)
 		//{
@@ -8771,11 +9143,652 @@ namespace gemoDream
 		//	//			break;
 		//	//	}
 		//	//}
-	 	
+
 		//	//catch { }
 		//}
+		#region Blocking_Parts
+		private DataSet GetBlockedPartsSKUBatches(string sOrder)
+		{
+			DataSet dsTemp = new DataSet();
+			dsTemp.Tables.Add("BatchBlockedParts1");
+			dsTemp.Tables[0].Columns.Add("GroupCode", Type.GetType("System.String"));
+			dsTemp.Tables[0].Columns.Add("BatchCode", Type.GetType("System.String"));
+			dsTemp.Tables[0].Rows.Add(dsTemp.Tables[0].NewRow());
+			dsTemp.Tables[0].Rows[0][0] = sOrder;
+			dsTemp.Tables[0].Rows[0][1] = "0";
+			DataSet dsOut = Service.ProxyGenericGet(dsTemp); //Procedure [dbo].[spGetBatchBlockedParts]
+			return dsOut;
+		}
 
-		// Implements the manual sorting of items by columns.
+		private void FillBlockedDataObjects(string sOrder, string sSelectBy)
+		{
+			try
+			{
+				label22.Text = "";
+				lblStructure.Text = "";
+				button5.Enabled = false;
+				DataSet dsBatches = GetBlockedPartsSKUBatches(sOrder);
+#if DEBUG
+				// For debugging only			
+				string filename = "C:/DELL/myXmlBlockedBatches.xml";
+				if (File.Exists(filename)) File.Delete(filename);
+				// Create the FileStream to write with.
+				System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+				// Create an XmlTextWriter with the fileStream.
+				System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+				// Write to the file with the WriteXml method.
+				dsBatches.WriteXml(myXmlWriter);
+				myXmlWriter.Close();
+				// End of debugging part
+#endif
+				if (dsBatches != null)
+				{
+					ListViewItem lv;
+					DataRow[] dRows;
+					isLoaded = true;
+					lvBatchesToBlock.Items.Clear();
+					if (sSelectBy == "") dRows = dsBatches.Tables[0].Select();
+					else dRows = dsBatches.Tables[0].Select("CustomerProgramName = '" + sSelectBy + "'");
+
+					if (dRows.Length > 0)
+					{
+						foreach (DataRow dRow in dRows)
+						{
+							lv = new ListViewItem("");
+							//if (dRow[6].ToString() != "") lv.Checked = true;
+							//else
+							lv.Checked = false;
+							lv.SubItems.Add(dRow[0].ToString());
+							lv.SubItems.Add(dRow[1].ToString());
+							lv.SubItems.Add(dRow[2].ToString());
+							lv.SubItems.Add(dRow[3].ToString());
+							lv.SubItems.Add(dRow[4].ToString());
+							lv.SubItems.Add(dRow[5].ToString());
+							dRow[6] = dRow[6] == DBNull.Value ? "" : dRow[6].ToString();
+							dRow[6] = dRow[6].ToString().TrimStart(';');
+							dRow[7] = dRow[7] == DBNull.Value ? "" : dRow[7].ToString();
+							dRow[7] = dRow[7].ToString().TrimStart(';');
+							dRow[8] = dRow[8] == DBNull.Value ? "" : dRow[8].ToString();
+							dRow[8] = dRow[8].ToString().TrimStart(';');
+							var temp = dRow[8].ToString();
+							lv.SubItems.Add(dRow[6].ToString()); // == DBNull.Value ? "" : dRow[6].ToString());
+							lv.SubItems.Add(dRow[7].ToString()); // == DBNull.Value ? "" : dRow[7].ToString());
+							lv.SubItems.Add(dRow[8].ToString());
+							//lv.SubItems.Add(dRow[6].ToString());
+							//lv.SubItems.Add(dRow[7].ToString());
+							lvBatchesToBlock.Items.Add(lv);
+						}
+						lvBatchesToBlock.ListViewItemSorter = new ListViewItemComparer(1);
+						lvBatchesToBlock.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvBatchesToBlock_ItemSelectionChanged);
+						//lvBatchesToBlock.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lvBatchesToBlock_ItemCheck);
+						//lvBatchesToBlock.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvBatchesToBlock_ItemChecked);
+					}
+					if (sSelectBy.Trim() == "")
+					{
+						dRows = dsBatches.Tables[1].Select();
+						if (dRows.Length > 0)
+						{
+							cbCustomerProgram.DataSource = dsBatches.Tables[1];
+							cbCustomerProgram.DisplayMember = "CustomerProgramName";
+							cbCustomerProgram.ValueMember = "ItemTypeID";
+							cbCustomerProgram.SelectedIndex = -1;
+							cbCustomerProgram.Text = "Customer program lookup";
+							//cbCustomerProgram.SelectedIndexChanged += new System.EventHandler(this.cbCustomerProgram_SelectedIndexChanged);
+						}
+					}
+					//cbCustomerProgram.SelectedIndexChanged += new System.EventHandler(this.cbCustomerProgram_SelectedIndexChanged);
+					isLoaded = false;
+					cmd_Reset.Enabled = true;
+					cbCustomerProgram.SelectedIndexChanged += new System.EventHandler(this.cbCustomerProgram_SelectedIndexChanged);
+
+				}
+
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+		private void InitPartTree(string sItemTypeID)
+		{
+			try
+			{
+				partView.Clear();
+				dsStructure = new DataSet();
+				dsStructure.Tables.Add(Service.GetParts(sItemTypeID));  //tblName : Parts	/Procedure dbo.spGetPartsByItemType
+				//dsStructure.Tables.Add(Service.GetPartsStruct());   //tblName : SetParts
+
+				this.partView.Initialize(dsStructure.Tables["Parts"]);
+				this.partView.ExpandTree();
+				//partView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.partView_AfterCheck);
+#if DEBUG
+				// For debugging only			
+				string filename = "C:/DELL/myXmlPartsList.xml";
+				if (File.Exists(filename)) File.Delete(filename);
+				// Create the FileStream to write with.
+				System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+				// Create an XmlTextWriter with the fileStream.
+				System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+				// Write to the file with the WriteXml method.
+				dsStructure.WriteXml(myXmlWriter);
+				myXmlWriter.Close();
+				// End of debugging part
+#endif
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		private void cbCustomerProgram_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (isLoaded) return;
+			if (reset) return;
+			if (bulkMode)
+			{
+				
+				var selectedSKU = cbCustomerProgram.Text.ToString();
+				resetBlockedParts();
+				FillBlockedDataObjects(myActiveOrder, selectedSKU);
+				var sItemTypeID = cbCustomerProgram.SelectedValue;
+				//InitPartTree(sItemTypeID.ToString());
+				button5.Enabled = true;
+				if (lvBatchesToBlock.Items.Count > 0)
+				{
+					lvBatchesToBlock.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvBatchesToBlock_ItemSelectionChanged);
+					lvBatchesToBlock.Items[0].Selected = true;
+					lvBatchesToBlock.Items[0].Checked = true;
+					lvBatchesToBlock.Items[0].BackColor = Color.SkyBlue;
+					bulkMode = false;
+				}
+				//lvBatchesToBlock.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lvBatchesToBlock_ItemChecked);
+			}
+		}
+
+		//private void UpdatePartTree(TreeNodeCollection nodes, List<string> partID, bool toCheck)
+		//{
+		//   try
+		//	{
+		//		if (partID.Count > 0)
+		//		{
+		//			foreach (var node in partID)
+		//			{
+		//				foreach (TreeNode tn in nodes)
+		//				{
+		//					if (node.Trim().ToUpper() == "ITEM CONTAINER" && tn.Text.Trim().ToUpper() == node.Trim().ToUpper())
+		//					{
+		//						tn.Checked = toCheck;
+		//						continue;
+		//					}
+		//					FindRecursive(tn, node.Trim(), toCheck);
+		//				}
+		//			}
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		var a = ex.Message;
+		//	}
+
+		//}
+
+		private void lvBatchesToBlock_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		{
+			try
+			{
+				if (reset) return;
+				//var a = 123;
+				var BatchID = "";
+				var SKU = "";
+				var indexNew = e.Item.Index;
+				if (indexNew == indexOld) return;
+				foreach (ListViewItem item in lvBatchesToBlock.Items)
+				{
+					item.BackColor = Color.White;
+				}
+				e.Item.BackColor = Color.SkyBlue;
+				List<string> partID = new List<string>();
+				isLoaded = true;
+				var itemTypeID = e.Item.SubItems[5].Text;
+				lblStructure.Text = "";
+				label22.Text = "";
+				InitPartTree(itemTypeID.ToString());
+				lblStructure.Text = e.Item.SubItems[6].Text;
+				BatchID = e.Item.SubItems[1].Text;
+				SKU = e.Item.SubItems[4].Text;
+				//label22.Text = "Batch " + e.Item.SubItems[1].Text;
+				//if (e.Item.Checked)
+				{
+	
+					lblStructure.Text = e.Item.SubItems[6].Text;
+					label22.Text = "Batch " + e.Item.SubItems[1].Text;
+					var myParts1 = e.Item.SubItems[9].Text.Split(';');
+					foreach (var item in myParts1)
+					{
+						partID.Add(item.ToString());
+					}
+					Service.UpdatePartTree(partView.tvPartTree.Nodes, partID, true);
+					partView.AfterCheck += new TreeViewEventHandler(this.partView_AfterCheck);
+					//myParts = new ArrayList();
+					//GetCheckedPartFromPartTree(partView.tvPartTree.Nodes, ref myParts);
+
+					//comboBox1.FindString(textBox1.Text); 
+					bulkMode = false;
+					var index = cbCustomerProgram.FindStringExact(SKU);
+					cbCustomerProgram.SelectedIndex = index;
+					isLoaded = false;
+					bulkMode = true;
+					indexOld = indexNew;
+				}
+				//else
+				//{
+				//	partView.Clear();
+				//	cbCustomerProgram.SelectedIndex = -1;
+				//	cbCustomerProgram.Text = "Customer program lookup";
+				//}
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		//private void FindRecursive(TreeNode treeNode, string findNode, bool toCheck)
+		//{
+		//	foreach (TreeNode tn in treeNode.Nodes)
+		//	{
+		//		if (tn.Text == findNode.Trim())
+		//			tn.Checked = toCheck;
+		//		FindRecursive(tn, findNode.Trim(), toCheck);
+		//	}
+		//}
+
+		private void RefreshListView()
+		{
+			try
+			{
+				isLoaded = true;
+				DataTable table = new DataTable();
+				var columns = lvBatchesToBlock.Columns.Count;
+				foreach (ColumnHeader column in lvBatchesToBlock.Columns)
+					table.Columns.Add(column.Text);
+				foreach (ListViewItem item in lvBatchesToBlock.Items)
+				{
+					var cells = new object[columns];
+					for (var i = 0; i < columns; i++)
+					{
+						if (i == 0)
+						{
+							if (item.Checked) cells[i] = "1";
+							else cells[i] = "0";
+						}
+						else cells[i] = item.SubItems[i].Text;
+					}
+					table.Rows.Add(cells);
+				}
+				lvBatchesToBlock.Items.Clear();
+				DataTable results = table.AsEnumerable().Distinct().CopyToDataTable();
+				ListViewItem lv;
+				DataRow[] dRows;
+				lvBatchesToBlock.Items.Clear();            //"DocumentTypeCode = '8'"
+				dRows = results.Select();
+				if (dRows.Length > 0)
+				{
+					foreach (DataRow dRow in dRows)
+					{
+						lv = new ListViewItem("");
+						if (dRow[0].ToString() != "0") lv.Checked = true;
+						else lv.Checked = false;
+						lv.SubItems.Add(dRow[1].ToString());
+						lv.SubItems.Add(dRow[2].ToString());
+						lv.SubItems.Add(dRow[3].ToString());
+						lv.SubItems.Add(dRow[4].ToString());
+						lv.SubItems.Add(dRow[5].ToString());
+						lv.SubItems.Add(dRow[6].ToString());
+						lv.SubItems.Add(dRow[7].ToString());
+						lv.SubItems.Add(dRow[8].ToString());
+						lvBatchesToBlock.Items.Add(lv);
+					}
+					lvBatchesToBlock.ListViewItemSorter = new ListViewItemComparer(1);
+					isLoaded = false;
+				}
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		private void lvBatchesToBlock_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			try
+			{
+				return;
+				if (isLoaded) return;
+				if (!bulkMode) return;
+				var BatchID = "";
+				var SKU = "";
+				List<string> partID = new List<string>();
+				isLoaded = true;
+				var itemTypeID = e.Item.SubItems[5].Text;
+				//InitPartTree(itemTypeID.ToString());
+				lblStructure.Text = "";
+				label22.Text = "";
+				BatchID = e.Item.SubItems[1].Text;
+				SKU = e.Item.SubItems[4].Text;
+				
+				if (e.Item.Checked)
+				{
+					InitPartTree(itemTypeID.ToString());
+					lblStructure.Text = e.Item.SubItems[6].Text;
+					label22.Text = "Batch " + e.Item.SubItems[1].Text;
+					//var BatchID = e.Item.SubItems[1].Text;
+					//label22.Text = "Batch " + BatchID;
+					//List<string> partID = new List<string>();
+					//var partName = e.Item.SubItems[8].Text
+					//	.Replace("White Diamond Stone Set", "WDS")
+					//	.Replace("Color Diamond Stone Set", "CDS")
+					//	.Replace("Color Stone Set", "CSS")
+					//	.Replace("Colored diamond", "CD");
+					//partID.Add(partName);
+					var myParts = e.Item.SubItems[8].Text.Split(';');
+					foreach (var item in myParts)
+					{
+						partID.Add(item.ToString());
+					}
+					Service.UpdatePartTree(partView.tvPartTree.Nodes, partID, e.Item.Checked);
+					partView.AfterCheck += new TreeViewEventHandler(this.partView_AfterCheck);
+					bulkMode = false;
+					var index = cbCustomerProgram.FindStringExact(SKU);
+					cbCustomerProgram.SelectedIndex = index;
+					bulkMode = true;
+					//e.Item.SubItems[7].Text = "";
+					//e.Item.SubItems[8].Text = "";
+				}
+				else
+				{
+					partView.Clear();
+					cbCustomerProgram.SelectedIndex = -1;
+					cbCustomerProgram.Text = "Customer program lookup";
+
+				}
+				isLoaded = false;
+			}
+			catch (Exception ex)
+			{
+				var aa = ex.Message;
+			}
+			//var a = 123;
+		}
+
+		private void lvBatchesToBlock_ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			//var a = 123;
+		}
+
+		private void partView_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			try
+			{
+				if (reset) return;
+				if (isLoaded) return;
+				var a = e.Node.Text;
+				var b = e.Node.ImageKey;
+				//var BatchCode = lvBatchesToBlock.SelectedItems[0].SubItems[1].Text;
+				var c = ""; // = lvBatchesToBlock.SelectedItems[0].SubItems[9].Text;
+				var ee = ""; // lvBatchesToBlock.SelectedItems[0].SubItems[7].Text;
+				var index = lvBatchesToBlock.SelectedIndices[0];
+				//var c0 = c.Split(';');
+				ArrayList myParts = new ArrayList();
+				ArrayList myPartsNames = new ArrayList();
+				
+				Service.GetCheckedPartFromPartTree(partView.tvPartTree.Nodes, ref myParts, ref myPartsNames);
+				//////if (e.Node.Checked)
+				//////{
+				//////	foreach(var item in c0)
+				//////	{
+				//////		if (item.ToUpper() == a.ToUpper()) return;
+				//////		c = c = c + ";" + a;
+				//////		ee = ee + ";" + b;
+				//////	}
+				//////	//if (c.Contains(a)) return;
+				//////	//c = c + ";" + a;
+				//////	//lvBatchesToBlock.SelectedItems[0].SubItems[8].Text = c.Replace(";;", ";").TrimStart(';').TrimEnd(';');
+				//////	ee = ee + ";" + b;
+				//////	//lvBatchesToBlock.SelectedItems[0].SubItems[7].Text = ee.Replace(";;", ";").TrimStart(';').TrimEnd(';');
+				//////}
+				//////else
+				//////{
+				//////	ee = ee.Replace(b, "");
+				//////	for (int i = 0; i < c0.Length; i++)
+				//////	{
+				//////		if (c0[i].ToUpper() == a.ToUpper())
+				//////		{
+				//////			c0[i] = "";
+				//////		}
+
+				//////	}
+				//////	c = "";
+				//////	foreach (var item in c0)
+				//////	{
+				//////		c = c + ";" + item;
+				//////	}
+
+				//////	//lvBatchesToBlock.SelectedItems[0].SubItems[8].Text = c.Replace(";;", ";").TrimStart(';').TrimEnd(';');
+				//////	//lvBatchesToBlock.SelectedItems[0].SubItems[7].Text = ee.Replace(";;", ";").TrimStart(';').TrimEnd(';');
+				//////}
+			
+				if (myPartsNames.Count > 0)
+				{
+					c = "";
+					foreach (var item in myPartsNames)
+					{
+						c = c + "; " + item;
+					}
+				}
+				else c = "";
+				if (myParts.Count > 0)
+				{
+					ee = "";
+					foreach (var item in myParts)
+					{
+						ee = ee + ";" + item;
+					}
+
+				}
+				lvBatchesToBlock.SelectedItems[0].SubItems[8].Text = ""; //cc.Replace(";;", ";").TrimStart(';').TrimEnd(';');
+				lvBatchesToBlock.SelectedItems[0].SubItems[7].Text = ee.Replace(";;", ";").TrimStart(';').TrimEnd(';').Trim();
+				lvBatchesToBlock.SelectedItems[0].SubItems[9].Text = c.Replace(";;", ";").TrimStart(';').TrimEnd(';').Trim();
+				//if (lvBatchesToBlock.SelectedItems[0].SubItems[8].Text != lvBatchesToBlock.SelectedItems[0].SubItems[10].Text)
+				{
+					//try
+					//{
+					//	htBlockedPart.Add(index, "Changed");
+					//}
+					//catch { }
+					lvBatchesToBlock.SelectedItems[0].Checked = true;
+				}
+				//else lvBatchesToBlock.SelectedItems[0].Checked = false;
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		} //partView_AfterCheck
+
+		private void cmd_ClearBlockPart_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				lvBatchesToBlock.Items.Clear();
+				partView.Clear();
+				cbCustomerProgram.DataSource = null;
+				cbCustomerProgram.Items.Clear();
+				lblStructure.Text = "";
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+ 		private void cmd_Reset_Click(object sender, EventArgs e)
+		{
+			resetBlockedParts();
+		}
+
+		private void resetBlockedParts()
+		{
+			try
+			{
+				reset = true;
+				cbCustomerProgram.DataSource = null;
+				cbCustomerProgram.Items.Clear();
+				//myActiveOrder = sItemNum[0];
+				lvBatchesToBlock.Items.Clear();
+				partView.Clear();
+				FillBlockedDataObjects(myActiveOrder, "");
+				cbCustomerProgram.Text = "Customer program lookup";
+				cbCustomerProgram.SelectedIndex = -1;
+				bulkMode = true;
+				indexOld = -1;
+				this.Cursor = Cursors.Default;
+				isSelectItem = false;
+				htBlockedPart = null;
+				reset = false;
+				lvBatchesToBlock.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvBatchesToBlock_ItemSelectionChanged);
+				return;
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+			SaveBlockedParts();
+		}
+
+		private void SaveBlockedParts()
+		{
+			DataSet dsTemp = new DataSet("Batches");
+			DataTable dt = new DataTable("PartsPerBatch");
+ 			int[] ColumnIndex = { 2, 3, 7 };
+
+			try
+			{
+				var list = lvBatchesToBlock.CheckedIndices.Cast<int>().ToList();
+				if (list.Count > 0)
+				{
+					foreach (var i in ColumnIndex)
+					{
+						dt.Columns.Add("Col" + i.ToString());
+					}
+					foreach (var item in list)
+					{
+						if (lvBatchesToBlock.Items[item].SubItems[7].Text.Trim() == "")
+						{
+							DataRow dr = dt.NewRow();
+							foreach (int i in ColumnIndex)
+							{
+								if (i != 7)
+									dr["Col" + i.ToString()] = lvBatchesToBlock.Items[item].SubItems[i].Text;
+								else dr["Col" + i.ToString()] = "";
+							}
+							dt.Rows.Add(dr);
+						}
+						else
+						{
+							var parts0 = lvBatchesToBlock.Items[item].SubItems[7].Text.Split(';');
+							foreach (var aa in parts0)
+							{
+								DataRow dr = dt.NewRow();
+								foreach (int i in ColumnIndex)
+								{
+									if (i != 7)
+										dr["Col" + i.ToString()] = lvBatchesToBlock.Items[item].SubItems[i].Text;
+									else dr["Col" + i.ToString()] = aa;
+								}
+								dt.Rows.Add(dr);
+							}
+						}
+					}
+					dsTemp.Tables.Add(dt);
+#if DEBUG
+					// For debugging only			
+					string filename = "C:/DELL/myXmlBlockedPartsList.xml";
+					if (File.Exists(filename)) File.Delete(filename);
+					// Create the FileStream to write with.
+					System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+					// Create an XmlTextWriter with the fileStream.
+					System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+					// Write to the file with the WriteXml method.
+					dsTemp.WriteXml(myXmlWriter);
+					myXmlWriter.Close();
+					// End of debugging part
+#endif
+					DataSet dsIn = new DataSet();
+					DataTable dtIn = dsIn.Tables.Add("SaveBlockedPartsByBatch");
+					dtIn.Columns.Add("XmlBlockedParts", System.Type.GetType("System.String"));
+					DataRow row = dtIn.NewRow();
+					dtIn.Rows.Add(row);
+					row["XmlBlockedParts"] = dsTemp.GetXml();
+					DataSet dsOut = Service.ProxyGenericSet(dsIn, "Set");
+					sbStatus.Text = "Batches Updated";
+					resetBlockedParts();
+				}
+			}
+			catch(Exception ex)
+			{
+				var a = ex.Message;
+			}
+
+		}
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (lvBatchesToBlock.Items.Count > 0)
+				{
+					if (lvBatchesToBlock.Items[0].Checked)
+					{
+						var aa = lvBatchesToBlock.Items[0].SubItems[7].Text;
+						var bb = lvBatchesToBlock.Items[0].SubItems[8].Text;
+						var cc = lvBatchesToBlock.Items[0].SubItems[9].Text;
+						for (var item = 0; item < lvBatchesToBlock.Items.Count; item++)
+						{
+							lvBatchesToBlock.Items[item].SubItems[7].Text = aa;
+							lvBatchesToBlock.Items[item].SubItems[8].Text = bb;
+							lvBatchesToBlock.Items[item].SubItems[9].Text = cc;
+							lvBatchesToBlock.Items[item].Checked = true;
+						}
+					}
+				}
+				DialogResult result = MessageBox.Show("Is it OK to save bulk?", "Bulk blocked parts", MessageBoxButtons.YesNo);
+				if (result == DialogResult.Yes)
+					SaveBlockedParts();
+				else
+				{
+					//bulkMode = true;
+					//cbCustomerProgram_SelectedIndexChanged(sender, System.EventArgs.Empty);
+					resetBlockedParts();
+				}
+			}
+			catch(Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
+
+		private void cbCustomerProgram_Click(object sender, EventArgs e)
+		{
+			bulkMode = true;
+		}
+		#endregion Blocking_Parts
+
 		class ListViewItemComparer : IComparer
 		{
 			private int col;
@@ -8793,5 +9806,9 @@ namespace gemoDream
 			}
 		}
 
+		//private void cbCustomerProgram_Click(object sender, EventArgs e)
+		//{
+
+		//}
 	}
 }

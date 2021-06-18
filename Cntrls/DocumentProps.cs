@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using gemoDream;
 
 namespace Cntrls
@@ -44,6 +45,7 @@ namespace Cntrls
 		private string sCPName;
 		private DataSet dsData;
 		private DataSet dsParts;
+		private DataSet dsBlockedParts;
 		private DataTable dtPartsInfo;
 		DataRow[] adrInfo;
 		public Cntrls.PartTree ptPartTree;
@@ -457,6 +459,7 @@ namespace Cntrls
 			// 
 			// ptPartTree
 			// 
+			this.ptPartTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ptPartTree.Location = new System.Drawing.Point(5, 15);
 			this.ptPartTree.Name = "ptPartTree";
 			this.ptPartTree.Size = new System.Drawing.Size(195, 222);
@@ -500,28 +503,72 @@ namespace Cntrls
 
 		private void Init()
 		{
-			chbDocEnabled.Checked = false;
-			
-			ptPartTree.Enabled = false;
-			gbToDo.Enabled = false;
-			gbToDo.Enabled = false;
-			ptPartTree.Initialize(dsParts.Tables["Parts"]);
-			ptPartTree.ExpandTree();
-			chbShowDoc1.Checked = false;
-			chbShowDoc2.Checked = false;
-			chbShowDoc3.Checked = false;
-			chbShowDoc4.Checked = false;
-			chbShowDoc5.Checked = false;
-			chbShowDoc6.Checked = false;
+			try
+			{
+				chbDocEnabled.Checked = false;
 
-			chbShowDoc1.Enabled = false;
-			chbShowDoc2.Enabled = false;
-			chbShowDoc3.Enabled = false;
-			chbShowDoc4.Enabled = false;
-			chbShowDoc5.Enabled = false;
-			chbShowDoc6.Enabled = false;
+				ptPartTree.Enabled = false;
+				gbToDo.Enabled = false;
+				gbToDo.Enabled = false;
+				ptPartTree.Initialize(dsParts.Tables["Parts"]);
+				ptPartTree.ExpandTree();
+				chbShowDoc1.Checked = false;
+				chbShowDoc2.Checked = false;
+				chbShowDoc3.Checked = false;
+				chbShowDoc4.Checked = false;
+				chbShowDoc5.Checked = false;
+				chbShowDoc6.Checked = false;
+
+				chbShowDoc1.Enabled = false;
+				chbShowDoc2.Enabled = false;
+				chbShowDoc3.Enabled = false;
+				chbShowDoc4.Enabled = false;
+				chbShowDoc5.Enabled = false;
+				chbShowDoc6.Enabled = false;
+	
+			}
+			catch(Exception ex)
+			{
+				var a = ex.Message;
+			}
 		}
 
+		//private void UpdatePartTree(TreeNodeCollection nodes, List<string> partID, bool toCheck)
+		//{
+		//	try
+		//	{
+		//		if (partID.Count > 0)
+		//		{
+		//			foreach (string node in partID)
+		//			{
+		//				foreach (TreeNode tn in nodes)
+		//				{
+		//					if (node.Trim().ToUpper() == "ITEM CONTAINER" && tn.Text.Trim().ToUpper() == node.Trim().ToUpper())
+		//					{
+		//						tn.Checked = toCheck;
+		//						continue;
+		//					}
+		//					FindRecursive(tn, node.Trim(), toCheck);
+		//				}
+		//			}
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		var a = ex.Message;
+		//	}
+
+		//}
+
+		//private void FindRecursive(TreeNode treeNode, string findNode, bool toCheck)
+		//{
+		//	foreach (TreeNode tn in treeNode.Nodes)
+		//	{
+		//		if (tn.Text == findNode)
+		//			tn.Checked = toCheck;
+		//		FindRecursive(tn, findNode, toCheck);
+		//	}
+		//}
 
 		public void InitRechecks(DataView dvData)
 		{
@@ -568,12 +615,39 @@ namespace Cntrls
 			return ts1;
 		}
 
-
 		//PartTreeInit
 		public void InitTree(DataTable dtIni)
 		{
-			ptPartTree.Initialize(dtIni);
-			ptPartTree.ExpandTree();
+			try
+			{
+				ptPartTree.Initialize(dtIni);
+				ptPartTree.ExpandTree();
+
+				DataSet dsTemp = new DataSet();
+				dsTemp.Tables.Add("BlockedPartsBySKU");
+				dsTemp.Tables[0].Columns.Add("CPID", Type.GetType("System.String"));
+				dsTemp.Tables[0].Rows.Add(dsTemp.Tables[0].NewRow());
+				dsTemp.Tables[0].Rows[0][0] = sCPID;
+				dsBlockedParts = Service.ProxyGenericGet(dsTemp);
+				if (dsBlockedParts.Tables.Count > 0)
+				{
+					if (dsBlockedParts.Tables[0].Rows.Count == 1)
+					{
+						string[] myParts = dsBlockedParts.Tables[0].Rows[0][8].ToString().TrimStart(';').Split(';');
+						//ArrayList partID = new ArrayList();
+						List<string> partID = new List<string>();
+						foreach (var part in myParts)
+						{
+							partID.Add(part);
+						}
+						Service.UpdatePartTree(ptPartTree.tvPartTree.Nodes, partID, true);
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				var a = ex.Message;
+			}
 		}
 
 
@@ -1538,7 +1612,7 @@ namespace Cntrls
 					string sCPName = this.sCPName;
 					if(this.iAccessLevel > 2)
 					{
-						sDocumentID = DefineDocumentForm.AddOperation(	
+						sDocumentID = gemoDream.DefineDocumentForm.AddOperation(	
 							this.iAccessLevel,
 							dsNotVCCM,
 							this.newOperationsList, 

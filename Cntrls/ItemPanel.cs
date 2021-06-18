@@ -159,24 +159,23 @@ namespace Cntrls
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Ring Type1", 1, 1);
-			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Ring Type2--1");
-			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Ring Type2--2");
-			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Ring Type2", 4, 4, new System.Windows.Forms.TreeNode[] {
-			treeNode11,
-			treeNode12});
-			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Ring Type3", 2, 2);
-			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Rings", new System.Windows.Forms.TreeNode[] {
-			treeNode10,
-			treeNode13,
-			treeNode14});
-			System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Studs", 5, 5);
-			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("...", 1, 1);
-			System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("...", 3, 3);
+			System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Ring Type1", 1, 1);
+			System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Ring Type2--1");
+			System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Ring Type2--2");
+			System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Ring Type2", 4, 4, new System.Windows.Forms.TreeNode[] {
+            treeNode20,
+            treeNode21});
+			System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Ring Type3", 2, 2);
+			System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Rings", new System.Windows.Forms.TreeNode[] {
+            treeNode19,
+            treeNode22,
+            treeNode23});
+			System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Studs", 5, 5);
+			System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("...", 1, 1);
+			System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("...", 3, 3);
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemPanel));
 			this.GroupBox = new System.Windows.Forms.GroupBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.ptItemStructure = new Cntrls.PartTreeEx();
 			this.listItems = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -187,6 +186,7 @@ namespace Cntrls
 			this.ilDefItemIcons = new System.Windows.Forms.ImageList(this.components);
 			this.ilLibIcons = new System.Windows.Forms.ImageList(this.components);
 			this.ilItemIcons = new System.Windows.Forms.ImageList(this.components);
+			this.ptItemStructure = new Cntrls.PartTreeEx();
 			this.GroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbItemPicture)).BeginInit();
 			this.SuspendLayout();
@@ -219,19 +219,11 @@ namespace Cntrls
 			this.label1.TabIndex = 8;
 			this.label1.Text = "label1";
 			// 
-			// ptItemStructure
-			// 
-			this.ptItemStructure.Font = new System.Drawing.Font("Verdana", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ptItemStructure.Location = new System.Drawing.Point(559, 37);
-			this.ptItemStructure.Name = "ptItemStructure";
-			this.ptItemStructure.Size = new System.Drawing.Size(226, 165);
-			this.ptItemStructure.TabIndex = 7;
-			// 
 			// listItems
 			// 
 			this.listItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader1,
-			this.columnHeader2});
+            this.columnHeader1,
+            this.columnHeader2});
 			this.listItems.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listItems.FullRowSelect = true;
 			this.listItems.GridLines = true;
@@ -263,41 +255,41 @@ namespace Cntrls
 			this.treeItemLibrary.HideSelection = false;
 			this.treeItemLibrary.Location = new System.Drawing.Point(791, 37);
 			this.treeItemLibrary.Name = "treeItemLibrary";
-			treeNode10.ImageIndex = 1;
-			treeNode10.Name = "";
-			treeNode10.SelectedImageIndex = 1;
-			treeNode10.Text = "Ring Type1";
-			treeNode11.Name = "";
-			treeNode11.Text = "Ring Type2--1";
-			treeNode12.Name = "";
-			treeNode12.Text = "Ring Type2--2";
-			treeNode13.ImageIndex = 4;
-			treeNode13.Name = "";
-			treeNode13.SelectedImageIndex = 4;
-			treeNode13.Text = "Ring Type2";
-			treeNode14.ImageIndex = 2;
-			treeNode14.Name = "";
-			treeNode14.SelectedImageIndex = 2;
-			treeNode14.Text = "Ring Type3";
-			treeNode15.Name = "";
-			treeNode15.Text = "Rings";
-			treeNode16.ImageIndex = 5;
-			treeNode16.Name = "";
-			treeNode16.SelectedImageIndex = 5;
-			treeNode16.Text = "Studs";
-			treeNode17.ImageIndex = 1;
-			treeNode17.Name = "";
-			treeNode17.SelectedImageIndex = 1;
-			treeNode17.Text = "...";
-			treeNode18.ImageIndex = 3;
-			treeNode18.Name = "";
-			treeNode18.SelectedImageIndex = 3;
-			treeNode18.Text = "...";
+			treeNode19.ImageIndex = 1;
+			treeNode19.Name = "";
+			treeNode19.SelectedImageIndex = 1;
+			treeNode19.Text = "Ring Type1";
+			treeNode20.Name = "";
+			treeNode20.Text = "Ring Type2--1";
+			treeNode21.Name = "";
+			treeNode21.Text = "Ring Type2--2";
+			treeNode22.ImageIndex = 4;
+			treeNode22.Name = "";
+			treeNode22.SelectedImageIndex = 4;
+			treeNode22.Text = "Ring Type2";
+			treeNode23.ImageIndex = 2;
+			treeNode23.Name = "";
+			treeNode23.SelectedImageIndex = 2;
+			treeNode23.Text = "Ring Type3";
+			treeNode24.Name = "";
+			treeNode24.Text = "Rings";
+			treeNode25.ImageIndex = 5;
+			treeNode25.Name = "";
+			treeNode25.SelectedImageIndex = 5;
+			treeNode25.Text = "Studs";
+			treeNode26.ImageIndex = 1;
+			treeNode26.Name = "";
+			treeNode26.SelectedImageIndex = 1;
+			treeNode26.Text = "...";
+			treeNode27.ImageIndex = 3;
+			treeNode27.Name = "";
+			treeNode27.SelectedImageIndex = 3;
+			treeNode27.Text = "...";
 			this.treeItemLibrary.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-			treeNode15,
-			treeNode16,
-			treeNode17,
-			treeNode18});
+            treeNode24,
+            treeNode25,
+            treeNode26,
+            treeNode27});
 			this.treeItemLibrary.Size = new System.Drawing.Size(148, 159);
 			this.treeItemLibrary.TabIndex = 5;
 			this.treeItemLibrary.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeItemLibrary_AfterSelect);
@@ -377,6 +369,14 @@ namespace Cntrls
 			this.ilItemIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
 			this.ilItemIcons.ImageSize = new System.Drawing.Size(16, 16);
 			this.ilItemIcons.TransparentColor = System.Drawing.Color.Transparent;
+			// 
+			// ptItemStructure
+			// 
+			this.ptItemStructure.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ptItemStructure.Location = new System.Drawing.Point(559, 37);
+			this.ptItemStructure.Name = "ptItemStructure";
+			this.ptItemStructure.Size = new System.Drawing.Size(226, 165);
+			this.ptItemStructure.TabIndex = 7;
 			// 
 			// ItemPanel
 			// 

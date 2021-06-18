@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Cntrls
 {
@@ -56,15 +57,16 @@ namespace Cntrls
 			// 
 			// tvPartTree
 			// 
+			this.tvPartTree.CheckBoxes = true;
 			this.tvPartTree.HideSelection = false;
-			this.tvPartTree.ImageIndex = -1;
 			this.tvPartTree.Location = new System.Drawing.Point(0, 0);
 			this.tvPartTree.Name = "tvPartTree";
-			this.tvPartTree.SelectedImageIndex = -1;
+			this.tvPartTree.ShowNodeToolTips = true;
 			this.tvPartTree.Size = new System.Drawing.Size(290, 225);
 			this.tvPartTree.TabIndex = 0;
-			this.tvPartTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvPartTree_KeyDown);
+			this.tvPartTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvPartTree_AfterCheck);
 			this.tvPartTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPartTree_AfterSelect);
+			this.tvPartTree.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tvPartTree_KeyDown);
 			// 
 			// PartTreeEx
 			// 
@@ -107,10 +109,18 @@ namespace Cntrls
 		{
 			int i = 0;
 			TreeNode[] tnSet = new TreeNode[drSet.Length];
-
-			foreach(DataRow row in drSet)
+			
+			foreach (DataRow row in drSet)
 			{
-				tnSet[i] = new TreeNode(row["Name"].ToString(), recursTreeFill(row.GetChildRows("PartChild")));
+				var partName = row["Name"].ToString().ToLower();
+				TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+				partName = myTI.ToTitleCase(partName);
+				//partName = partName.Replace("White Diamond Stone Set", "WDS");
+				//partName = partName.Replace("Color Diamond Stone Set", "CDS");
+				//partName = partName.Replace("Color Stone Set", "CSS");
+				//partName = partName.Replace("Colored diamond", "CD");
+				tnSet[i] = new TreeNode(partName, recursTreeFill(row.GetChildRows("PartChild")));
+				//tnSet[i] = new TreeNode(row["Name"].ToString(), recursTreeFill(row.GetChildRows("PartChild")));
 				/*
 				string sPartTypeID = "";
 				string sPartID = "";
@@ -121,6 +131,7 @@ namespace Cntrls
 				//, s2 = "", s3 = "";
 				string sTag = BuildTag(sPartTypeID, sPartID, sItemContainerName);
 				*/
+				tnSet[i].ImageKey = row["ID"].ToString();
 				tnSet[i].Tag = row["PartTypeID"];
 				i++;
 			}
@@ -177,6 +188,15 @@ namespace Cntrls
 				return tvPartTree.Nodes.Count;
 			}
 		}
+
+		public TreeNodeCollection Nodes
+		{
+			get
+			{
+				return tvPartTree.Nodes;
+			}
+		}
+
 		public void ExpandTree()
 		{
 			tvPartTree.ExpandAll();
@@ -193,6 +213,14 @@ namespace Cntrls
 		private void tvPartTree_KeyDown(object sender, System.Windows.Forms.KeyEventArgs kea)
 		{
 			OnKeyDown(kea);
+		}
+		[Browsable(true)]
+		public event TreeViewEventHandler AfterCheck;
+
+		private void tvPartTree_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			if (AfterCheck != null)
+				AfterCheck(this, e);
 		}
 	}
 }

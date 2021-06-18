@@ -67,21 +67,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DefineDocument\DefineDocument.csproj">
-      <Name>DefineDocument</Name>
-      <Project>{B7FAB17F-4405-4949-BE10-5BEE2A3E2BA1}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\gdrLibrary\gdrClientLibrary.csproj">
-      <Name>gdrClientLibrary</Name>
-      <Project>{A651DE82-DAB6-40FD-96E8-A076DC59CBC3}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\ShipManifestConstructor\ShipManifestConstructor.csproj">
-      <Name>ShipManifestConstructor</Name>
-      <Project>{B6FB027C-FCA6-438E-B73E-DA439E3B304C}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -305,6 +290,20 @@
     <EmbeddedResource Include="WeightControl.resx">
       <DependentUpon>WeightControl.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DefineDocument\DefineDocument.csproj">
+      <Project>{b7fab17f-4405-4949-be10-5bee2a3e2ba1}</Project>
+      <Name>DefineDocument</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\gdrLibrary\gdrClientLibrary.csproj">
+      <Project>{a651de82-dab6-40fd-96e8-a076dc59cbc3}</Project>
+      <Name>gdrClientLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShipManifestConstructor\ShipManifestConstructor.csproj">
+      <Project>{b6fb027c-fca6-438e-b73e-da439e3b304c}</Project>
+      <Name>ShipManifestConstructor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

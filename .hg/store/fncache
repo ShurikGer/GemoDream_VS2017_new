@@ -81,6 +81,7 @@ data/Menu/bin/Release/Cntrls.dll.i
 data/ComponentTester/bin/Debug/Spire.Pdf.dll.d
 data/Menu/bin/Release/Cntrls.dll.d
 data/Menu/bin/Release/CrystalReport.dll.i
+data/Menu/bin/Release/Microsoft.mshtml.dll.i
 data/Menu/bin/Debug/ClientLibrary.pdb.i
 data/Menu/bin/Debug/ClientLibrary.pdb.d
 data/Menu/bin/Release/CrystalReport.dll.d
@@ -191,6 +192,7 @@ data/CMStrategy/obj/Release/CMStrategy.csproj.FileListAbsolute.txt.i
 data/Color/bin/Release/ClientLibrary.dll.d
 data/gdrLogin/bin/Release/ClientCfg-printing.xml.i
 data/CrystalReport/bin/Release/Spire.License.dll.i
+data/Clarity/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Clarity/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Itemizn/obj/Debug/gemoDream.DoneGroupDialogForm.resources.i
 data/Cntrls/bin/Debug/DefineDocument.pdb.i
@@ -200,6 +202,7 @@ data/Front/obj/Debug/Front.csprojAssemblyReference.cache.d
 data/Utils/obj/Release/Utils.dll.i
 data/Measure/obj/Release/GenerateResource.write.1.tlog.i
 data/Utils/bin/Debug/Cntrls.pdb.d
+data/ReMeasure/bin/Release/ClientLibrary.dll.i
 data/ComponentTester/bin/Release/ComponentTester.dll.i
 data/Utils/obj/Release/Utils.dll.d
 data/Front/obj/Debug/Front.csprojAssemblyReference.cache.i
@@ -225,7 +228,9 @@ data/Front/bin/Debug/Front.pdb.i
 data/CustomerProgram/mssccprj.scc.i
 data/CustomerCreation/bin/Debug/DefineDocument.pdb.i
 data/Itemizn/Itemizn.csproj.user.i
+data/History/bin/Debug/History.dll.d
 data/History/bin/Debug/History.dll.i
+data/gdrLogin/bin/Release/CustomerCreation.dll.d
 data/gdrLibrary/obj/Release/gemoDream.ReLoginForm.resources.i
 data/Measure/obj/Debug/Measure.pdb.i
 data/Itemizn/bin/Debug/CustomerCreation.dll.d
@@ -252,10 +257,12 @@ data/Clarity/bin/Debug/Clarity.pdb.i
 data/DefineDocument/mssccprj.scc.i
 data/Itemizn/bin/Debug/Spire.License.dll.i
 data/gdrLogin/obj/Debug/GemoDream.exe.i
+data/DeaprtureSettings/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/gdrLogin/obj/Debug/GemoDream.exe.d
 data/Menu/waitClock.cs.i
 data/CustomerCreation/bin/Release/CustomerCreation.dll.d
 data/AccountRep/bin/Debug/MessagingToolkit.QRCode.dll.d
+data/gdrLibrary/obj/Debug/Interop.VBIDE.dll.i
 data/Cntrls/DataTree.cs.i
 data/CustomerCreation/bin/Release/CustomerCreation.dll.i
 data/AccountRep/bin/Debug/MessagingToolkit.QRCode.dll.i
@@ -263,6 +270,8 @@ data/Color/obj/Release/Color.projdata1.i
 data/CustomerProgram/obj/Debug/CustomerProgram.pdb.d
 data/NewCntrls/bin/Release/ClientLibrary.dll.config.i
 data/ComponentTester/obj/Release/ComponentTester.projdata.i
+data/History/bin/Release/ClientLibrary.XmlSerializers.dll.d
+data/DeaprtureSettings/bin/Release/DefineDocument.dll.d
 data/History/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Cntrls/obj/Release/Cntrls.MessengerControl.resources.i
 data/Utils/bin/Debug/NewCntrls.pdb.i
@@ -292,6 +301,7 @@ data/gdrLogin/obj/Debug/gemoDream.LoginForm.resources.i
 data/Utils/bin/Release/ClientLibrary.dll.i
 data/AccountRep/bin/Release/Spire.Pdf.dll.d
 data/DeaprtureSettings/bin/Debug/ClientLibrary.pdb.d
+data/Menu/bin/Release/Microsoft.mshtml.dll.d
 data/Measure/ComPort.xml.i
 data/AccountRep/AccountRep.csproj.i
 data/gdrLibrary/obj/Debug/ClientLibrary.pdb.d
@@ -303,12 +313,12 @@ data/CustomerCreation/bin/Debug/NewCntrls.dll.i
 data/CustomerProgram/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/CrystalReport/bin/Debug/Interop.Excel.dll.d
 data/CMStrategy/obj/Release/CMStrategy.csproj.CopyComplete.i
+data/Printing/bin/Release/Printing.dll.d
 data/Menu/bin/Release/Menu.dll.i
 data/Menu/bin/Release/Menu.dll.d
 data/Itemizn/ItemiznForm1.resx.i
 data/CMStrategy/bin/Debug/DefineDocument.dll.d
 data/Printing/obj/Release/gemoDream.PrintingForm.resources.i
-data/gdrLogin/bin/Release/MessagingToolkit.QRCode.dll.d
 data/Printing/obj/Debug/Printing.csprojResolveAssemblyReference.cache.i
 data/ComponentTester/obj/Release/ComponentTester.csproj.CopyComplete.i
 data/Front/bin/Debug/ClientLibrary.pdb.d
@@ -324,9 +334,9 @@ data/DefineDocument/DefineDocument.csproj.user.i
 data/CustomerProgram/obj/Debug/CustomerProgram.csproj.CopyComplete.i
 data/Printing/bin/Release/Printing.dll.i
 data/DeaprtureSettings/bin/Debug/ClientLibrary.dll.i
-data/Cntrls/obj/Release/Cntrls.ItemPanelDynamic.resources.i
+data/ReMeasure/bin/Release/ClientLibrary.dll.d
 data/ReItemzn/bin/Debug/CrystalReport.pdb.i
-data/ReMeasure/bin/Release/ClientLibrary.dll.i
+data/Itemizn/bin/Debug/CrystalReport.pdb.d
 data/Itemizn/bin/Debug/Microsoft.mshtml.dll.i
 data/Front/obj/Debug/Front.csproj.FileListAbsolute.txt.i
 data/CustomerProgram/obj/Release/GenerateResource.write.1.tlog.i
@@ -396,6 +406,7 @@ data/Utils/mssccprj.scc.i
 data/Itemizn/OldNumbersForm.cs.i
 data/ComponentTester/bin/Debug/CrystalReport.pdb.i
 data/Cntrls/obj/Debug/Cntrls.csproj.CoreCompileInputs.cache.i
+data/Front/bin/Release/Front.dll.d
 data/Cntrls/obj/Debug/Cntrls.ItemPanelDynamic.resources.i
 data/ComponentTester/bin/Debug/Microsoft.mshtml.dll.d
 data/CMStrategy/bin/Debug/Cntrls.pdb.d
@@ -422,6 +433,7 @@ data/Measure/obj/Release/GenerateResource.read.1.tlog.i
 data/AccountRep/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Menu/bin/Release/ShipManifestConstructor.dll.i
 data/Cntrls/Cntrls.csproj.i
+data/AccountRep/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Front/bin/Debug/CrystalReport.dll.d
 data/History/bin/Debug/DefineDocument.dll.d
 data/CrystalReport/bin/Release/MessagingToolkit.QRCode.dll.d
@@ -456,7 +468,6 @@ data/DefineDocument/obj/Release/DefineDocument.csproj.FileListAbsolute.txt.i
 data/Clarity/obj/Release/Clarity.dll.d
 data/SerialPortCustomWrapper/bin/Debug/Interop.VBIDE.dll.i
 data/AccountRep/bin/Release/AccountReport.dll.d
-data/CustomerCreation/bin/Debug/DefineDocument.dll.i
 data/CustomerProgram/bin/Release/ClientLibrary.dll.d
 data/CustomerProgram/bin/Release/ClientLibrary.dll.i
 data/AccountRep/bin/Release/AccountReport.dll.i
@@ -512,6 +523,7 @@ data/Clarity/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/ReMeasure/obj/Release/ReMeasure.csproj.CopyComplete.i
 data/gdrLogin/bin/Release/ReMeasure.dll.i
 data/gdrLogin/bin/Release/ClientCfg_mars.xml.i
+data/gdrLogin/bin/Release/DefineDocument.dll.d
 data/AddExtraData/obj/Debug/AddExtraData.projdata2.i
 data/Front/Front.csproj.i
 data/ComponentTester/obj/Debug/ComponentTester.projdata2.i
@@ -531,6 +543,7 @@ data/Utils/NewGroupForm.resx.i
 data/packages/Newtonsoft.Json.9.0.1/lib/netstandard1.0/Newtonsoft.Json.xml.i
 data/Clarity/obj/Release/Clarity.csprojAssemblyReference.cache.i
 data/AccountRep/bin/Debug/Cntrls.pdb.d
+data/CustomerProgram/bin/Release/Cntrls.dll.i
 data/DefineDocument/bin/Debug/Interop.VBIDE.dll.i
 data/AccountRep/bin/Debug/Cntrls.pdb.i
 data/ReItemzn/obj/Release/ReItemzn.csprojAssemblyReference.cache.i
@@ -539,6 +552,7 @@ data/gdrLogin/bin/Release/Spire.License.dll.i
 data/Itemizn/bin/Debug/CMStrategy.dll.i
 data/ComponentTester/bin/Debug/DefineDocument.dll.d
 data/ComponentTester/bin/Debug/DefineDocument.dll.i
+data/ComponentTester/bin/Release/DefineDocument.dll.d
 data/CMStrategy/bin/Debug/ClientLibrary.dll.i
 data/AccountRep/bin/Debug/AccountReport.pdb.d
 data/Cntrls/obj/Release/Cntrls.csproj.FileListAbsolute.txt.i
@@ -551,7 +565,7 @@ data/Measure/bin/Debug/ClientLibrary.pdb.i
 data/ComponentTester/obj/Debug/ComponentTester.projdata1.i
 data/ShipManifestConstructor/bin/Release/ShipManifestConstructor.dll.i
 data/ReItemzn/bin/Debug/ShipManifestConstructor.dll.i
-data/Menu/obj/Release/gemoDream.MenuForm.resources.i
+data/ShipManifestConstructor/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Measure/bin/Debug/ClientLibrary.pdb.d
 data/Cntrls/PartProps.resx.i
 data/Menu/bin/Release/Spire.Pdf.dll.d
@@ -575,12 +589,16 @@ data/DefineDocument/PartTreeEx1.cs.i
 data/gdrLibrary/bin/Release/ClientLibrary.dll.config.i
 data/Cntrls/bin/Debug/ClientLibrary.pdb.i
 data/Itemizn/bin/Release/CustomerCreation.dll.i
+data/Front/bin/Release/DefineDocument.dll.d
+data/ComponentTester/bin/Debug/MessagingToolkit.QRCode.dll.d
 data/CMStrategy/CMStrategy.csproj.vspscc.i
 data/Front/bin/Release/DefineDocument.dll.i
 data/Utils/obj/Debug/gemoDream.NewGroupForm.resources.i
 data/Cntrls/BarCode.cs.i
 data/Front/obj/Release/GenerateResource.write.1.tlog.i
+data/Measure/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Cntrls/BarCodeField.resx.i
+data/Itemizn/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Menu/bin/Debug/Cntrls.dll.i
 data/Clarity/obj/Debug/Clarity.projdata1.i
 data/gdrLogin/bin/Debug/DefineDocument.pdb.i
@@ -588,6 +606,7 @@ data/DefineDocument/obj/Debug/DefineDocument.projdata.i
 data/Front/bin/Debug/CustomerCreation.dll.i
 data/Measure/obj/Release/Measure.projdata1.i
 data/gdrLogin/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
+data/Printing/bin/Release/DefineDocument.dll.d
 data/Menu/bin/Release/Utils.dll.d
 data/Menu/bin/Debug/ClientLibrary.dll.config.i
 data/Menu/bin/Debug/Printing.dll.i
@@ -654,10 +673,12 @@ data/CMStrategy/mssccprj.scc.i
 data/Cntrls/obj/Release/Cntrls.IntField.resources.i
 data/Clarity/Clarity.csproj.i
 data/Cntrls/obj/Release/Cntrls.CarrierControl.resources.i
+data/Itemizn/bin/Release/DefineDocument.dll.d
 data/Measure/obj/Debug/Measure.dll.i
 data/Menu/obj/Release/Menu.csproj.CoreCompileInputs.cache.i
 data/gdrLogin/bin/Debug/ClientCfg_itmz02.xml.i
 data/DeaprtureSettings/bin/Release/DeaprtureSettings.dll.i
+data/CustomerProgram/bin/Release/Cntrls.dll.d
 data/CMStrategy/bin/Release/DeaprtureSettings.dll.i
 data/Menu/bin/Release/Color.dll.i
 data/Clarity/obj/Debug/Clarity.csprojAssemblyReference.cache.i
@@ -702,7 +723,7 @@ data/DeaprtureSettings/bin/Debug/ShipManifestConstructor.pdb.i
 data/ShipManifestConstructor/obj/Release/ShipManifestConstructor.csprojAssemblyReference.cache.i
 data/History/bin/Release/ClientLibrary.dll.config.i
 data/gdrLogin/bin/Release/MessagingToolkit.QRCode.dll.i
-data/Cntrls/obj/Debug/Cntrls.csproj.FileListAbsolute.txt.i
+data/gdrLogin/bin/Release/MessagingToolkit.QRCode.dll.d
 data/CustomerCreation/vssver.scc.i
 data/Cntrls/obj/Debug/Cntrls.projdata.i
 data/Color/obj/Debug/Color.pdb.i
@@ -710,7 +731,6 @@ data/SerialPortCustomWrapper/bin/Debug/DesktopSerialIO.dll.i
 data/_UpgradeReport_Files/UpgradeReport_Plus.gif.i
 data/CMStrategy/CMAccessStrategy.cs.i
 data/AccountRep/bin/Debug/ClientLibrary.dll.config.i
-data/ComponentTester/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/gdrLibrary/CrystalClLib.cs.i
 data/gdrLogin/bin/Debug/Spire.Pdf.dll.i
 data/gdrLogin/bin/Debug/Spire.Pdf.dll.d
@@ -721,7 +741,9 @@ data/gdrLibrary/bin/Debug/Interop.Microsoft.Office.Core.dll.i
 data/Printing/bin/Debug/CrystalDecisions.Shared.dll.i
 data/ReMeasure/obj/Release/gemoDream.RemeasureForm.resources.i
 data/CrystalReportSrv/obj/Release/CrystalReportSrv.dll.i
+data/History/obj/Debug/History.dll.d
 data/Color/vssver.scc.i
+data/Printing/obj/Release/Printing.dll.d
 data/History/obj/Debug/History.dll.i
 data/CrystalReport/obj/Release/CrystalReport.projdata1.i
 data/Utils/bin/Release/MessagingToolkit.QRCode.dll.i
@@ -758,6 +780,7 @@ data/Menu/bin/Release/Front.dll.d
 data/CustomerProgram/SaveCPas.cs.i
 data/History/bin/Debug/Cntrls.pdb.i
 data/Cntrls/obj/Release/Cntrls.csproj.CopyComplete.i
+data/ComponentTester/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/gdrLogin/bin/Debug/OfficeCfg_4.xml.i
 data/Menu/obj/Release/Menu.dll.i
 data/Menu/bin/Release/Front.dll.i
@@ -766,11 +789,13 @@ data/Menu/bin/Debug/SerialPortCustomWrapper.dll.i
 data/ReMeasure/bin/Debug/ClientLibrary.pdb.i
 data/Clarity/obj/Release/Clarity.projdata.i
 data/DefineDocument/obj/Debug/DefineDocument.csproj.CoreCompileInputs.cache.i
+data/CustomerProgram/obj/Debug/CustomerProgram.csprojAssemblyReference.cache.d
 data/CustomerProgram/obj/Debug/CustomerProgram.csprojAssemblyReference.cache.i
 data/CrystalReport/obj/Release/CrystalReport.dll.d
 data/History/obj/Release/History.projdata.i
 data/DefineDocument/obj/Debug/DefineDocument.pdb.i
 data/gdrLogin/bin/Debug/Spire.Pdf.xml.i
+data/Cntrls/Price.cs.i
 data/CustomerProgram/obj/Debug/CustomerProgram.projdata1.i
 data/gdrLibrary/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/gdrLogin/bin/Debug/Spire.Pdf.xml.d
@@ -795,6 +820,7 @@ data/CustomerProgram/bin/Release/CustomerProgram.dll.i
 data/CustomerCreation/bin/Release/Cntrls.dll.i
 data/gdrLibrary/obj/Release/GenerateResource.read.1.tlog.i
 data/CustomerCreation/bin/Release/Cntrls.dll.d
+data/Cntrls/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Cntrls/obj/Release/Cntrls.WeightControl.resources.i
 data/CustomerProgram/bin/Release/CustomerProgram.dll.d
 data/CMStrategy/bin/Debug/ClientLibrary.dll.d
@@ -809,12 +835,12 @@ data/History/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
 data/Cntrls/bin/Release/DefineDocument.dll.d
 data/Cntrls/Location.cs.i
 data/ComponentTester/bin/Debug/ComponentTester.dll.i
-data/Measure/bin/Release/DesktopSerialIO.dll.i
 data/CMStrategy/bin/Debug/DeaprtureSettings.dll.i
 data/Cntrls/bin/Release/DefineDocument.dll.i
 data/gdrLibrary/obj/Debug/Interop.Microsoft.Office.Core.dll.d
 data/History/bin/Release/NewCntrls.dll.i
-data/gdrLibrary/obj/Debug/Interop.Microsoft.Office.Core.dll.i
+data/Color/bin/Release/Interop.Microsoft.Office.Core.dll.i
+data/History/bin/Release/DefineDocument.dll.d
 data/ComponentTester/obj/Release/ComponentTester.csproj.CoreCompileInputs.cache.i
 data/NewCntrls/bin/Debug/NewCntrls.dll.i
 data/ComponentTester/bin/Release/Spire.License.xml.i
@@ -839,9 +865,9 @@ data/ComponentTester/obj/Release/ComponentTester.csprojResolveAssemblyReference.
 data/ReItemzn/obj/Release/ReItemzn.projdata1.i
 data/gdrLogin/obj/Release/GenerateResource.write.1.tlog.i
 data/AddExtraData/obj/Release/AddExtraData.projdata.i
-data/ReItemzn/bin/Release/Microsoft.mshtml.dll.d
 data/DefineDocument/obj/Debug/DefineDocument.csproj.GenerateResource.cache.i
 data/AccountRep/obj/Release/AccountRep.projdata1.i
+data/CMStrategy/bin/Debug/ClientLibrary.pdb.d
 data/Measure/obj/Debug/Measure.csproj.FileListAbsolute.txt.i
 data/Front/obj/Debug/Front.dll.d
 data/Cntrls/bin/Debug/ShipManifestConstructor.dll.i
@@ -849,7 +875,6 @@ data/CustomerCreation/obj/Release/CustomerCreation.csproj.GenerateResource.cache
 data/Clarity/bin/Release/Microsoft.mshtml.dll.d
 data/CustomerCreation/obj/Release/gemoDream.NewCaratRange.resources.i
 data/Cntrls/obj/Debug/Cntrls.csproj.CopyComplete.i
-data/Cntrls/PartTreeEx1.cs.i
 data/ReItemzn/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
 data/CrystalReportSrv/obj/Release/CrystalReportSrv.csproj.CoreCompileInputs.cache.i
 data/Itemizn/bin/Release/NewCntrls.dll.i
@@ -876,7 +901,7 @@ data/ShipManifestConstructor/obj/Release/ShipManifestConstructor.csprojResolveAs
 data/Menu/bin/Debug/MessagingToolkit.QRCode.dll.i
 data/AccountRep/obj/Debug/AccountRep.csproj.CoreCompileInputs.cache.i
 data/CMStrategy/bin/Release/ShipManifestConstructor.dll.i
-data/CustomerProgram/bin/Release/Cntrls.dll.i
+data/Itemizn/bin/Debug/Itemizn.dll.d
 data/DefineDocument/obj/Debug/gemoDream.NewDocumentNameForm.resources.i
 data/DefineDocument/obj/Release/DefineDocument.csprojAssemblyReference.cache.i
 data/GemoDreamForms.sln.i
@@ -892,7 +917,6 @@ data/ComponentTester/obj/Debug/ComponentTester.csprojAssemblyReference.cache.i
 data/CrystalReportSrv/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/ComponentTester/obj/Debug/ComponentTester.csprojAssemblyReference.cache.d
 data/DefineDocument/obj/Release/DefineDocument.projdata1.i
-data/gdrLibrary/Web References/gemoDreamService/Reference.map.i
 data/DefineDocument/bin/Release/ClientLibrary.dll.d
 data/ReItemzn/bin/Debug/Spire.Pdf.dll.i
 data/ComponentTester/bin/Debug/ClientLibrary.dll.d
@@ -905,7 +929,7 @@ data/Printing/Printing.csproj.user.i
 data/gdrLibrary/bin/Debug/Newtonsoft.Json.xml.i
 data/gdrLogin/gemoDream.csproj.vspscc.i
 data/AddExtraData/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
-data/CustomerProgram/bin/Release/Cntrls.dll.d
+data/Itemizn/bin/Debug/Itemizn.dll.i
 data/AddExtraData/obj/Release/AddExtraData.csproj.CoreCompileInputs.cache.i
 data/AccountRep/obj/Release/DesignTimeResolveAssemblyReferences.cache.i
 data/Clarity/obj/Debug/Clarity.csproj.FileListAbsolute.txt.i
@@ -1000,6 +1024,7 @@ data/History/bin/Debug/History.pdb.i
 data/ComponentTester/obj/Release/gemoDream.Form1.resources.i
 data/ShipManifestConstructor/bin/Debug/Interop.VBIDE.dll.i
 data/AddExtraData/T_Reader.cs.i
+data/NewCntrls/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/gdrLibrary/obj/Debug/gdrClientLibrary.projdata.i
 data/gdrLogin/bin/Release/Spire.Pdf.xml.d
 data/Utils/bin/Debug/Interop.Microsoft.Office.Core.dll.i
@@ -1024,6 +1049,7 @@ data/CrystalReport/bin/Debug/ClientLibrary.dll.d
 data/DefineDocument/bin/Release/ClientLibrary.dll.config.i
 data/SerialPortCustomWrapper/bin/Debug/ClientLibrary.dll.config.i
 data/ReItemzn/bin/Release/CrystalReport.dll.i
+data/ReItemzn/bin/Release/DefineDocument.dll.d
 data/AccountRep/bin/Debug/DefineDocument.dll.d
 data/ReItemzn/bin/Release/DefineDocument.dll.i
 data/DefineDocument/PartTreeEx1.resx.i
@@ -1038,6 +1064,7 @@ data/gdrLogin/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Clarity/obj/Debug/Clarity.dll.d
 data/AddExtraData/obj/Release/AddExtraData.projdata1.i
 data/CrystalReport/obj/Release/CrystalReport.csprojResolveAssemblyReference.cache.i
+data/gdrLogin/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/AccountRep/obj/Debug/gemoDream.CommonDetails.resources.i
 data/Clarity/obj/Debug/Clarity.dll.i
 data/SerialPortCustomWrapper/bin/Debug/SerialPortCustomWrapper.pdb.i
@@ -1048,6 +1075,7 @@ data/SerialPortCustomWrapper/obj/Debug/SerialPortCustomWrapper.projdata.i
 data/gdrLogin/gemoDream.resx.i
 data/Front/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Printing/bin/Debug/DefineDocument.dll.i
+data/Front/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/CrystalReport/bin/Debug/Interop.Microsoft.Office.Core.dll.i
 data/SerialPortCustomWrapper/bin/Debug/ClientLibrary.dll.i
 data/gdrLogin/bin/Debug/SerialPortCustomWrapper.pdb.i
@@ -1082,6 +1110,7 @@ data/Cntrls/obj/Release/Cntrls.CustomerOrder.resources.i
 data/AccountRep/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/Utils/bin/Release/DefineDocument.dll.i
 data/Measure/bin/Debug/DesktopSerialIO.dll.i
+data/Utils/bin/Release/DefineDocument.dll.d
 data/gdrLogin/obj/Release/gemoDream.csproj.FileListAbsolute.txt.i
 data/gdrLogin/App.ico.i
 data/Printing/bin/Release/CrystalReport.dll.d
@@ -1090,6 +1119,7 @@ data/Menu/bin/Debug/Cntrls.dll.d
 data/Cntrls/obj/Release/Cntrls.DataTree.resources.i
 data/Printing/bin/Release/CrystalReport.dll.i
 data/Cntrls/bin/Debug/Cntrls.dll.i
+data/Itemizn/bin/Release/Spire.License.xml.i
 data/Color/AssemblyInfo.cs.i
 data/gdrLogin/bin/Debug/GemoDream.exe.i
 data/AddExtraData/obj/Debug/AddExtraData.csproj.CoreCompileInputs.cache.i
@@ -1122,6 +1152,7 @@ data/ReItemzn/obj/Release/GenerateResource.write.1.tlog.i
 data/AccountRep/bin/Release/Microsoft.mshtml.dll.d
 data/Clarity/bin/Release/CrystalReport.dll.d
 data/DeaprtureSettings/bin/Release/ClientLibrary.dll.d
+data/CMStrategy/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/DeaprtureSettings/bin/Release/ClientLibrary.dll.i
 data/Clarity/bin/Release/CrystalReport.dll.i
 data/CMStrategy/bin/Release/ClientLibrary.XmlSerializers.dll.i
@@ -1131,7 +1162,6 @@ data/DefineDocument/DefineDocumentForm.resx.i
 data/ReMeasure/obj/Debug/ReMeasure.csproj.CopyComplete.i
 data/Front/bin/Debug/Microsoft.mshtml.dll.i
 data/Clarity/bin/Release/Interop.Microsoft.Office.Core.dll.i
-data/Itemizn/bin/Debug/CrystalReport.pdb.d
 data/CustomerCreation/NewCaratRange.resx.i
 data/gdrLibrary/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/gdrLibrary/bin/Release/ClientLibrary.XmlSerializers.dll.d
@@ -1152,7 +1182,6 @@ data/Cntrls/AdditionalPrice.cs.i
 data/AccountRep/bin/Debug/Cntrls.dll.d
 data/ReItemzn/obj/Debug/ReItemzn.projdata2.i
 data/AccountRep/bin/Debug/Cntrls.dll.i
-data/SerialPortCustomWrapper/SerialPortCustomWrapper.csproj.user.i
 data/Printing/PrintingForm.cs.i
 data/gdrLogin/bin/Release/ClientCfg.xml.i
 data/Itemizn/bin/Debug/DefineDocument.pdb.i
@@ -1160,6 +1189,7 @@ data/Menu/bin/Release/ClientLibrary.dll.d
 data/ReMeasure/ReMeasureForm.cs.i
 data/ComponentTester/bin/Debug/Cntrls.dll.i
 data/ReMeasure/bin/Debug/ReMeasure.dll.i
+data/Cntrls/obj/Debug/Cntrls.csproj.FileListAbsolute.txt.i
 data/Itemizn/batchData.cs.i
 data/Menu/bin/Release/ClientLibrary.dll.i
 data/Menu/bin/Debug/CustomerProgram.dll.i
@@ -1245,7 +1275,6 @@ data/gdrLibrary/ReLoginForm.resx.i
 data/AddExtraData/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/gdrLibrary/obj/Release/Interop.VBIDE.dll.i
 data/ReItemzn/bin/Release/Cntrls.dll.i
-data/AccountRep/bin/Release/NewCntrls.dll.i
 data/Cntrls/bin/Debug/Interop.VBIDE.dll.i
 data/ReItemzn/bin/Release/Cntrls.dll.d
 data/Cntrls/Front/Tab_TakeIn.cs.i
@@ -1253,6 +1282,7 @@ data/Itemizn/bin/Debug/NewCntrls.pdb.i
 data/Utils/Utils.csproj.i
 data/Utils/ItemContainerNameForm.cs.i
 data/Color/obj/Release/Color.csproj.GenerateResource.cache.i
+data/Menu/bin/Debug/History.dll.d
 data/CustomerProgram/bin/Debug/Cntrls.pdb.d
 data/CustomerProgram/obj/Release/CustomerProgram.csproj.CopyComplete.i
 data/gdrLogin/bin/Debug/DesktopSerialIO.dll.i
@@ -1312,12 +1342,14 @@ data/Front/obj/Release/Front.dll.i
 data/ReItemzn/obj/Release/gemoDream.ReItemiznForm.resources.i
 data/Clarity/bin/Debug/Clarity.dll.config.i
 data/Color/bin/Release/ClientLibrary.dll.config.i
+data/CustomerProgram/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Front/obj/Release/Front.dll.d
 data/Utils/bin/Release/Spire.License.xml.i
 data/Menu/bin/Debug/ShipManifestConstructor.dll.i
 data/Cntrls/obj/Release/DesignTimeResolveAssemblyReferences.cache.i
 data/ShipManifestConstructor/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/Cntrls/DocumentProps.resx.i
+data/DefineDocument/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Menu/bin/Debug/DefineDocument.pdb.i
 data/History/obj/Release/History.csproj.GenerateResource.cache.i
 data/Menu/bin/Debug/Spire.Pdf.xml.i
@@ -1359,6 +1391,7 @@ data/ShipManifestConstructor/obj/Debug/ShipManifestConstructor.projdata.i
 data/CMStrategy/obj/Release/CMStrategy.csprojResolveAssemblyReference.cache.i
 data/Color/obj/Debug/Color.csproj.FileListAbsolute.txt.i
 data/SerialPortCustomWrapper/bin/Debug/ClientLibrary.dll.d
+data/Printing/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/gdrLogin/bin/Debug/Printing.dll.i
 data/ShipManifestConstructor/obj/Debug/ShipManifestConstructor.csproj.GenerateResource.cache.i
 data/gdrLogin/bin/Debug/Printing.dll.d
@@ -1420,6 +1453,7 @@ data/NewCntrls/obj/Release/NewCntrls.csprojResolveAssemblyReference.cache.i
 data/SerialPortCustomWrapper/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/CrystalReport/obj/Debug/CrystalReport.projdata2.i
 data/Menu/obj/Debug/gemoDream.MenuForm.resources.i
+data/SerialPortCustomWrapper/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/AccountRep/obj/Release/gemoDream.ReprintForm.resources.i
 data/Itemizn/obj/Debug/Itemizn.csproj.GenerateResource.cache.i
 data/Itemizn/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
@@ -1430,6 +1464,7 @@ data/CustomerCreation/obj/Debug/CustomerCreation.csproj.FileListAbsolute.txt.i
 data/DeaprtureSettings/obj/Debug/DeaprtureSettings.csproj.FileListAbsolute.txt.i
 data/gdrLogin/obj/Debug/gemoDream.csprojResolveAssemblyReference.cache.i
 data/Utils/NewItemForm.resx.i
+data/gdrLogin/bin/Debug/History.dll.d
 data/gdrLogin/bin/Debug/History.dll.i
 data/Cntrls/BarCode.resx.i
 data/Cntrls/obj/Release/Cntrls.Front.Tab_TakeIn.resources.i
@@ -1447,6 +1482,7 @@ data/History/bin/Release/History.dll.i
 data/CustomerCreation/obj/Debug/gemoDream.NewCustomer.resources.i
 data/NewCntrls/obj/Release/NewCntrls.csproj.FileListAbsolute.txt.i
 data/gdrLogin/bin/Debug/ClientCfg_.xml.i
+data/Utils/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Printing/obj/Release/GenerateResource.read.1.tlog.i
 data/Utils/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/gdrLogin/bin/Debug/ComponentTester.dll.i
@@ -1462,7 +1498,6 @@ data/AccountRep/bin/Debug/Spire.Pdf.dll.i
 data/Measure/obj/Release/Measure.csproj.CoreCompileInputs.cache.i
 data/Itemizn/ItemiznForm2.cs.i
 data/Cntrls/obj/Release/Cntrls.ShippingManifest.resources.i
-data/Itemizn/bin/Debug/Itemizn.dll.d
 data/DeaprtureSettings/obj/Debug/DeaprtureSettings.csprojAssemblyReference.cache.i
 data/gdrLogin/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache.i
 data/Clarity/obj/Debug/Clarity.pdb.i
@@ -1563,6 +1598,7 @@ data/Measure/obj/Release/Measure.csproj.CopyComplete.i
 data/AccountRep/bin/Debug/CrystalReport.pdb.d
 data/CustomerCreation/obj/Release/GenerateResource.read.1.tlog.i
 data/CMStrategy/obj/Release/CMStrategy.csprojAssemblyReference.cache.i
+data/AccountRep/bin/Release/DefineDocument.dll.d
 data/NewCntrls/AssemblyInfo.cs.i
 data/ReItemzn/bin/Release/Spire.Pdf.dll.d
 data/ReItemzn/bin/Release/Spire.Pdf.dll.i
@@ -1574,13 +1610,11 @@ data/CrystalReport/bin/Release/Interop.VBIDE.dll.i
 data/ComponentTester/obj/Release/GenerateResource.read.1.tlog.i
 data/Menu/bin/Release/Measure.dll.i
 data/CustomerProgram/obj/Debug/CustomerProgram.projdata.i
-data/Itemizn/bin/Debug/Itemizn.dll.i
 data/CMStrategy/bin/Debug/Cntrls.dll.d
 data/CrystalReport/bin/Debug/Interop.VBIDE.dll.i
 data/Color/bin/Debug/Interop.VBIDE.dll.i
 data/CMStrategy/bin/Debug/Cntrls.dll.i
 data/CrystalReport/obj/Debug/CrystalReport.csproj.FileListAbsolute.txt.i
-data/gdrLogin/bin/Release/Menu.dll.i
 data/Printing/bin/Debug/ShipManifestConstructor.dll.i
 data/CMStrategy/bin/Debug/CustomerCreation.dll.i
 data/DeaprtureSettings/obj/Release/GenerateResource.write.1.tlog.i
@@ -1600,16 +1634,17 @@ data/Itemizn/bin/Debug/NewCntrls.dll.i
 data/ReItemzn/bin/Debug/MessagingToolkit.QRCode.dll.d
 data/DefineDocument/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
 data/CMStrategy/bin/Debug/CMStrategy.pdb.i
-data/Menu/bin/Release/Microsoft.mshtml.dll.d
+data/ComponentTester/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/gdrLogin/bin/Release/Spire.Pdf.dll.i
-data/Menu/bin/Release/Microsoft.mshtml.dll.i
+data/ReItemzn/bin/Release/Microsoft.mshtml.dll.d
 data/gdrLogin/bin/Release/Spire.Pdf.dll.d
 data/CrystalReport/bin/Release/Spire.Pdf.xml.i
 data/Cntrls/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
+data/Menu/bin/Release/DefineDocument.dll.d
 data/Cntrls/obj/Release/Cntrls.PartTree.resources.i
 data/Measure/obj/Debug/Measure.csprojAssemblyReference.cache.i
 data/Menu/bin/Release/DefineDocument.dll.i
-data/Cntrls/Price.cs.i
+data/Cntrls/PartTreeEx1.cs.i
 data/Printing/obj/Release/Printing.projdata.i
 data/Printing/bin/Debug/Spire.Pdf.dll.i
 data/ReItemzn/bin/Debug/ClientLibrary.dll.i
@@ -1623,10 +1658,10 @@ data/Clarity/bin/Release/ClientLibrary.dll.i
 data/CustomerCreation/bin/Debug/CustomerCreation.pdb.i
 data/Front/App.ico.i
 data/Clarity/bin/Release/Clarity.dll.d
-data/Itemizn/bin/Release/Spire.License.xml.i
+data/CustomerCreation/bin/Debug/DefineDocument.dll.i
 data/CMStrategy/bin/Debug/NewCntrls.dll.i
 data/Printing/bin/Debug/CrystalDecisions.ReportSource.dll.i
-data/gdrLibrary/obj/Debug/Interop.VBIDE.dll.i
+data/gdrLogin/obj/Release/gemoDream.csproj.GenerateResource.cache.i
 data/Cntrls/Front/CarrierControl.resx.i
 data/CrystalReportSrv/mssccprj.scc.i
 data/AccountRep/obj/Debug/AccountReport.dll.i
@@ -1741,6 +1776,7 @@ data/Menu/obj/Debug/Menu.csproj.FileListAbsolute.txt.i
 data/CrystalReport/obj/Release/Interop.VBIDE.dll.i
 data/Color/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Cntrls/Cntrls.csproj.vspscc.i
+data/Color/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Color/obj/Debug/Color.projdata1.i
 data/Printing/obj/Release/Printing.dll.i
 data/CMStrategy/obj/Debug/CMStrategy.csprojResolveAssemblyReference.cache.i
@@ -1786,6 +1822,7 @@ data/gdrLibrary/obj/Debug/ClientLibrary.pdb.i
 data/ComponentTester/obj/Debug/ComponentTester.csprojResolveAssemblyReference.cache.i
 data/Clarity/bin/Debug/Spire.Pdf.xml.i
 data/gdrLibrary/Web References/gemoDreamService/gdrService.wsdl.i
+data/Cntrls/Cntrls.csproj.user.i
 data/Clarity/obj/Release/Clarity.csproj.CoreCompileInputs.cache.i
 data/Clarity/bin/Release/Spire.Pdf.dll.i
 data/gdrLogin/bin/Debug/Formats.xml.i
@@ -1846,6 +1883,7 @@ data/ReItemzn/bin/Debug/DefineDocument.pdb.i
 data/Front/Front.csproj.user.i
 data/Utils/UtilsForm.resx.i
 data/CustomerCreation/bin/Release/NewCntrls.dll.i
+data/gdrLogin/bin/Release/Printing.dll.d
 data/ReItemzn/obj/Debug/ReItemzn.pdb.i
 data/CustomerProgram/obj/Release/GenerateResource.read.1.tlog.i
 data/Printing/bin/Debug/Printing.pdb.i
@@ -1989,7 +2027,7 @@ data/Front/bin/Debug/Spire.Pdf.dll.i
 data/Printing/bin/Release/Spire.Pdf.dll.d
 data/Utils/obj/Debug/Utils.csprojAssemblyReference.cache.i
 data/ReItemzn/ReItemznForm.resx.i
-data/ComponentTester/bin/Debug/MessagingToolkit.QRCode.dll.d
+data/gdrLogin/gemoDream.csproj.user.i
 data/Printing/bin/Release/Spire.Pdf.dll.i
 data/Measure/bin/Release/Interop.VBIDE.dll.i
 data/AccountRep/obj/Debug/AccountRep.csproj.CopyComplete.i
@@ -2002,7 +2040,7 @@ data/AccountRep/bin/Release/DefineDocument.dll.i
 data/ComponentTester/bin/Debug/MessagingToolkit.QRCode.dll.i
 data/Itemizn/bin/Debug/Microsoft.mshtml.dll.d
 data/Itemizn/bin/Release/MessagingToolkit.QRCode.dll.d
-data/ReMeasure/bin/Release/ClientLibrary.dll.d
+data/Cntrls/obj/Release/Cntrls.ItemPanelDynamic.resources.i
 data/gdrLogin/bin/Debug/Front.pdb.i
 data/CustomerProgram/bin/Debug/CustomerProgram.dll.i
 data/CMStrategy/bin/Release/Cntrls.dll.i
@@ -2010,7 +2048,7 @@ data/Cntrls/obj/Release/Cntrls.BarCodeField.resources.i
 data/CMStrategy/bin/Release/Cntrls.dll.d
 data/History/obj/Debug/History.projdata.i
 data/Front/obj/Debug/gemoDream.ExternalReceiptForm.resources.i
-data/Menu/bin/Debug/Printing.pdb.i
+data/gdrLogin/bin/Release/OfficeCfg_1.xml.i
 data/AccountRep/obj/Release/gemoDream.AccountRep.resources.i
 data/Cntrls/PriceRange.cs.i
 data/DeaprtureSettings/bin/Debug/ClientLibrary.dll.d
@@ -2029,15 +2067,15 @@ data/CustomerProgram/CustomerProgram.csproj.vspscc.i
 data/Cntrls/Communication.resx.i
 data/AddExtraData/bin/Debug/AddExtraData.exe.i
 data/gdrLogin/bin/Release/CustomerCreation.dll.i
-data/History/History.csproj.i
+data/AccountRep/obj/Debug/AccountRep.csproj.GenerateResource.cache.i
 data/AccountRep/obj/Debug/AccountRep.csprojAssemblyReference.cache.d
 data/Color/bin/Release/Color.dll.i
-data/gdrLogin/bin/Release/CustomerCreation.dll.d
+data/gdrLogin/bin/Release/Menu.dll.i
 data/Itemizn/obj/Release/gemoDream.DoneBatchDialogForm.resources.i
 data/DefineDocument/bin/Debug/DefineDocument.dll.d
 data/gdrLogin/bin/Debug/CustomerProgram.dll.i
 data/History/bin/Debug/ClientLibrary.dll.i
-data/Color/Color.csproj.user.i
+data/gdrLogin/bin/Debug/CustomerProgram.dll.d
 data/History/bin/Debug/ClientLibrary.dll.d
 data/DefineDocument/bin/Debug/DefineDocument.dll.i
 data/Cntrls/obj/Debug/Cntrls.PartTree.resources.i
@@ -2049,10 +2087,11 @@ data/Cntrls/obj/Debug/Cntrls.Price.resources.i
 data/Menu/obj/Debug/gemoDream.waitClock.resources.i
 data/Itemizn/bin/Debug/DefineDocument.dll.i
 data/CustomerProgram/obj/Release/CustomerProgram.csproj.CoreCompileInputs.cache.i
-data/ReMeasure/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
-data/Cntrls/Cntrls.csproj.user.i
-data/CMStrategy/bin/Debug/ClientLibrary.pdb.d
 data/ReMeasure/vssver.scc.i
+data/ReMeasure/obj/Debug/DesignTimeResolveAssemblyReferences.cache.i
+data/CrystalReport/AssemblyInfo.cs.i
+data/DeaprtureSettings/bin/Release/NewCntrls.dll.i
+data/Measure/bin/Release/DesktopSerialIO.dll.i
 data/CMStrategy/obj/Debug/CMStrategy.projdata1.i
 data/gdrLogin/bin/Release/Menu.dll.d
 data/Printing/bin/Debug/DefineDocument.dll.d
@@ -2067,10 +2106,12 @@ data/Color/mssccprj.scc.i
 data/ReItemzn/obj/Release/ReItemzn.csproj.CopyComplete.i
 data/Itemizn/bin/Release/Spire.License.dll.i
 data/ReMeasure/bin/Release/DefineDocument.dll.i
+data/ReMeasure/bin/Release/DefineDocument.dll.d
 data/NewCntrls/bin/Debug/ClientLibrary.dll.d
 data/gdrLibrary/obj/Debug/gdrClientLibrary.csproj.ResolveComReference.cache.i
 data/Cntrls/obj/Release/Cntrls.projdata.i
 data/CMStrategy/bin/Debug/ShipManifestConstructor.pdb.i
+data/Menu/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/AccountRep/AssemblyInfo.cs.i
 data/ReItemzn/bin/Release/ClientLibrary.dll.config.i
 data/Cntrls/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
@@ -2095,7 +2136,7 @@ data/gdrLogin/bin/Debug/Utils.pdb.i
 data/Measure/mssccprj.scc.i
 data/Cntrls/obj/Debug/Cntrls.BindingComboBox.resources.i
 data/Itemizn/bin/Debug/CMStrategy.pdb.i
-data/gdrLogin/gemoDream.csproj.user.i
+data/gdrLibrary/Web References/gemoDreamService/Reference.map.i
 data/SerialPortCustomWrapper/SerialPortCustomWrapper.cs.i
 data/CrystalReportSrv/obj/Release/CrystalReportSrv.csproj.FileListAbsolute.txt.i
 data/NewCntrls/obj/Release/GenerateResource.write.1.tlog.i
@@ -2163,6 +2204,7 @@ data/History/History.csproj.user.i
 data/CrystalReport/bin/Release/Microsoft.mshtml.dll.d
 data/Cntrls/BindingComboBox.resx.i
 data/Color/bin/Debug/ClientLibrary.pdb.i
+data/CMStrategy/bin/Release/DefineDocument.dll.d
 data/gdrLogin/bin/Debug/Microsoft.mshtml.dll.d
 data/gdrLogin/bin/Debug/Microsoft.mshtml.dll.i
 data/History/obj/Debug/History.csproj.GenerateResource.cache.i
@@ -2175,7 +2217,6 @@ data/Menu/bin/Debug/CustomerCreation.pdb.i
 data/History/bin/Release/Interop.VBIDE.dll.i
 data/Cntrls/obj/Release/Cntrls.AdditionalPrice.resources.i
 data/CustomerProgram/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache.i
-data/DeaprtureSettings/vssver.scc.i
 data/AddExtraData/obj/Release/AddExtraData.csproj.FileListAbsolute.txt.i
 data/Menu/App.ico.i
 data/Menu/bin/Debug/ShipManifestConstructor.pdb.i
@@ -2199,11 +2240,12 @@ data/Cntrls/obj/Release/Cntrls.PriceRange.resources.i
 data/ReMeasure/bin/Release/Interop.Microsoft.Office.Core.dll.i
 data/History/bin/Debug/Cntrls.pdb.d
 data/ReMeasure/bin/Debug/ClientLibrary.pdb.d
-data/gdrLogin/bin/Release/OfficeCfg_1.xml.i
+data/Menu/bin/Debug/Printing.pdb.i
 data/NewCntrls/obj/Release/GenerateResource.read.1.tlog.i
 data/gdrLogin/obj/Release/GemoDream.exe.i
 data/Cntrls/bin/Debug/NewCntrls.pdb.i
 data/Menu/bin/Release/Printing.dll.i
+data/Menu/bin/Release/Printing.dll.d
 data/GemoDreamClient/Release/Setup.Exe.i
 data/ReItemzn/bin/Debug/Cntrls.pdb.d
 data/Printing/obj/Release/Printing.csproj.CopyComplete.i
@@ -2278,7 +2320,7 @@ data/Cntrls/bin/Debug/DefineDocument.dll.d
 data/Cntrls/bin/Release/ClientLibrary.dll.config.i
 data/CrystalReportSrv/obj/Debug/CrystalReportSrv.pdb.i
 data/Cntrls/bin/Debug/DefineDocument.dll.i
-data/AccountRep/obj/Debug/AccountRep.csproj.GenerateResource.cache.i
+data/History/History.csproj.i
 data/Menu/bin/Debug/Color.pdb.i
 data/ShipManifestConstructor/ShipManifestConstructor.csproj.user.i
 data/Menu/bin/Debug/CrystalReport.dll.d
@@ -2313,7 +2355,7 @@ data/History/vssver.scc.i
 data/NewCntrls/obj/Debug/NewCntrls.csprojResolveAssemblyReference.cache.i
 data/Clarity/obj/Release/Clarity.csproj.FileListAbsolute.txt.i
 data/CrystalReportSrv/vssver.scc.i
-data/gdrLogin/bin/Debug/CustomerProgram.dll.d
+data/Color/Color.csproj.user.i
 data/Itemizn/bin/Release/ShipManifestConstructor.dll.i
 data/gdrLogin/bin/Debug/SerialPortCustomWrapper.dll.i
 data/ComponentTester/obj/Release/ComponentTester.projdata1.i
@@ -2331,6 +2373,7 @@ data/CMStrategy/obj/Debug/CMStrategy.csprojAssemblyReference.cache.i
 data/Utils/obj/Debug/Utils.projdata1.i
 data/Menu/bin/Debug/Utils.dll.d
 data/CustomerProgram/bin/Debug/Cntrls.dll.d
+data/ReMeasure/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Menu/bin/Release/Itemizn.dll.d
 data/AccountRep/App.ico.i
 data/CustomerCreation/bin/Debug/Cntrls.pdb.i
@@ -2366,6 +2409,7 @@ data/ComponentTester/obj/Debug/ComponentTester.pdb.i
 data/Front/bin/Debug/NewCntrls.dll.i
 data/ReMeasure/obj/Release/ReMeasure.dll.i
 data/CrystalReport/bin/Release/Microsoft.mshtml.dll.i
+data/ReItemzn/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/Front/bin/Debug/Cntrls.dll.i
 data/Utils/bin/Debug/NewCntrls.dll.i
 data/Itemizn/bin/Debug/CustomerCreation.pdb.i
@@ -2430,15 +2474,15 @@ data/Front/bin/Release/CustomerCreation.dll.d
 data/Utils/NewItemForm.cs.i
 data/Front/bin/Release/CustomerCreation.dll.i
 data/Front/bin/Release/Interop.Microsoft.Office.Core.dll.i
-data/CrystalReport/AssemblyInfo.cs.i
+data/DeaprtureSettings/vssver.scc.i
 data/CMStrategy/bin/Debug/CMStrategy.dll.i
 data/DeaprtureSettings/obj/Debug/DeaprtureSettings.csprojResolveAssemblyReference.cache.i
 data/CustomerCreation/bin/Debug/DefineDocument.dll.d
 data/Cntrls/obj/Debug/Cntrls.ComboTextComponent.resources.i
-data/DeaprtureSettings/bin/Release/NewCntrls.dll.i
+data/AccountRep/bin/Release/NewCntrls.dll.i
 data/gdrLogin/obj/Debug/gemoDream.csproj.GenerateResource.cache.i
 data/ShipManifestConstructor/bin/Debug/ClientLibrary.pdb.i
-data/Printing/obj/Release/Printing.csprojAssemblyReference.cache.i
+data/Menu/obj/Release/gemoDream.MenuForm.resources.i
 data/ReMeasure/App.ico.i
 data/ShipManifestConstructor/obj/Release/GenerateResource.write.1.tlog.i
 data/ShipManifestConstructor/bin/Debug/ClientLibrary.pdb.d
@@ -2453,13 +2497,14 @@ data/gdrLogin/bin/Release/CustomerProgram.dll.i
 data/CrystalReport/obj/Interop.VBIDE.dll.i
 data/gdrLogin/bin/Release/Spire.License.xml.i
 data/ReItemzn/ReItemzn.csproj.i
-data/Color/bin/Release/Interop.Microsoft.Office.Core.dll.i
+data/gdrLibrary/obj/Debug/Interop.Microsoft.Office.Core.dll.i
 data/DeaprtureSettings/DepartureForm.resx.i
 data/packages/Newtonsoft.Json.9.0.1/lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml.i
 data/CrystalReport/bin/Debug/CrystalReport.dll.d
 data/DefineDocument/App.ico.i
 data/ShipManifestConstructor/bin/Debug/ShipManifestConstructor.pdb.i
 data/gdrLogin/bin/Debug/ServiceCfg.xml.i
+data/CustomerCreation/bin/Release/ClientLibrary.XmlSerializers.dll.d
 data/CustomerCreation/bin/Release/ClientLibrary.XmlSerializers.dll.i
 data/Utils/bin/Release/ClientLibrary.dll.config.i
 data/AccountRep/bin/Release/ClientLibrary.dll.config.i
@@ -2476,7 +2521,7 @@ data/DefineDocument/bin/Release/Interop.VBIDE.dll.i
 data/Menu/obj/Release/gemoDream.MenuForm.resources.d
 data/AccountRep/obj/Release/AccountRep.csprojResolveAssemblyReference.cache.i
 data/Printing/bin/Release/Spire.Pdf.xml.i
-data/gdrLogin/obj/Release/gemoDream.csproj.GenerateResource.cache.i
+data/Printing/obj/Release/Printing.csprojAssemblyReference.cache.i
 data/Cntrls/OrdersTree.resx.i
 data/Menu/bin/Debug/Measure.pdb.i
 data/gdrLogin/bin/Debug/Utils.dll.i
@@ -2484,7 +2529,7 @@ data/Itemizn/obj/Release/gemoDream.Itemizn1Form.resources.i
 data/ShipManifestConstructor/bin/Release/DefineDocument.dll.i
 data/gdrLogin/bin/Release/ComponentTester.dll.i
 data/AccountRep/obj/Debug/AccountReport.dll.d
-data/Front/bin/Release/Front.dll.d
+data/SerialPortCustomWrapper/SerialPortCustomWrapper.csproj.user.i
 data/DefineDocument/obj/Release/gemoDream.DefineDocumentForm.resources.i
 data/gdrLogin/bin/Debug/Utils.dll.d
 data/SerialPortCustomWrapper/obj/Release/ResolveAssemblyReference.cache.i

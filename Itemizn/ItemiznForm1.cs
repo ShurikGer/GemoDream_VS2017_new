@@ -686,7 +686,7 @@ namespace gemoDream
 			this.itemPanel1.Size = new System.Drawing.Size(696, 185);
 			this.itemPanel1.TabIndex = 10;
 			this.itemPanel1.Changed += new System.EventHandler(this.itemPanel3_Changed);
-			this.itemPanel1.NewItemTypeSelected += new System.EventHandler(this.itemPanel1_NewItemTypeSelected);
+			//this.itemPanel1.NewItemTypeSelected += new System.EventHandler(this.itemPanel1_NewItemTypeSelected);
 			this.itemPanel1.Load += new System.EventHandler(this.itemPanel1_Load_1);
 			// 
 			// panel4
@@ -1070,10 +1070,10 @@ namespace gemoDream
 			btnClearSet_Click(this, System.EventArgs.Empty);
 
 			wcInspected.Initialize(dsMainDataSet.Tables["MeasureUnits"].DefaultView);
-			itemPanel1.Initialize();
+			//itemPanel1.Initialize();
 
 			DataTable dt = Service.GetItemizn1_ItemsLibrary();
-			itemPanel1.InitializeLibrary(dt);
+			//itemPanel1.InitializeLibrary(dt);
 			bAutoCreateBatch = false;
 			setState("wait for scan");
 			bLoading = true;
@@ -1314,7 +1314,7 @@ namespace gemoDream
 						btnStartGrouping.Enabled = false;
 						btnStartGrouping.BackColor = SystemColors.Control;
 						btnDoneBag.Enabled = false;
-						if (tbItemsInGroup.Text.Length > 0 && Convert.ToInt32(tbItemsInGroup.Text) > 0 && itemPanel1.ItemId != null)
+						if (tbItemsInGroup.Text.Length > 0 && Convert.ToInt32(tbItemsInGroup.Text) > 0)// && itemPanel1.ItemId != null)
 						{
 							btnCreateGroup.Enabled = true;
 							if (isCPvalidatedForGlobal)
@@ -1345,7 +1345,7 @@ namespace gemoDream
 						tbItemsInspected.Enabled = false;
 						btnItmzFromXLS.Enabled = true;
 						wcInspected.Enabled = false;
-						if (tbItemsInGroup.Text.Length > 0 && Convert.ToInt32(tbItemsInGroup.Text) > 0 && itemPanel1.ItemId != null)
+						if (tbItemsInGroup.Text.Length > 0 && Convert.ToInt32(tbItemsInGroup.Text) > 0)// && itemPanel1.ItemId != null)
 						{
 							btnCreateGroup.Enabled = true;
 							if (isCPvalidatedForGlobal)
@@ -1488,16 +1488,16 @@ namespace gemoDream
 				lbWeightNotInspected.Text = "";
 			}
 			//lbItemsNotInspected.Text = 
-			try
-			{
-				itemPanel1.InitializeMRU(
-					dsMainDataSet.Tables["EntryBatch"].Rows[0]["CustomerOfficeID"].ToString(),
-					dsMainDataSet.Tables["EntryBatch"].Rows[0]["CustomerID"].ToString(),
-					dsMainDataSet.Tables["EntryBatch"].Rows[0]["VendorOfficeID"].ToString(),
-					dsMainDataSet.Tables["EntryBatch"].Rows[0]["VendorID"].ToString()
-					);
-			}
-			catch { }
+			//try
+			//{
+			//	itemPanel1.InitializeMRU(
+			//		dsMainDataSet.Tables["EntryBatch"].Rows[0]["CustomerOfficeID"].ToString(),
+			//		dsMainDataSet.Tables["EntryBatch"].Rows[0]["CustomerID"].ToString(),
+			//		dsMainDataSet.Tables["EntryBatch"].Rows[0]["VendorOfficeID"].ToString(),
+			//		dsMainDataSet.Tables["EntryBatch"].Rows[0]["VendorID"].ToString()
+			//		);
+			//}
+			//catch { }
 		 }
 
 		catch(Exception ex)
@@ -1727,8 +1727,8 @@ namespace gemoDream
 
 				frm.lbCustomerName.Text = lbCustomerName.Text;
 				frm.lbCustomerProgram.Text = dsBatchCPItemSet.Tables[0].Rows[0]["CPName"].ToString();
-				frm.lbFullItemName.Text = itemPanel1.FullItemName;
-				frm.pbItemPicture.Image = itemPanel1.ItemPicture;
+				//frm.lbFullItemName.Text = itemPanel1.FullItemName;
+				//frm.pbItemPicture.Image = itemPanel1.ItemPicture;
 
 				frm.ItemsInGroup = itemsInGroup;
 				frm.ItemsTypeId = dsBatchCPItemSet.Tables[0].Rows[0]["ItemTypeId"].ToString(); //           itemPanel1.ItemId;
@@ -2121,7 +2121,7 @@ namespace gemoDream
 					oCPID = drvCP["CPID"];
 					oOfficeID_CPID = drvCP["CPOfficeID_CPID"];
 					oNItems = 1;
-					oItemTypeName = itemPanel1.ItemName;
+					//oItemTypeName = itemPanel1.ItemName;
 					dsBatchCPItemSet.Tables[0].Rows.Add(new Object[] {  oBatchMemoID,
 																		oBatchMemoName,
 																		oNItems,
@@ -2155,11 +2155,11 @@ namespace gemoDream
 		//			Application.Run(new Itemizn1Form(2));
 		//		}
 
-		private void itemPanel1_NewItemTypeSelected(object sender, System.EventArgs e)
-		{
-			DataTable table = Service.GetItemizn1_ItemsSubtypesList(itemPanel1.TypeId);
-			itemPanel1.InitializeItems(table);
-		}
+		//private void itemPanel1_NewItemTypeSelected(object sender, System.EventArgs e)
+		//{
+		//	DataTable table = Service.GetItemizn1_ItemsSubtypesList(itemPanel1.TypeId);
+		//	itemPanel1.InitializeItems(table);
+		//}
 
 		// Handle the KeyDown event to determine the type of character entered into the control.
 		private void tbItemsInspected_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2521,22 +2521,22 @@ namespace gemoDream
 			try
 			{
 					DataRowView drv = dvCP[0];
-					itemPanel1.SelectItemTypeById(drv["ItemTypeID"].ToString(), drv["ItemTypeGroupID"].ToString());
+					//itemPanel1.SelectItemTypeById(drv["ItemTypeID"].ToString(), drv["ItemTypeGroupID"].ToString());
 
-				if (drv["Path2Picture"] != DBNull.Value)
-				{
+				//if (drv["Path2Picture"] != DBNull.Value)
+				//{
 
-					string pathToShape = Client.GetOfficeDirPath("iconDir") + drv["Path2Picture"].ToString();
-					if (File.Exists(pathToShape))
-					{
-						Image im = System.Drawing.Image.FromFile(pathToShape);//  (System.Drawing.Image)Service.ExtractImageFromString(dvParts[0]["ShapePicture"].ToString(), dvParts[0]["ShapePath"].ToString()); old part
-						itemPanel1.InitializePicture(im);
-					}
-					else
-						itemPanel1.InitializePicture(itemPanel1.DefaultPicture);
-				}
-				else
-					itemPanel1.InitializePicture(itemPanel1.DefaultPicture);
+				//	string pathToShape = Client.GetOfficeDirPath("iconDir") + drv["Path2Picture"].ToString();
+				//	if (File.Exists(pathToShape))
+				//	{
+				//		Image im = System.Drawing.Image.FromFile(pathToShape);//  (System.Drawing.Image)Service.ExtractImageFromString(dvParts[0]["ShapePicture"].ToString(), dvParts[0]["ShapePath"].ToString()); old part
+				//		itemPanel1.InitializePicture(im);
+				//	}
+				//	else
+				//		itemPanel1.InitializePicture(itemPanel1.DefaultPicture);
+				//}
+				//else
+				//	itemPanel1.InitializePicture(itemPanel1.DefaultPicture);
 
 				isCPvalidated = true;
 				isCPvalidatedForGlobal = true;
@@ -3186,7 +3186,7 @@ namespace gemoDream
 					oCPID		=	drvCP["CPID"];
 					oOfficeID_CPID =	drvCP["CPOfficeID_CPID"];
 					oNItems	= Convert.ToInt16(tbItemsInGroup.Text.Trim());
-					oItemTypeName = itemPanel1.ItemName;
+					//oItemTypeName = itemPanel1.ItemName;
 
 					if(tbTotalItemsInSet.Text.Trim() == "") 
 						tbTotalItemsInSet.Text = "0";
