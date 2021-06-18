@@ -9222,7 +9222,6 @@ namespace gemoDream
             dsIn.Tables.Add("GetBatchIDByCP");
             dsIn.Tables[0].Columns.Add("CPID", System.Type.GetType("System.String"));
             dsIn.Tables[0].Columns.Add("CPOfficeID", System.Type.GetType("System.String"));
-				
             DataRow row = dsIn.Tables[0].NewRow();
             row["CPID"] = sCPID;
             row["CPOfficeID"] = sCPOfficeID;
