@@ -3923,7 +3923,7 @@ namespace gemoDream
 													System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
 													// Write to the file with the WriteXml method.
 													dsCPDocRules.WriteXml(myXmlWriter);
-													myXmlWriter.Close();
+													myXmlWriter.Close();  
 													// End of debugging part
 												}
 												catch

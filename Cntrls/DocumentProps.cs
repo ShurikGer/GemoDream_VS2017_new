@@ -1238,7 +1238,6 @@ namespace Cntrls
 				}
 				else
 				{
-					// ??
 					//if (ppCurrent.cbMinValue.
 					mini = Convert.ToInt32(ppCurrent.cbMinValue.SelectedValue);
 					maxi = Convert.ToInt32(ppCurrent.cbMaxValue.SelectedValue);
