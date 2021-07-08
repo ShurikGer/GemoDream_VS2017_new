@@ -326,7 +326,7 @@ namespace gemoDream
 			// sbStatus
 			// 
 			this.sbStatus.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
-			this.sbStatus.Location = new System.Drawing.Point(0, 689);
+			this.sbStatus.Location = new System.Drawing.Point(0, 709);
 			this.sbStatus.Name = "sbStatus";
 			this.sbStatus.Size = new System.Drawing.Size(956, 15);
 			this.sbStatus.TabIndex = 8;
@@ -344,7 +344,7 @@ namespace gemoDream
 			this.tcOpsReqs.Name = "tcOpsReqs";
 			this.tcOpsReqs.Padding = new System.Drawing.Point(6, 2);
 			this.tcOpsReqs.SelectedIndex = 0;
-			this.tcOpsReqs.Size = new System.Drawing.Size(956, 407);
+			this.tcOpsReqs.Size = new System.Drawing.Size(956, 427);
 			this.tcOpsReqs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tcOpsReqs.TabIndex = 16;
 			this.tcOpsReqs.SelectedIndexChanged += new System.EventHandler(this.tcOpsReqs_SelectedIndexChanged);
@@ -356,7 +356,7 @@ namespace gemoDream
 			this.tabPage2.Controls.Add(this.tcDocs);
 			this.tabPage2.Location = new System.Drawing.Point(4, 20);
 			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Size = new System.Drawing.Size(948, 383);
+			this.tabPage2.Size = new System.Drawing.Size(948, 403);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Requirements";
 			// 
@@ -393,7 +393,7 @@ namespace gemoDream
 			this.tcDocs.Location = new System.Drawing.Point(0, 5);
 			this.tcDocs.Name = "tcDocs";
 			this.tcDocs.SelectedIndex = 0;
-			this.tcDocs.Size = new System.Drawing.Size(948, 373);
+			this.tcDocs.Size = new System.Drawing.Size(948, 402);
 			this.tcDocs.TabIndex = 2;
 			// 
 			// tabPage4
@@ -404,7 +404,7 @@ namespace gemoDream
 			this.tabPage4.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
 			this.tabPage4.Location = new System.Drawing.Point(4, 18);
 			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(940, 351);
+			this.tabPage4.Size = new System.Drawing.Size(940, 380);
 			this.tabPage4.TabIndex = 1;
 			this.tabPage4.Text = "Default";
 			// 
@@ -605,7 +605,7 @@ namespace gemoDream
 			// 
 			this.tabPage6.Location = new System.Drawing.Point(4, 18);
 			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Size = new System.Drawing.Size(982, 351);
+			this.tabPage6.Size = new System.Drawing.Size(940, 380);
 			this.tabPage6.TabIndex = 2;
 			this.tabPage6.Text = "Documents";
 			// 
@@ -621,7 +621,7 @@ namespace gemoDream
 			this.tabPage7.Controls.Add(this.tbComments);
 			this.tabPage7.Location = new System.Drawing.Point(4, 20);
 			this.tabPage7.Name = "tabPage7";
-			this.tabPage7.Size = new System.Drawing.Size(948, 383);
+			this.tabPage7.Size = new System.Drawing.Size(948, 403);
 			this.tabPage7.TabIndex = 2;
 			this.tabPage7.Text = "Description";
 			// 
@@ -708,7 +708,7 @@ namespace gemoDream
 			this.tabPage1.Controls.Add(this.label2);
 			this.tabPage1.Location = new System.Drawing.Point(4, 20);
 			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(948, 383);
+			this.tabPage1.Size = new System.Drawing.Size(948, 403);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Operations";
 			// 
@@ -793,7 +793,7 @@ namespace gemoDream
 			// 
 			this.tabPage3.Location = new System.Drawing.Point(4, 20);
 			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(948, 383);
+			this.tabPage3.Size = new System.Drawing.Size(948, 403);
 			this.tabPage3.TabIndex = 3;
 			this.tabPage3.Text = "Pricing";
 			// 
@@ -1010,20 +1010,21 @@ namespace gemoDream
 			this.ipItems.Changed += new System.EventHandler(this.ipItems_Changed);
 			this.ipItems.NewItemTypeSelected += new System.EventHandler(this.ipItems_NewItemTypeSelected);
 			this.ipItems.ListViewDoubleClick += new System.EventHandler(this.ipItems_ListViewDoubleClick);
+			this.ipItems.Load += new System.EventHandler(this.ipItems_Load);
 			this.ipItems.Enter += new System.EventHandler(this.ipItems_Enter);
 			// 
 			// documentProps1
 			// 
 			this.documentProps1.BackColor = System.Drawing.SystemColors.Control;
 			this.documentProps1.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
-			this.documentProps1.Location = new System.Drawing.Point(5, 5);
+			this.documentProps1.Location = new System.Drawing.Point(5, 15);
 			this.documentProps1.Name = "documentProps1";
 			this.documentProps1.Size = new System.Drawing.Size(925, 300);
 			this.documentProps1.TabIndex = 0;
 			// 
 			// CustomerProgramForm
 			// 
-			this.ClientSize = new System.Drawing.Size(956, 704);
+			this.ClientSize = new System.Drawing.Size(956, 724);
 			this.Controls.Add(this.bReloadSKU_List);
 			this.Controls.Add(this.tbSRP);
 			this.Controls.Add(this.tbCPPropertyCustomerID);
@@ -5400,6 +5401,11 @@ namespace gemoDream
 				}
 			}
 			//throw new NotImplementedException();
+		}
+
+		private void ipItems_Load(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

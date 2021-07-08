@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 using gemoDream;
 
 namespace Cntrls
@@ -63,6 +64,8 @@ namespace Cntrls
 		public System.Windows.Forms.CheckBox chbShowDoc4;
 		public System.Windows.Forms.CheckBox chbShowDoc5;
 		public System.Windows.Forms.CheckBox chbShowDoc6;
+		private Button cmd_Select;
+		private Button cmd_UnSelect;
 
 
 
@@ -153,6 +156,8 @@ namespace Cntrls
 			this.chbDocEnabled = new System.Windows.Forms.CheckBox();
 			this.tbDescription = new System.Windows.Forms.TextBox();
 			this.pnlPartProps = new System.Windows.Forms.Panel();
+			this.cmd_Select = new System.Windows.Forms.Button();
+			this.cmd_UnSelect = new System.Windows.Forms.Button();
 			this.ptPartTree = new Cntrls.PartTree();
 			this.gbToDo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgRechecks)).BeginInit();
@@ -451,11 +456,33 @@ namespace Cntrls
 			// 
 			this.pnlPartProps.AutoScroll = true;
 			this.pnlPartProps.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.pnlPartProps.Location = new System.Drawing.Point(205, 0);
+			this.pnlPartProps.Location = new System.Drawing.Point(205, 45);
 			this.pnlPartProps.Name = "pnlPartProps";
-			this.pnlPartProps.Size = new System.Drawing.Size(467, 330);
+			this.pnlPartProps.Size = new System.Drawing.Size(467, 321);
 			this.pnlPartProps.TabIndex = 9;
 			this.pnlPartProps.Leave += new System.EventHandler(this.pnlPartProps_Leave);
+			// 
+			// cmd_Select
+			// 
+			this.cmd_Select.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+			this.cmd_Select.Location = new System.Drawing.Point(559, 27);
+			this.cmd_Select.Name = "cmd_Select";
+			this.cmd_Select.Size = new System.Drawing.Size(69, 18);
+			this.cmd_Select.TabIndex = 12;
+			this.cmd_Select.Text = "Check in";
+			this.cmd_Select.UseVisualStyleBackColor = false;
+			this.cmd_Select.Click += new System.EventHandler(this.cmd_Select_Click);
+			// 
+			// cmd_UnSelect
+			// 
+			this.cmd_UnSelect.BackColor = System.Drawing.Color.Snow;
+			this.cmd_UnSelect.Location = new System.Drawing.Point(559, 8);
+			this.cmd_UnSelect.Name = "cmd_UnSelect";
+			this.cmd_UnSelect.Size = new System.Drawing.Size(69, 18);
+			this.cmd_UnSelect.TabIndex = 13;
+			this.cmd_UnSelect.Text = "Check out";
+			this.cmd_UnSelect.UseVisualStyleBackColor = false;
+			this.cmd_UnSelect.Click += new System.EventHandler(this.cmd_UnSelect_Click);
 			// 
 			// ptPartTree
 			// 
@@ -468,6 +495,8 @@ namespace Cntrls
 			// 
 			// DocumentProps
 			// 
+			this.Controls.Add(this.cmd_UnSelect);
+			this.Controls.Add(this.cmd_Select);
 			this.Controls.Add(this.tbDescription);
 			this.Controls.Add(this.chbDocEnabled);
 			this.Controls.Add(this.gbToDo);
@@ -476,7 +505,7 @@ namespace Cntrls
 			this.Controls.Add(this.checkBox1);
 			this.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
 			this.Name = "DocumentProps";
-			this.Size = new System.Drawing.Size(941, 335);
+			this.Size = new System.Drawing.Size(941, 377);
 			this.Load += new System.EventHandler(this.DocumentProps_Load);
 			this.gbToDo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgRechecks)).EndInit();
@@ -946,7 +975,7 @@ namespace Cntrls
 		private void ptPartTree_Changed_1(object sender, System.EventArgs e)
 		{
 			pnlPartProps.Focus();
-			DataRow[] drSet = dsParts.Tables["MeasuresByItemType"].Select("PartTypeID = '" + ptPartTree.SelectedRow["PartTypeID"]+ "'", "MeasureTitle");
+			DataRow[] drSet = dsParts.Tables["MeasuresByItemType"].Select("PartTypeID = '" + ptPartTree.SelectedRow["PartTypeID"] + "'", "MeasureTitle");
 
 			currentPartTypeID = Convert.ToInt32(ptPartTree.SelectedRow["ID"]);
 			CreateCharacteristic(drSet);
@@ -1119,8 +1148,13 @@ namespace Cntrls
 					pnlPartProps.Controls.Add(ppcNew);
 
 					pnlPartProps.ScrollControlIntoView(ppcNew);
+					//ppcNew.Dispose();
+					//ppcNew = null;
 				}
 			}
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
 		}
 
 		private void DoMinMaxCorrect(PartPropControl ppc)
@@ -1165,8 +1199,9 @@ namespace Cntrls
 			{
 				ppCurrent = (PartPropControl)sender;
 			}
-			catch
+			catch (Exception ex)
 			{
+				var a = ex.Message;
 				return;
 			}
 			double mind;
@@ -1184,7 +1219,8 @@ namespace Cntrls
 			}
 			catch(Exception exc)
 			{
-				Console.WriteLine(exc.Message);
+					var a = exc.Message;
+					//Console.WriteLine(exc.Message);
 			}
 
 			try
@@ -1253,7 +1289,8 @@ namespace Cntrls
 			}
 			catch(Exception exc)
 			{
-				Console.WriteLine(exc.Message);
+					var a = exc.Message;
+					//Console.WriteLine(exc.Message);
 			}
 
 			try
@@ -1290,7 +1327,8 @@ namespace Cntrls
 			}
 			catch(Exception exc)
 			{
-				Console.WriteLine(exc.Message);
+					var a = exc.Message;
+					//Console.WriteLine(exc.Message);
 			}
 
 			try
@@ -1356,7 +1394,8 @@ namespace Cntrls
 				}
 			catch(Exception exc)
 			{
-				Console.WriteLine(exc.Message);
+					var a = exc.Message;
+					//Console.WriteLine(exc.Message);
 			}
 
 			try
@@ -1370,10 +1409,11 @@ namespace Cntrls
 			}
 			catch (Exception exc)
 			{
-				Console.WriteLine(exc.Message);
+					var a = exc.Message;
+					//Console.WriteLine(exc.Message);			
 			}
-		}
-		}
+			}
+			}
 
 		private void comboBoxDocument(object sender, System.EventArgs e)
 		{
@@ -1740,6 +1780,63 @@ namespace Cntrls
 				comboBoxDocument6(sender, e);
 			}		
 		}
+		private void UpdateNotVisibleInCCM(string PartID, bool check)
+		{
+			try
+			{
+				//DataRow[] drParameters = dsRulez.Tables[0].Select("PartID = '" + ptPartTree.SelectedNode.ImageKey + "'");
+				foreach (PartPropControl temp in pnlPartProps.Controls)
+				{
+					temp.chbDo2.Checked = check;
+					{
+						DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + temp.Tag.ToString() + " and PartID=" + PartID.ToString());
+						if (temp.chbDo2.Checked)
+						{
+							if (aRow.Length == 0)
+							{
+								dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(temp.Tag);
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(PartID);
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 1;//"1";
+							}
+							else
+							{
+								aRow[0]["NotVisibleInCCM"] = 1;
+							}
+						}
+						else
+						{
+							if (aRow.Length == 0)
+							{
+								dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(temp.Tag);
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(PartID);
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 0;//"1";
+							}
+							else
+							{
+								aRow[0]["NotVisibleInCCM"] = 0;
+							}
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				var a = ex.Message;
+			}
+		}
 
+		private void cmd_Select_Click(object sender, EventArgs e)
+		{
+			var PartID = ptPartTree.SelectedNode.ImageKey;
+			UpdateNotVisibleInCCM(PartID, true);
+		}
+
+		private void cmd_UnSelect_Click(object sender, EventArgs e)
+		{
+			var PartID = ptPartTree.SelectedNode.ImageKey;
+			UpdateNotVisibleInCCM(PartID, false);
+		}
 	}
 }
