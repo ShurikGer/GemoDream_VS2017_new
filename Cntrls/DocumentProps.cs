@@ -471,6 +471,7 @@ namespace Cntrls
 			this.cmd_Select.TabIndex = 12;
 			this.cmd_Select.Text = "Check in";
 			this.cmd_Select.UseVisualStyleBackColor = false;
+			this.cmd_Select.Visible = false;
 			this.cmd_Select.Click += new System.EventHandler(this.cmd_Select_Click);
 			// 
 			// cmd_UnSelect
@@ -482,6 +483,7 @@ namespace Cntrls
 			this.cmd_UnSelect.TabIndex = 13;
 			this.cmd_UnSelect.Text = "Check out";
 			this.cmd_UnSelect.UseVisualStyleBackColor = false;
+			this.cmd_UnSelect.Visible = false;
 			this.cmd_UnSelect.Click += new System.EventHandler(this.cmd_UnSelect_Click);
 			// 
 			// ptPartTree
@@ -974,11 +976,29 @@ namespace Cntrls
 
 		private void ptPartTree_Changed_1(object sender, System.EventArgs e)
 		{
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
 			pnlPartProps.Focus();
+#if DEBUG
+			// For debugging only			
+			string filename = "C:/DELL/myPartsMeasure.xml";
+			if (System.IO.File.Exists(filename)) System.IO.File.Delete(filename);
+			// Create the FileStream to write with.
+			System.IO.FileStream myFileStream = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+			// Create an XmlTextWriter with the fileStream.
+			System.Xml.XmlTextWriter myXmlWriter = new System.Xml.XmlTextWriter(myFileStream, System.Text.Encoding.Unicode);
+			// Write to the file with the WriteXml method.
+			dsParts.WriteXml(myXmlWriter);
+			myXmlWriter.Close();
+			// End of debugging part
+#endif
 			DataRow[] drSet = dsParts.Tables["MeasuresByItemType"].Select("PartTypeID = '" + ptPartTree.SelectedRow["PartTypeID"] + "'", "MeasureTitle");
-
 			currentPartTypeID = Convert.ToInt32(ptPartTree.SelectedRow["ID"]);
 			CreateCharacteristic(drSet);
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
 		}
 
 		private void CreateCharacteristic(DataRow[] drSet)
@@ -989,6 +1009,7 @@ namespace Cntrls
 			DataRow[] dIsDefaultMeasureValue;
 
 			pnlPartProps.Controls.Clear();
+
 #if DEBUG
 			// For debugging only			
 			string filename = "C:/DELL/mySkuRules.xml";
@@ -1005,156 +1026,162 @@ namespace Cntrls
 
 			foreach (DataRow row in drSet)
 			{
-				if(row["MeasureClass"].ToString() == "1" || row["MeasureClass"].ToString() == "3")
+				if (row["MeasureClass"].ToString() == "1" || row["MeasureClass"].ToString() == "3")
 				{
-					PartPropControl ppcNew = new PartPropControl();
-					ppcNew.tbPropName.Text = row["MeasureTitle"].ToString();
-					ppcNew.Leave += new EventHandler(pnlPartProps_Leave);
-					ppcNew.Tag = row["MeasureID"];						
-					dCurMin = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-					dCurMax = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-					dNotVisible = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-					dIsDefaultMeasureValue = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-
-					//mvs
-					//string s1 = ppcNew.Tag.ToString();
-					//string s2 = currentPartTypeID.ToString();
-					//System.Diagnostics.Trace.WriteLine("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-					//gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
-
-					if (dNotVisible.Length > 0 && !dNotVisible[0].IsNull("NotVisibleInCCM"))
+					//using (PartPropControl ppcNew = new PartPropControl())
 					{
-						if (dNotVisible[0]["NotVisibleInCCM"].ToString() == "1")
-							ppcNew.chbDo2.Checked = true;
-						else
-							ppcNew.chbDo2.Checked = false;
-					}
-					// for visual debug
-					/*
-					else
-					{
-						gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
-					}
-					*/
+						PartPropControl ppcNew = new PartPropControl();
+						ppcNew.tbPropName.Text = row["MeasureTitle"].ToString();
+						ppcNew.Leave += new EventHandler(pnlPartProps_Leave);
+						ppcNew.Tag = row["MeasureID"];
+						dCurMin = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+						dCurMax = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+						dNotVisible = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+						dIsDefaultMeasureValue = dsRulez.Tables[0].Select("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
 
-					if (dIsDefaultMeasureValue.Length > 0 && !dIsDefaultMeasureValue[0].IsNull("IsDefaultMeasureValue"))
-					{
-						if (dNotVisible[0]["IsDefaultMeasureValue"].ToString() == "1")
-							ppcNew.chbDo3.Checked = true;
-						else
-							ppcNew.chbDo3.Checked = false;
-						if (dNotVisible[0]["IsDefaultMeasureValue"].ToString() == "2")
+						//mvs
+						//string s1 = ppcNew.Tag.ToString();
+						//string s2 = currentPartTypeID.ToString();
+						//System.Diagnostics.Trace.WriteLine("MeasureID=" + ppcNew.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+						//gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
+
+						if (dNotVisible.Length > 0 && !dNotVisible[0].IsNull("NotVisibleInCCM"))
 						{
-							//ppcNew.chbDo3.Checked = false;
-							ppcNew.chbDo4.Checked = true;
+							if (dNotVisible[0]["NotVisibleInCCM"].ToString() == "1" || dNotVisible[0]["NotVisibleInCCM"].ToString() == "2")
+								ppcNew.chbDo2.Checked = true;
+							else
+								ppcNew.chbDo2.Checked = false;
 						}
-						//else
-						//	ppcNew.chbDo3.Checked = false;
-					}
-					/*
-					else
-					{
-						gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
-					}
-					*/
+						// for visual debug
+						/*
+						else
+						{
+							gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
+						}
+						*/
 
-
-					switch (row["MeasureClass"].ToString()) 
-					{
-						case "1":
-							
-							DataTable dtComboSource = dsData.Tables[0].Clone();
-							DataRow[] aRows = dsData.Tables[0].Select("MeasureCode=" + row["MeasureCode"].ToString());
-							for(int i = 0; i < aRows.Length; i++)
-								dtComboSource.Rows.Add(aRows[i].ItemArray);						
-
-							ppcNew.cbMinValue.Show();
-							ppcNew.cbMaxValue.Show();
-							ppcNew.tbMinValue.Hide();
-							ppcNew.tbMaxValue.Hide();
-						
-							ppcNew.cbMinValue.DataSource = dtComboSource.Copy();
-							ppcNew.cbMaxValue.DataSource = dtComboSource.Copy();
-							ppcNew.cbMinValue.ValueMember = "MeasureValueID";
-							ppcNew.cbMaxValue.ValueMember = "MeasureValueID";
-//                            ppcNew.cbMinValue.Tag = "nOrder";
-//                            ppcNew.cbMaxValue.Tag = "nOrder";
-							ppcNew.cbMinValue.DisplayMember = "MeasureValueName";					
-							ppcNew.cbMaxValue.DisplayMember = "MeasureValueName";					
-
-							if (dCurMin.Length > 0 && !dCurMin[0].IsNull("MinMeasure"))
-							{
-								ppcNew.cbMinValue.SelectedValue = Convert.ToInt32(dCurMin[0]["MinMeasure"]);
-								ppcNew.chbDo.Checked = true;
-							}
+						if (dIsDefaultMeasureValue.Length > 0 && !dIsDefaultMeasureValue[0].IsNull("IsDefaultMeasureValue"))
+						{
+							if (dNotVisible[0]["IsDefaultMeasureValue"].ToString() == "1")
+								ppcNew.chbDo3.Checked = true;
 							else
-								ppcNew.cbMinValue.SelectedIndex = -1;
-
-							if (dCurMax.Length > 0 && !dCurMax[0].IsNull("MaxMeasure"))
+								ppcNew.chbDo3.Checked = false;
+							if (dNotVisible[0]["IsDefaultMeasureValue"].ToString() == "2")
 							{
-								ppcNew.cbMaxValue.SelectedValue = Convert.ToInt32(dCurMax[0]["MaxMeasure"]);
-								ppcNew.chbDo.Checked = true;
+								//ppcNew.chbDo3.Checked = false;
+								ppcNew.chbDo4.Checked = true;
 							}
-							else
-								ppcNew.cbMaxValue.SelectedIndex = -1;
+							//else
+							//	ppcNew.chbDo3.Checked = false;
+						}
+						/*
+						else
+						{
+							gemoDream.Service.debug_DiaspalyDataSet(dsRulez);
+						}
+						*/
 
-							ppcNew.cbMinValue.SelectedIndexChanged += new System.EventHandler(this.onMinComboBox);
-							break;
 
-						case "3":
-							ppcNew.cbMinValue.Hide();
-							ppcNew.cbMaxValue.Hide();
-							ppcNew.tbMinValue.Show();
-							ppcNew.tbMaxValue.Show();
-						
-							if (dCurMin.Length > 0 && !dCurMin[0].IsNull("MinMeasure"))
-							{
-								string str = dCurMin[0]["MinMeasure"].ToString();
-								if (str.Equals("0"))
-									ppcNew.tbMinValue.Text = ".00";
+						switch (row["MeasureClass"].ToString())
+						{
+							case "1":
+
+								DataTable dtComboSource = dsData.Tables[0].Clone();
+								DataRow[] aRows = dsData.Tables[0].Select("MeasureCode=" + row["MeasureCode"].ToString());
+								for (int i = 0; i < aRows.Length; i++)
+									dtComboSource.Rows.Add(aRows[i].ItemArray);
+
+								ppcNew.cbMinValue.Show();
+								ppcNew.cbMaxValue.Show();
+								ppcNew.tbMinValue.Hide();
+								ppcNew.tbMaxValue.Hide();
+
+								ppcNew.cbMinValue.DataSource = dtComboSource.Copy();
+								ppcNew.cbMaxValue.DataSource = dtComboSource.Copy();
+								ppcNew.cbMinValue.ValueMember = "MeasureValueID";
+								ppcNew.cbMaxValue.ValueMember = "MeasureValueID";
+								//                            ppcNew.cbMinValue.Tag = "nOrder";
+								//                            ppcNew.cbMaxValue.Tag = "nOrder";
+								ppcNew.cbMinValue.DisplayMember = "MeasureValueName";
+								ppcNew.cbMaxValue.DisplayMember = "MeasureValueName";
+
+								if (dCurMin.Length > 0 && !dCurMin[0].IsNull("MinMeasure"))
+								{
+									ppcNew.cbMinValue.SelectedValue = Convert.ToInt32(dCurMin[0]["MinMeasure"]);
+									ppcNew.chbDo.Checked = true;
+								}
 								else
-									ppcNew.tbMinValue.Text = Convert.ToDouble(dCurMin[0]["MinMeasure"]).ToString(".####");
-								ppcNew.chbDo.Checked = true;
-							}
+									ppcNew.cbMinValue.SelectedIndex = -1;
 
-							if (dCurMax.Length > 0 && !dCurMax[0].IsNull("MaxMeasure"))
-							{
-								string str = dCurMin[0]["MaxMeasure"].ToString();
-								if (str.Equals("0"))
-									ppcNew.tbMaxValue.Text = ".00";
+								if (dCurMax.Length > 0 && !dCurMax[0].IsNull("MaxMeasure"))
+								{
+									ppcNew.cbMaxValue.SelectedValue = Convert.ToInt32(dCurMax[0]["MaxMeasure"]);
+									ppcNew.chbDo.Checked = true;
+								}
 								else
-									ppcNew.tbMaxValue.Text = Convert.ToDouble(dCurMin[0]["MaxMeasure"]).ToString(".####");
-								ppcNew.chbDo.Checked = true;
-							}
+									ppcNew.cbMaxValue.SelectedIndex = -1;
 
-							break;
+								ppcNew.cbMinValue.SelectedIndexChanged += new System.EventHandler(this.onMinComboBox);
+								break;
 
-						default: continue;
-					}
-					if(pnlPartProps.Controls.Count > 0)
-						ppcNew.Location = new Point(5, pnlPartProps.Controls[pnlPartProps.Controls.Count - 1].Location.Y + 21);
-					else
-						ppcNew.Location = new Point(5, 1);
-					if (ppcNew.chbDo.Checked)
-					{
-						ppcNew.chbDo3.Enabled = true;
-						ppcNew.chbDo4.Enabled = true;
-					}
-					else
-					{
-						ppcNew.chbDo3.Enabled = false;
-						ppcNew.chbDo4.Enabled = false;
-					}
-					pnlPartProps.Controls.Add(ppcNew);
+							case "3":
+								ppcNew.cbMinValue.Hide();
+								ppcNew.cbMaxValue.Hide();
+								ppcNew.tbMinValue.Show();
+								ppcNew.tbMaxValue.Show();
 
-					pnlPartProps.ScrollControlIntoView(ppcNew);
-					//ppcNew.Dispose();
-					//ppcNew = null;
+								if (dCurMin.Length > 0 && !dCurMin[0].IsNull("MinMeasure"))
+								{
+									string str = dCurMin[0]["MinMeasure"].ToString();
+									if (str.Equals("0"))
+										ppcNew.tbMinValue.Text = "0.00";
+									else
+										ppcNew.tbMinValue.Text = Convert.ToDouble(dCurMin[0]["MinMeasure"]).ToString(".####");
+									ppcNew.chbDo.Checked = true;
+								}
+
+								if (dCurMax.Length > 0 && !dCurMax[0].IsNull("MaxMeasure"))
+								{
+									string str = dCurMin[0]["MaxMeasure"].ToString();
+									if (str.Equals("0"))
+										ppcNew.tbMaxValue.Text = "0.00";
+									else
+										ppcNew.tbMaxValue.Text = Convert.ToDouble(dCurMin[0]["MaxMeasure"]).ToString(".####");
+									ppcNew.chbDo.Checked = true;
+								}
+
+								break;
+
+							default: continue;
+						}
+						if (pnlPartProps.Controls.Count > 0)
+							ppcNew.Location = new Point(5, pnlPartProps.Controls[pnlPartProps.Controls.Count - 1].Location.Y + 21);
+						else
+							ppcNew.Location = new Point(5, 1);
+						if (ppcNew.chbDo.Checked)
+						{
+							ppcNew.chbDo3.Enabled = true;
+							ppcNew.chbDo4.Enabled = true;
+						}
+						else
+						{
+							ppcNew.chbDo3.Enabled = false;
+							ppcNew.chbDo4.Enabled = false;
+						}
+						pnlPartProps.Controls.Add(ppcNew);
+
+						pnlPartProps.ScrollControlIntoView(ppcNew);
+						//ppcNew.Dispose();
+						//ppcNew = null;
+					}
 				}
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+				GC.Collect();
 			}
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
+			//GC.Collect();
+			//GC.WaitForPendingFinalizers();
+			//GC.Collect();
 		}
 
 		private void DoMinMaxCorrect(PartPropControl ppc)
@@ -1209,158 +1236,158 @@ namespace Cntrls
 			int mini;
 			int maxi;
 			//for(int i = 0; i < pnlPartProps.Controls.Count; i++)
-		{
-			mind = maxd = - 1;
-			mini = maxi = -1;
-			//ppCurrent = (PartPropControl)pnlPartProps.Controls[i];
-			try
 			{
-				DoMinMaxCorrect(ppCurrent);
-			}
-			catch(Exception exc)
-			{
+				mind = maxd = -1;
+				mini = maxi = -1;
+				//ppCurrent = (PartPropControl)pnlPartProps.Controls[i];
+				try
+				{
+					DoMinMaxCorrect(ppCurrent);
+				}
+				catch (Exception exc)
+				{
 					var a = exc.Message;
 					//Console.WriteLine(exc.Message);
-			}
-
-			try
-			{
-				if(ppCurrent.tbMinValue.Visible)
-				{
-					if (ppCurrent.tbMinValue.Text.ToString().Equals(""))
-						mind = 0.0;
-					else
-						mind = Convert.ToDouble(ppCurrent.tbMinValue.Text);
-					if (ppCurrent.tbMaxValue.Text.ToString().Equals(""))
-						maxd = 0.0;
-					else
-						maxd = Convert.ToDouble(ppCurrent.tbMaxValue.Text);
 				}
-				else
-				{
-					//if (ppCurrent.cbMinValue.
-					mini = Convert.ToInt32(ppCurrent.cbMinValue.SelectedValue);
-					maxi = Convert.ToInt32(ppCurrent.cbMaxValue.SelectedValue);
-				}
-					
-				DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
 
-				//if(ppCurrent.chbDo.Checked && ((mini != -1 && maxi != -1) || (mind != -1 && maxd != -1)))
-				if(ppCurrent.chbDo.Checked)
-				{						
-					if(aRow.Length == 0)
+				try
+				{
+					if (ppCurrent.tbMinValue.Visible)
 					{
-						dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MinMeasure"] =
-							ppCurrent.cbMinValue.Visible ? Convert.ToDouble(mini) : Convert.ToDouble(mind);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MaxMeasure"] =
-							ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(maxi) : Convert.ToDouble(maxd);
-						/*
-							//E.B.M.
-							if(ppCurrent.chbDo2.Checked)
-								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME1"] ="sdsd";
-							else
-								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME1"] ="sdsd";
-							if(ppCurrent.chbDo3.Checked)
-								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME2"] ="sdsd";
-							else
-								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME2"] ="sdsd";
-							//E.B.M.
-							*/
+						if (ppCurrent.tbMinValue.Text.ToString().Equals(""))
+							mind = 0.0;
+						else
+							mind = Convert.ToDouble(ppCurrent.tbMinValue.Text);
+						if (ppCurrent.tbMaxValue.Text.ToString().Equals(""))
+							maxd = 0.0;
+						else
+							maxd = Convert.ToDouble(ppCurrent.tbMaxValue.Text);
 					}
 					else
 					{
-						aRow[0]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						aRow[0]["MinMeasure"] =
-							ppCurrent.cbMinValue.Visible ? Convert.ToDouble(mini) : Convert.ToDouble(mind);
-						//ppCurrent.cbMinValue.Visible ? Convert.ToDouble(ppCurrent.cbMinValue.SelectedValue) : Convert.ToDouble(mind);
-						aRow[0]["MaxMeasure"] =
-							ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(maxi) : Convert.ToDouble(maxd);
-						//ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(ppCurrent.cbMaxValue.SelectedValue) : Convert.ToDouble(maxd);
+						//if (ppCurrent.cbMinValue.
+						mini = Convert.ToInt32(ppCurrent.cbMinValue.SelectedValue);
+						maxi = Convert.ToInt32(ppCurrent.cbMaxValue.SelectedValue);
+					}
+
+					DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+
+					//if(ppCurrent.chbDo.Checked && ((mini != -1 && maxi != -1) || (mind != -1 && maxd != -1)))
+					if (ppCurrent.chbDo.Checked)
+					{
+						if (aRow.Length == 0)
+						{
+							dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MinMeasure"] =
+								ppCurrent.cbMinValue.Visible ? Convert.ToDouble(mini) : Convert.ToDouble(mind);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MaxMeasure"] =
+								ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(maxi) : Convert.ToDouble(maxd);
+							/*
+								//E.B.M.
+								if(ppCurrent.chbDo2.Checked)
+									dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME1"] ="sdsd";
+								else
+									dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME1"] ="sdsd";
+								if(ppCurrent.chbDo3.Checked)
+									dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME2"] ="sdsd";
+								else
+									dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NEWCOLLNAME2"] ="sdsd";
+								//E.B.M.
+								*/
+						}
+						else
+						{
+							aRow[0]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							aRow[0]["MinMeasure"] =
+								ppCurrent.cbMinValue.Visible ? Convert.ToDouble(mini) : Convert.ToDouble(mind);
+							//ppCurrent.cbMinValue.Visible ? Convert.ToDouble(ppCurrent.cbMinValue.SelectedValue) : Convert.ToDouble(mind);
+							aRow[0]["MaxMeasure"] =
+								ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(maxi) : Convert.ToDouble(maxd);
+							//ppCurrent.cbMaxValue.Visible ? Convert.ToDouble(ppCurrent.cbMaxValue.SelectedValue) : Convert.ToDouble(maxd);
+						}
+					}
+					else
+					{
+						dsRulez.Tables[0].Rows.Remove(aRow[0]);
 					}
 				}
-				else
+				catch (Exception exc)
 				{
-					dsRulez.Tables[0].Rows.Remove(aRow[0]);
-				}
-			}
-			catch(Exception exc)
-			{
 					var a = exc.Message;
 					//Console.WriteLine(exc.Message);
-			}
+				}
 
-			try
-			{
-				DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-				if (ppCurrent.chbDo2.Checked)
+				try
 				{
-					if (aRow.Length == 0)
+					DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+					if (ppCurrent.chbDo2.Checked)
 					{
-						dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 1;//"1";
+						if (aRow.Length == 0)
+						{
+							dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 1;//"1";
+						}
+						else
+						{
+							aRow[0]["NotVisibleInCCM"] = 1;
+						}
 					}
 					else
 					{
-						aRow[0]["NotVisibleInCCM"] = 1;
+						if (aRow.Length == 0)
+						{
+							dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 0;//"1";
+						}
+						else
+						{
+							aRow[0]["NotVisibleInCCM"] = 0;
+						}
 					}
 				}
-				else
+				catch (Exception exc)
 				{
-					if (aRow.Length == 0)
-					{
-						dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 0;//"1";
-					}
-					else
-					{
-						aRow[0]["NotVisibleInCCM"] = 0;
-					}
-				}
-			}
-			catch(Exception exc)
-			{
 					var a = exc.Message;
 					//Console.WriteLine(exc.Message);
-			}
+				}
 
-			try
-			{
-				DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-				if (ppCurrent.chbDo.Checked && ppCurrent.chbDo3.Checked && ppCurrent.chbDo3.Enabled)
+				try
 				{
-					if (aRow.Length == 0)
+					DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+					if (ppCurrent.chbDo.Checked && ppCurrent.chbDo3.Checked && ppCurrent.chbDo3.Enabled)
 					{
-						dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 1;
+						if (aRow.Length == 0)
+						{
+							dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 1;
+						}
+						else
+						{
+							aRow[0]["IsDefaultMeasureValue"] = 1;
+						}
 					}
 					else
 					{
-						aRow[0]["IsDefaultMeasureValue"] = 1;
+						if (aRow.Length == 0)
+						{
+							dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+							dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 0;//"1";
+						}
+						else
+						{
+							aRow[0]["IsDefaultMeasureValue"] = 0;
+						}
 					}
-				}
-				else
-				{
-					if (aRow.Length == 0)
-					{
-						dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-						dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 0;//"1";
-					}
-					else
-					{
-						aRow[0]["IsDefaultMeasureValue"] = 0;
-					}
-				}
 					if (ppCurrent.chbDo.Checked && ppCurrent.chbDo4.Checked && ppCurrent.chbDo4.Enabled)
 					{
 						if (aRow.Length == 0)
@@ -1374,45 +1401,45 @@ namespace Cntrls
 						{
 							aRow[0]["IsDefaultMeasureValue"] = 2;
 						}
-					//}
-					//else
-					//{
-					//	if (aRow.Length == 0)
-					//	{
-					//		dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
-					//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
-					//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
-					//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 0;//"1";
-					//	}
-					//	else
-					//	{
-					//		aRow[0]["IsDefaultMeasureValue"] = 0;
-					//	}
+						//}
+						//else
+						//{
+						//	if (aRow.Length == 0)
+						//	{
+						//		dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
+						//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(ppCurrent.Tag);
+						//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(currentPartTypeID);
+						//		dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["IsDefaultMeasureValue"] = 0;//"1";
+						//	}
+						//	else
+						//	{
+						//		aRow[0]["IsDefaultMeasureValue"] = 0;
+						//	}
 					}
 
 				}
-			catch(Exception exc)
-			{
+				catch (Exception exc)
+				{
 					var a = exc.Message;
 					//Console.WriteLine(exc.Message);
-			}
-
-			try
-			{
-				DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
-				if (aRow.Length > 0 && !ppCurrent.chbDo.Checked && 
-					!ppCurrent.chbDo2.Checked && !ppCurrent.chbDo3.Enabled)
-				{
-					dsRulez.Tables[0].Rows.Remove(aRow[0]);
 				}
-			}
-			catch (Exception exc)
-			{
+
+				try
+				{
+					DataRow[] aRow = dsRulez.Tables[0].Select("MeasureID=" + ppCurrent.Tag.ToString() + " and PartID=" + currentPartTypeID.ToString());
+					if (aRow.Length > 0 && !ppCurrent.chbDo.Checked &&
+						!ppCurrent.chbDo2.Checked && !ppCurrent.chbDo3.Enabled)
+					{
+						dsRulez.Tables[0].Rows.Remove(aRow[0]);
+					}
+				}
+				catch (Exception exc)
+				{
 					var a = exc.Message;
 					//Console.WriteLine(exc.Message);			
+				}
 			}
-			}
-			}
+		}
 
 		private void comboBoxDocument(object sender, System.EventArgs e)
 		{
@@ -1796,11 +1823,11 @@ namespace Cntrls
 								dsRulez.Tables[0].Rows.Add(dsRulez.Tables[0].NewRow());
 								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["MeasureID"] = Convert.ToInt32(temp.Tag);
 								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["PartID"] = Convert.ToInt32(PartID);
-								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 1;//"1";
+								dsRulez.Tables[0].Rows[dsRulez.Tables[0].Rows.Count - 1]["NotVisibleInCCM"] = 2;//"1";
 							}
 							else
 							{
-								aRow[0]["NotVisibleInCCM"] = 1;
+								aRow[0]["NotVisibleInCCM"] = 2;
 							}
 						}
 						else

@@ -1951,6 +1951,7 @@ namespace gemoDream
 		private void ctcCustomer_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ipItems.ListItems.Enabled = true;
+			ipItems.ListItems.Items.Clear();
 
 			Service.SetDepartmentOfficeId(ctcCustomer.SelectedID.Split('_')[0]);
 			//ctcVendor.Enabled = false;
@@ -3483,6 +3484,7 @@ namespace gemoDream
 				DataSet dsCheck = Service.GetCPByNameAndCustomer(tbCustProgName.Text,
 											ctcCustomer.ComboField.cbField.SelectedValue.ToString(),
 											ctcVendor.ComboField.cbField.SelectedValue.ToString()); //Procedure dbo.spGetCustomerProgramByNameAndCustomer
+				var sItemTypeID = "";
 
 				if (tbCustProgName.Text.Trim() == "" || ipItems.ItemId == null)
 				{
@@ -3510,7 +3512,10 @@ namespace gemoDream
 							this.Cursor = Cursors.WaitCursor;
 
 							if (dsCheck.Tables[0].Rows.Count > 0)
+							{
 								dsCP = dsCheck.Copy();
+								sItemTypeID = dsCheck.Tables[0].Rows[0]["itemTypeID"].ToString();
+							}
 							else
 								dsCP = Service.GetCustomerProgramTypeOf();//Procedure dbo.spGetCustomerProgramTypeOf2
 
@@ -3533,7 +3538,7 @@ namespace gemoDream
 							dsCP.Tables[0].Rows[0]["CustomerProgramName"] = sCPName.Trim();
 
 							dsCP.Tables[0].Rows[0]["VendorOfficeID_VendorID"] = sVendorOfficeID_VendorID;
-							dsCP.Tables[0].Rows[0]["ItemTypeID"] = Convert.ToInt32(ipItems.ItemId);
+							dsCP.Tables[0].Rows[0]["ItemTypeID"] = sItemTypeID != "" ? Convert.ToInt32(sItemTypeID): Convert.ToInt32(ipItems.ItemId);
 							dsCP.Tables[0].Rows[0]["CustomerOfficeID_CustomerID"] = sCustomerOfficeID_CustomerID;
 							dsCP.Tables[0].Rows[0]["Comment"] = tbComments.Text;
 

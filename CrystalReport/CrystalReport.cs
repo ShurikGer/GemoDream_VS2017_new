@@ -6467,12 +6467,15 @@ alex */
 							}
 						}
 					}
-					foreach (string sLine in ErrorArray)
+					if (ErrorArray.Count > 0)
 					{
-						sErrMessage = sErrMessage + sLine + "\n";
+						foreach (string sLine in ErrorArray)
+						{
+							sErrMessage = sErrMessage + sLine + "\n";
+						}
+						ErrorArray.Clear();
+						throw new Exception("\n" + sErrMessage);
 					}
-					ErrorArray.Clear();
-					throw new Exception("\n" + sErrMessage);
 				}
 
 				ArrayList alCutGradeDetail = new ArrayList();
