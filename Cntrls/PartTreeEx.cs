@@ -169,7 +169,7 @@ namespace Cntrls
 		{
 			get
 			{
-				DataRow[] drSet = dtParts.Select("ID = '" + SelectedNode.Tag.ToString() + "'");
+				DataRow[] drSet = dtParts.Select("PartTypeID = '" + SelectedNode.Tag.ToString() + "'");
 				return drSet[0];				
 			}
 		}		

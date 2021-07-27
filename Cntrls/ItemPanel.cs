@@ -34,7 +34,7 @@ namespace Cntrls
 		private System.ComponentModel.IContainer components;
 		private ColumnHeader columnHeader1;
 		private ColumnHeader columnHeader2;
-		private PartTreeEx ptItemStructure;
+		private PartTree ptItemStructure;
 		private Label label1;
 		private string MRUItemTypeID;
 
@@ -78,7 +78,7 @@ namespace Cntrls
 		}
 
 		[Browsable(true)]
-		public PartTreeEx _ptItemStructure
+		public PartTree _ptItemStructure
 		{
 			get { return ptItemStructure; }
 		}
@@ -186,7 +186,7 @@ namespace Cntrls
 			this.ilDefItemIcons = new System.Windows.Forms.ImageList(this.components);
 			this.ilLibIcons = new System.Windows.Forms.ImageList(this.components);
 			this.ilItemIcons = new System.Windows.Forms.ImageList(this.components);
-			this.ptItemStructure = new Cntrls.PartTreeEx();
+			this.ptItemStructure = new Cntrls.PartTree();
 			this.GroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbItemPicture)).BeginInit();
 			this.SuspendLayout();

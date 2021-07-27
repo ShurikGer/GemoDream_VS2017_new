@@ -49,7 +49,7 @@ namespace Cntrls
 		private DataSet dsBlockedParts;
 		private DataTable dtPartsInfo;
 		DataRow[] adrInfo;
-		public Cntrls.PartTree ptPartTree;
+		public Cntrls.PartTreeEx ptPartTree;
 		public DataSet dsRulez;
 		private int currentPartTypeID;
 		private string sCPOfficeID = null;
@@ -158,7 +158,7 @@ namespace Cntrls
 			this.pnlPartProps = new System.Windows.Forms.Panel();
 			this.cmd_Select = new System.Windows.Forms.Button();
 			this.cmd_UnSelect = new System.Windows.Forms.Button();
-			this.ptPartTree = new Cntrls.PartTree();
+			this.ptPartTree = new Cntrls.PartTreeEx();
 			this.gbToDo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgRechecks)).BeginInit();
 			this.panel2.SuspendLayout();
@@ -471,7 +471,6 @@ namespace Cntrls
 			this.cmd_Select.TabIndex = 12;
 			this.cmd_Select.Text = "Check in";
 			this.cmd_Select.UseVisualStyleBackColor = false;
-			this.cmd_Select.Visible = false;
 			this.cmd_Select.Click += new System.EventHandler(this.cmd_Select_Click);
 			// 
 			// cmd_UnSelect
@@ -483,7 +482,6 @@ namespace Cntrls
 			this.cmd_UnSelect.TabIndex = 13;
 			this.cmd_UnSelect.Text = "Check out";
 			this.cmd_UnSelect.UseVisualStyleBackColor = false;
-			this.cmd_UnSelect.Visible = false;
 			this.cmd_UnSelect.Click += new System.EventHandler(this.cmd_UnSelect_Click);
 			// 
 			// ptPartTree
@@ -976,9 +974,9 @@ namespace Cntrls
 
 		private void ptPartTree_Changed_1(object sender, System.EventArgs e)
 		{
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
+			//GC.Collect();
+			//GC.WaitForPendingFinalizers();
+			//GC.Collect();
 			pnlPartProps.Focus();
 #if DEBUG
 			// For debugging only			
@@ -993,12 +991,19 @@ namespace Cntrls
 			myXmlWriter.Close();
 			// End of debugging part
 #endif
-			DataRow[] drSet = dsParts.Tables["MeasuresByItemType"].Select("PartTypeID = '" + ptPartTree.SelectedRow["PartTypeID"] + "'", "MeasureTitle");
-			currentPartTypeID = Convert.ToInt32(ptPartTree.SelectedRow["ID"]);
-			CreateCharacteristic(drSet);
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
+			try
+			{
+				DataRow[] drSet = dsParts.Tables["MeasuresByItemType"].Select("PartTypeID = '" + ptPartTree.SelectedRow["PartTypeID"] + "'", "MeasureTitle");
+				currentPartTypeID = Convert.ToInt32(ptPartTree.SelectedRow["ID"]);
+				CreateCharacteristic(drSet);
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+				GC.Collect();
+			}
+			catch(Exception ex)
+			{
+				var a = ex.Message;
+			}
 		}
 
 		private void CreateCharacteristic(DataRow[] drSet)

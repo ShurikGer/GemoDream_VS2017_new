@@ -57,7 +57,7 @@ namespace Cntrls
 			// 
 			// tvPartTree
 			// 
-			this.tvPartTree.CheckBoxes = true;
+			this.tvPartTree.CheckBoxes = false;
 			this.tvPartTree.Location = new System.Drawing.Point(0, 0);
 			this.tvPartTree.Name = "tvPartTree";
 			this.tvPartTree.ShowNodeToolTips = true;

@@ -2491,6 +2491,9 @@ namespace gemoDream
 			//dpNewDoc.partProps2.Nodes = dtItem;
 			tcDocs.TabPages.Add(tpNewPage);
 			tcDocs.SelectedTab = tpNewPage;
+			//GC.Collect();
+			//GC.WaitForPendingFinalizers();
+			//GC.Collect();
 
 			//((DocumentProps)(tcDocs.SelectedTab.Controls[0])).InitTree(dsData1.Tables["Parts"]);
 		}
